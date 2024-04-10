@@ -60,4 +60,29 @@ public class Board {
         }
         selected = new ArrayList<>();
     }
+
+    /**
+     * Selects a tile on the board
+     * @param row
+     * @param col
+     */
+    public void select(int row, int col) {
+        selected.add(this.words[row][col]);
+        this.words[row][col].select();
+    }
+
+    /**
+     * Check if selected tiles are in correct category
+     * @return if tiles are correct
+     */
+    public boolean checkSelected(){
+        // see if categories all match
+        String choosenCategory = this.selected.get(0).getCategory();
+        for (int i = 1; i < this.selected.size(); i++){
+            if(this.selected.get(i).getCategory() != choosenCategory) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
