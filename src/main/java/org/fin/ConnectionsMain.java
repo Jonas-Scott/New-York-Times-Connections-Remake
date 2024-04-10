@@ -6,16 +6,17 @@
  * Name: Casey King
  * Section: 1:00
  * Date: 4/10/24
- * Time: 1:50 PM
+ * Time: 3:51 PM
  *
  * Project: csci205_final_project
- * Package: PACKAGE_NAME
+ * Package: org.fin
  * Class: ConnectionsMain
  *
  * Description:
  *
  * ****************************************
  */
+package org.fin;
 
 public class ConnectionsMain {
 }

@@ -14,7 +14,7 @@ plugins{
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
-group 'org.final'
+group 'org.fin'
 version '0.1-SNAPSHOT'
 
 repositories {
@@ -46,7 +46,7 @@ dependencies {
 
 application {
     mainModule = "csci205_final_project"
-    mainClassName = "org.final.Main"
+    mainClassName = "org.fin.ConnectionsMain"
 
     if (project.hasProperty("mainClass")) {
         getMainClass().set(project.getProperty("mainClass"))
