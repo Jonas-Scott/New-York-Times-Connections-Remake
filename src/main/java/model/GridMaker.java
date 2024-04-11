@@ -18,69 +18,93 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * Class that creates generates a list of Tile objects
  * for a game of Connections
  */
 public class GridMaker {
+
+    /** Map of easy mode categories and words */
+    private static TreeMap<String, String[]> easyModeMap;
+
+    /** Map of medium mode categories and words */
+    private static TreeMap<String, String[]> mediumModeMap;
+
+    /** Map of hard mode categories and words */
+    private static TreeMap<String, String[]> hardModeMap;
+
+    /** Map of extreme mode categories and words */
+    private static TreeMap<String, String[]> extremeModeMap;
+
     /**
      * Makes an easy mode board of Connections
      * @return 4x4 array of Tiles
      */
-    public static Tile[][] makeEasyModeBoard(){
-        Tile[][] easyModeBoard = {
-                {new Tile("Roberts", "____ Hall"), new Tile("Bison", "Places to eat"),
-                        new Tile("Depew", "Outdoor Sports Facilities"),
-                        new Tile("Becker", "Outdoor Sports Facilities")},
-                {new Tile("Duck", "Downtown Houses"), new Tile("Larison", "____ Hall"),
-                        new Tile("Garage", "Downtown Houses"),
-                        new Tile("Bostwick", "Places to eat")},
-                {new Tile("Bodega", "Downtown Houses"), new Tile("Commons", "Places to eat"),
-                        new Tile("Swartz", "____ Hall"),
-                        new Tile("Graham", "Outdoor Sports Facilities")},
-                {new Tile("Becker", "Outdoor Sports Facilities"), new Tile("Tank", "Downtown Houses"),
-                        new Tile("Flyson", "Places to eat"),
-                        new Tile("Vedder", "____ Hall")}
-        };
-        return easyModeBoard;
+    public static ArrayList<ArrayList<Tile>> makeEasyModeBoard(){
+        // Create easy mode game
+        easyModeMap = new TreeMap<>();
+        easyModeMap.put("____ Hall", new String[]{"Roberts", "Larison", "Vedder", "Swartz"});
+        easyModeMap.put("Downtown Houses", new String[]{"Duck", "Tank", "Garage", "Bodega"});
+        easyModeMap.put("Places to eat", new String[]{"Bostwick", "Flyson", "Bison", "Commons"});
+        easyModeMap.put("Outdoor Sports Facilities", new String[]{"Emmet", "Graham", "Depew", "Becker"});
+
+        return makeBoard(easyModeMap);
     }
 
     /**
      * Makes a medium mode board of Connections
      * @return 4x4 array of Tiles
      */
-    public static Tile[][] makeMediumModeBoard() {
-        Tile[][] placeHolder = {{new Tile("Place", "Holder")}};
-        return placeHolder;
+    public static ArrayList<ArrayList<Tile>> makeMediumModeBoard() {
+        return makeBoard(mediumModeMap);
     }
 
     /**
      * Makes a hard mode board of Connections
      * @return 4x4 array of Tiles
      */
-    public static Tile[][] makeHardModeBoard() {
-        Tile[][] placeHolder = {{new Tile("Place", "Holder")}};
-        return placeHolder;
+    public static ArrayList<ArrayList<Tile>> makeHardModeBoard() {
+        return makeBoard(hardModeMap);
     }
 
     /**
      * Makes an extreme mode board of Connections
      * @return 4x4 array of Tiles
      */
-    public static Tile[][] makeExtremeModeBoard() {
-        Tile[][] placeHolder = {{new Tile("Place", "Holder")}};
-        return placeHolder;
+    public static ArrayList<ArrayList<Tile>> makeExtremeModeBoard() {
+        return makeBoard(extremeModeMap);
     }
 
-    public static void main(String[] args) {
-        Tile[][] test = GridMaker.makeEasyModeBoard();
+    private static ArrayList<ArrayList<Tile>> makeBoard(TreeMap<String, String[]> mapOfWords) {
 
-        for(Tile[] row: test){
-            for ( Tile word: row){
-                System.out.print(word.getWord() + " ");
+        ArrayList<ArrayList<Tile>> listOfTiles = new ArrayList<>();
+
+        int currIndex = 0;
+
+        for(Map.Entry<String, String[]> entry : mapOfWords.entrySet()){
+            listOfTiles.add(new ArrayList<Tile>());
+            for(String word : entry.getValue()) {
+                listOfTiles.get(currIndex).add(new Tile(word, entry.getKey()));
+            }
+            currIndex ++;
+        }
+
+        return listOfTiles;
+    }
+
+
+    public static void main(String[] args) {
+        ArrayList<ArrayList<Tile>> testList = GridMaker.makeEasyModeBoard();
+        for(ArrayList<Tile> list : testList) {
+            for (Tile tile : list) {
+                System.out.print(tile.getWord() + " ");
             }
             System.out.println();
         }
-
     }
+
 }
