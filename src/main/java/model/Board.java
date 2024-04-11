@@ -28,7 +28,7 @@ public class Board {
     /**
      * 4x4 array of tiles containing words to be guessed
      */
-    Tile[][] words;
+    ArrayList<ArrayList<Tile>> words;
 
     /**
      * Array of selected words
@@ -67,8 +67,8 @@ public class Board {
      * @param col
      */
     public void select(int row, int col) {
-        selected.add(this.words[row][col]);
-        this.words[row][col].select();
+        selected.add(this.words.get(row).get(col));
+        this.words.get(row).get(col).select();
     }
 
     /**
