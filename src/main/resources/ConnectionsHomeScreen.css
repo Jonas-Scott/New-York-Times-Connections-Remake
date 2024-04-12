@@ -1,0 +1,10 @@
+/*
+ * CSS file for Connections Home Screen
+ */
+
+.root {
+    -fx-spacing: 15;
+    -fx-padding: 15;
+    -fx-alignment: Center;
+    -fx-background-color: green;
+}
