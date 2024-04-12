@@ -18,6 +18,7 @@
  */
 package model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -83,6 +84,30 @@ public class Board {
                 return false;
             }
         }
+        adjustBoard();
         return true;
     }
+
+    public void adjustBoard() {
+
+        ArrayList<ArrayList<Tile>> newList = new ArrayList<>();
+        newList.add(new ArrayList<>());
+        int currIndex = 0;
+
+        for(ArrayList<Tile> list: words) {
+            for(Tile tile : selected) {
+                if(list.contains(tile)){
+                   list.remove(tile);
+                }
+                else {
+                    newList.get(currIndex).add(tile);
+                    if(newList.size() == 4) {
+                        currIndex++;
+                        newList.add(new ArrayList<>());
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 public class ConnectionsModel {
 
+    private Board board;
 
     /**
      * Array of all possible levels to chose from
@@ -46,17 +47,24 @@ public class ConnectionsModel {
     /**
      * Shouldn't have more than 4 guesses but we can change it if we need to
      */
-    private final int maxGuesses = 4;
+    private final int MAX_GUESSES = 4;
 
     /**
      *
      */
-    public void chooseLevel(){
-
+    public void chooseLevel(Level level){
+        board = new Board(level);
+        inGame = true;
     }
 
 
-    public void enterGame(){
+    public void guess(){
+        if(board.checkSelected()) {
+            guesses++;
+            if(guesses == MAX_GUESSES) {
+                inGame = false;
+            }
+        }
 
     }
 
