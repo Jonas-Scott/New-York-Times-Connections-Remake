@@ -5,7 +5,7 @@ Lewisburg, PA
 Instructor: Professor Romano  
 Semester: Spring 2024
 ## Team Information
-#### Team Name: Connections with a twist
+#### Team Name: Connect 4
 Casey King: 2026, CSE, Scrum Master  
 Jonas Scott: 2026, CSE  
 Owen Reilly: 2026, CS  
