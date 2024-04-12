@@ -68,8 +68,14 @@ public class Board {
      * @param col
      */
     public void select(int row, int col) {
-        selected.add(this.words.get(row).get(col));
-        this.words.get(row).get(col).select();
+        Tile tile = this.words.get(row).get(col);
+        if(selected.contains(tile)){
+            selected.remove(tile);
+        }
+        else {
+            selected.add(tile);
+        }
+        tile.select();
     }
 
     /**
@@ -88,6 +94,9 @@ public class Board {
         return true;
     }
 
+    /**
+     * After a correct guess adjust the board
+     */
     public void adjustBoard() {
 
         ArrayList<ArrayList<Tile>> newList = new ArrayList<>();
@@ -110,4 +119,11 @@ public class Board {
         }
     }
 
+    /**
+     * Give number of tiles selected
+     * @return size of selected list
+     */
+    public int getNumSelected(){
+        return selected.size();
+    }
 }

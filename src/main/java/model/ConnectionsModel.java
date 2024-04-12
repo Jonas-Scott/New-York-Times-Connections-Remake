@@ -20,15 +20,20 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * Class that models playing Connections
+ */
 public class ConnectionsModel {
 
-    private Board board;
+    /**
+     * How many categories are left
+     */
+    private int remainingCategories;
 
     /**
-     * Array of all possible levels to chose from
-     * Can be easy, medium, hard
+     * Connections game board
      */
-    private ArrayList<String> levels;
+    private Board board;
 
 
     /**
@@ -50,27 +55,55 @@ public class ConnectionsModel {
     private final int MAX_GUESSES = 4;
 
     /**
-     *
+     * ConnectionsModel constructor, initializes variables
+     */
+    public ConnectionsModel() {
+        guesses = 0;
+        inGame = false;
+        remainingCategories = 4;
+
+    }
+
+    /**
+     * Choose level to play
      */
     public void chooseLevel(Level level){
+        // make board with level
         board = new Board(level);
         inGame = true;
     }
 
-
-    public void guess(){
-        if(board.checkSelected()) {
-            guesses++;
-            if(guesses == MAX_GUESSES) {
-                inGame = false;
+    /**
+     * Check if selected tiles are a category
+     */
+    public void guess() {
+        // Only guess if 4 tiles selected
+        if(board.getNumSelected() == 4) {
+            // Add guess only if wrong, reset if lose
+            if (board.checkSelected()) {
+                guesses++;
+                if (guesses == MAX_GUESSES) {
+                    reset();
+                }
+            }
+            // Decrease remaining categories, reset if win
+            else {
+                remainingCategories--;
+                if (remainingCategories == 0) {
+                    reset();
+                }
             }
         }
-
     }
 
-
+    /**
+     * Resets model to not be playing game
+     */
     private void reset(){
-
+        // Reset all variables
+        inGame = false;
+        guesses = 0;
+        remainingCategories = 4;
     }
 
 }
