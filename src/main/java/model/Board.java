@@ -20,6 +20,7 @@ package model;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Board of words for Connections
@@ -119,6 +120,47 @@ public class Board {
         }
     }
 
+
+    /**
+     * Empties out the 4x4 into one array and then uses the collections. Shuffle method.
+     * This lets us put it back into a new 4x4
+     * then we replace the words attribute with the new 4x4
+     * @author Owen R
+     */
+    public void shuffleBoard(){
+        ArrayList<Tile> allTiles = new ArrayList<>();
+        ArrayList<Tile> firstRow = new ArrayList<>();
+        ArrayList<Tile>  secondRow = new ArrayList<>();
+        ArrayList<Tile> thirdRow = new ArrayList<>();
+        ArrayList<Tile> fourthRow = new ArrayList<>();
+        for (ArrayList each : words){
+            for (Object tiles : each){
+                allTiles.add((Tile) tiles);
+            }
+        }
+        Collections.shuffle(allTiles);
+
+        for (int i = 0; i == 3; i++){
+            firstRow.add(allTiles.get(i));
+        }
+        for (int i = 4; i == 7; i++){
+            firstRow.add(allTiles.get(i));
+        }
+        for (int i = 8; i == 11; i++){
+            firstRow.add(allTiles.get(i));
+        }
+        for (int i = 12; i == 15; i++){
+            firstRow.add(allTiles.get(i));
+        }
+
+        words.clear();
+        words.add(firstRow);
+        words.add(secondRow);
+        words.add(thirdRow);
+        words.add(fourthRow);
+
+
+    }
     /**
      * Give number of tiles selected
      * @return size of selected list
