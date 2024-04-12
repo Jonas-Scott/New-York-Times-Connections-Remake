@@ -43,6 +43,8 @@ public class ConnectionsModel {
      */
     private boolean inGame;
 
+
+
     /**
      * Tracks how many guesses we have.
      */
