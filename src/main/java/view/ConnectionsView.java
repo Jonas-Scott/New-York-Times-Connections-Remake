@@ -18,5 +18,16 @@
  */
 package view;
 
+import javafx.scene.layout.TilePane;
+import model.ConnectionsModel;
+
 public class ConnectionsView {
+
+    /** Model object for the ConnectionsModel Class */
+    private ConnectionsModel theModel;
+
+    /** Root object for the JavaFX class */
+    private TilePane root;
+
+
 }
