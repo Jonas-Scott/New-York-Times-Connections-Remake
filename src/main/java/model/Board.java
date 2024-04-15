@@ -27,6 +27,10 @@ import java.util.Collections;
  */
 public class Board {
 
+    public ArrayList<ArrayList<Tile>> getWords() {
+        return words;
+    }
+
     /**
      * 4x4 array of tiles containing words to be guessed
      */
@@ -60,6 +64,7 @@ public class Board {
                 break;
             }
         }
+        shuffleBoard();
         selected = new ArrayList<>();
     }
 
