@@ -73,6 +73,7 @@ public class ConnectionsModel {
         // make board with level
         board = new Board(level);
         inGame = true;
+        System.out.println(level);
     }
 
     /**

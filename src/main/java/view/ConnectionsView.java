@@ -37,6 +37,12 @@ public class ConnectionsView {
     private VBox homeScreenRoot;
 
     /**
+     * All of our buttons
+     */
+    public Button btnEasy, btnMedium, btnHard, btnExtreme;
+
+
+    /**
      * Constructor for ConnectionsView class
      * @author - Jonas Scott
      */
@@ -57,10 +63,12 @@ public class ConnectionsView {
         this.homeScreenRoot.setAlignment(Pos.CENTER);
 
         this.homeScreenRoot.getChildren().add(new Text("Welcome to Connections \n Select your Difficulty"));
-        this.homeScreenRoot.getChildren().add(new Button("Easy"));
-        this.homeScreenRoot.getChildren().add(new Button("Medium"));
-        this.homeScreenRoot.getChildren().add(new Button("Hard"));
-        this.homeScreenRoot.getChildren().add(new Button("Extreme"));
+        btnEasy = new Button("Easy");
+        btnMedium = new Button("Medium");
+        btnHard = new Button("Hard");
+        btnExtreme = new Button("Extreme");
+
+        this.homeScreenRoot.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExtreme);
     }
 
     // This might be completely unnecessary we could maybe delete it since we are styling in a CSS file anyway
