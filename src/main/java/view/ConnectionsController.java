@@ -33,7 +33,7 @@ public class ConnectionsController {
      * @param theModel
      * @param theView
      *
-     * @authoer Owen R
+     * @author Owen R
      */
     public ConnectionsController(ConnectionsModel theModel, ConnectionsView theView){
         this.theModel = theModel;
@@ -49,6 +49,8 @@ public class ConnectionsController {
     /**
      * Binds all the buttons in the view to a specific action
      * each action chooses a level that we have in the model.
+     *
+     * @author Owen R
      */
     private void initLevelSelector() {
         this.theView.btnEasy.setOnAction(e -> this.theModel.chooseLevel(Level.EASY));
