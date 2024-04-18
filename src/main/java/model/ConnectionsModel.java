@@ -108,4 +108,19 @@ public class ConnectionsModel {
         remainingCategories = 4;
     }
 
+    /**
+     * getter method for the board
+     * @return board
+     */
+    public Board getBoard() {
+        return board;
+    }
+
+    /**
+     * getter for boolean inGame
+     * @return inGame
+     */
+    public boolean isInGame() {
+        return inGame;
+    }
 }
