@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.ConnectionsModel;
+import view.ConnectionsController;
 import view.ConnectionsView;
 
 /**
@@ -20,6 +21,8 @@ public class ConnectionsMain extends Application {
     /**
      * Main model to start the game
      */
+
+    private ConnectionsController theController;
     public static void main(String[] args) {launch(args);}
 
 
@@ -36,6 +39,8 @@ public class ConnectionsMain extends Application {
         scene.getStylesheets().add(
                 getClass().getResource("/ConnectionsHomeScreen.css")
                         .toExternalForm());
+        this.theController = new ConnectionsController(this.theModel, this.theView);
+
         primaryStage.setTitle("Connections");
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
