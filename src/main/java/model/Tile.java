@@ -33,16 +33,24 @@ public class Tile {
     /** Category */
     private String category;
 
+
+    private int difficulty;
+
     /**
      * Tile constructor, initializes attributes
      * @param word word tile carries
      * @param category category word is in
      * @author Casey King
      */
-    public Tile(String word, String category){
+    public Tile(String word, String category, int difficulty){
         this.word = word;
         this.category = category;
         this.selected = false;
+        this.difficulty = difficulty;
+    }
+
+    public int getDifficulty() {
+        return this.difficulty;
     }
 
     /**
