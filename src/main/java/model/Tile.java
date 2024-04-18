@@ -79,4 +79,17 @@ public class Tile {
     public void select(){
         this.selected = !this.selected;
     }
+
+    /**
+     * Prints word of Tile
+     * @return
+     */
+    public String toString() {
+        return(word);
+    }
+
+
+    public boolean equals(Object obj) {
+        return obj.toString().equals( this.toString());
+    }
 }

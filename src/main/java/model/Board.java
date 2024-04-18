@@ -34,12 +34,20 @@ public class Board {
     /**
      * 4x4 array of tiles containing words to be guessed
      */
-    ArrayList<ArrayList<Tile>> words;
+    private ArrayList<ArrayList<Tile>> words;
 
     /**
      * Array of selected words
      */
-    ArrayList<Tile> selected;
+    private ArrayList<Tile> selected;
+
+    /**
+     * getter for selected tiles
+     * @return
+     */
+    public ArrayList<Tile> getSelected() {
+        return selected;
+    }
 
     /**
      * Initialize board according to level
@@ -110,19 +118,17 @@ public class Board {
         int currIndex = 0;
 
         for(ArrayList<Tile> list: words) {
-            for(Tile tile : selected) {
-                if(list.contains(tile)){
-                   list.remove(tile);
-                }
-                else {
+            for(Tile tile : list) {
+                if(!selected.contains(tile)){
                     newList.get(currIndex).add(tile);
-                    if(newList.size() == 4) {
+                    if(newList.get(currIndex).size() == 4) {
                         currIndex++;
                         newList.add(new ArrayList<>());
                     }
                 }
             }
         }
+        this.words = newList;
     }
 
 
@@ -145,24 +151,25 @@ public class Board {
         }
         Collections.shuffle(allTiles);
 
-        for (int i = 0; i == 3; i++){
+        for (int i = 0; i <= 3; i++){
             firstRow.add(allTiles.get(i));
         }
-        for (int i = 4; i == 7; i++){
-            firstRow.add(allTiles.get(i));
+        for (int i = 4; i <= 7; i++){
+            secondRow.add(allTiles.get(i));
         }
-        for (int i = 8; i == 11; i++){
-            firstRow.add(allTiles.get(i));
+        for (int i = 8; i <= 11; i++){
+            thirdRow.add(allTiles.get(i));
         }
-        for (int i = 12; i == 15; i++){
-            firstRow.add(allTiles.get(i));
+        for (int i = 12; i <= 15; i++){
+            fourthRow.add(allTiles.get(i));
         }
 
-        words.clear();
+        words = new ArrayList<>();
         words.add(firstRow);
         words.add(secondRow);
         words.add(thirdRow);
         words.add(fourthRow);
+
 
 
     }
@@ -172,5 +179,22 @@ public class Board {
      */
     public int getNumSelected(){
         return selected.size();
+    }
+
+
+    /**
+     * Returns string representation of board
+     * @return
+     */
+    public String toString(){
+        String allTiles = "";
+        for(ArrayList<Tile> list: this.words){
+            for(Tile tile: list) {
+                allTiles += tile.toString();
+                allTiles += " ";
+            }
+            allTiles += "\n";
+        }
+        return allTiles;
     }
 }

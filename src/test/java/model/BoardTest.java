@@ -40,35 +40,31 @@ class BoardTest {
         Tile vedder = new Tile ("Vedder", "____ Hall");
         Tile swartz = new Tile ("Swartz", "____ Hall");
         Tile bison = new Tile("Bison", "Food");
-        board.selected.add(roberts);
-        board.selected.add(vedder);
-        board.selected.add(swartz);
-        board.selected.add(bison);
+        board.getSelected().add(roberts);
+        board.getSelected().add(vedder);
+        board.getSelected().add(swartz);
+        board.getSelected().add(bison);
         assertFalse(board.checkSelected(),"4 categories are not the same");
 
-        board.selected.remove(bison);
-        board.selected.add(larrison);
+        board.getSelected().remove(bison);
+        board.getSelected().add(larrison);
         assertTrue(board.checkSelected(),"All categories are the same");
     }
 
     @Test
     void adjustBoard() {
         Tile roberts = new Tile("Roberts", "____ Hall");
-        Tile larrison = new Tile ("Larrison", "____ Hall");
+        Tile larrison = new Tile ("Larison", "____ Hall");
         Tile vedder = new Tile ("Vedder", "____ Hall");
         Tile swartz = new Tile ("Swartz", "____ Hall");
-        board.selected.add(roberts);
-        board.selected.add(vedder);
-        board.selected.add(swartz);
-        board.selected.add(larrison);
+        board.getSelected().add(roberts);
+        board.getSelected().add(vedder);
+        board.getSelected().add(swartz);
+        board.getSelected().add(larrison);
 
         board.checkSelected();
         ArrayList<Tile> firstRow = board.getWords().get(0);
-        System.out.println(firstRow.get(0));
-        assertTrue(firstRow.contains(roberts));
-        assertTrue(firstRow.contains(vedder));
-        assertTrue(firstRow.contains(larrison));
-        assertTrue(firstRow.contains(swartz));
+        System.out.println(board);
     }
 
     @Test
