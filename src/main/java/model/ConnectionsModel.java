@@ -124,4 +124,8 @@ public class ConnectionsModel {
     public boolean isInGame() {
         return inGame;
     }
+
+    public int getRemainingCategories() {
+        return remainingCategories;
+    }
 }

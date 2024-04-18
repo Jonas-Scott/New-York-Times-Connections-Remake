@@ -28,8 +28,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ConnectionsModelTest {
 
@@ -49,6 +48,19 @@ public class ConnectionsModelTest {
 
     @Test
     void guess() {
+        connectionsModel.getBoard().select(0, 0);
+        connectionsModel.getBoard().select(0, 1);
+        connectionsModel.getBoard().select(0, 2);
+        connectionsModel.getBoard().select(0, 3);
+
+        // Make a guess
+        connectionsModel.guess();
+
+        // Check if remainingCategories has decreased
+        assertEquals(3, connectionsModel.getRemainingCategories());
+
+        // Check if the game is still in progress
+        assertTrue(connectionsModel.isInGame());
+    }
 
     }
-}
