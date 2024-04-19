@@ -35,11 +35,11 @@ class BoardTest {
 
     @Test
     void checkSelected() {
-        Tile roberts = new Tile("Roberts", "____ Hall");
-        Tile larrison = new Tile ("Larrison", "____ Hall");
-        Tile vedder = new Tile ("Vedder", "____ Hall");
-        Tile swartz = new Tile ("Swartz", "____ Hall");
-        Tile bison = new Tile("Bison", "Food");
+        Tile roberts = new Tile("Roberts", "____ Hall",1);
+        Tile larrison = new Tile ("Larrison", "____ Hall",1);
+        Tile vedder = new Tile ("Vedder", "____ Hall",1);
+        Tile swartz = new Tile ("Swartz", "____ Hall",1);
+        Tile bison = new Tile("Bison", "Food",1);
         board.selected.add(roberts);
         board.selected.add(vedder);
         board.selected.add(swartz);
@@ -53,10 +53,10 @@ class BoardTest {
 
     @Test
     void adjustBoard() {
-        Tile roberts = new Tile("Roberts", "____ Hall");
-        Tile larrison = new Tile ("Larrison", "____ Hall");
-        Tile vedder = new Tile ("Vedder", "____ Hall");
-        Tile swartz = new Tile ("Swartz", "____ Hall");
+        Tile roberts = new Tile("Roberts", "____ Hall",1);
+        Tile larrison = new Tile ("Larrison", "____ Hall",1);
+        Tile vedder = new Tile ("Vedder", "____ Hall",1);
+        Tile swartz = new Tile ("Swartz", "____ Hall",1);
         board.selected.add(roberts);
         board.selected.add(vedder);
         board.selected.add(swartz);
