@@ -22,7 +22,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import model.ConnectionsModel;
 
 public class ConnectionsView {
@@ -61,12 +64,19 @@ public class ConnectionsView {
     private void initSceneGraph() {
         this.homeScreenRoot = new VBox();
         this.homeScreenRoot.setAlignment(Pos.CENTER);
+        Text title = new Text("Welcome to Connections \n Select your Difficulty");
+        title.setFont(Font.font("verdana", FontWeight.BOLD, 50));
+        title.setTextAlignment(TextAlignment.CENTER);
 
-        this.homeScreenRoot.getChildren().add(new Text("Welcome to Connections \n Select your Difficulty"));
+        this.homeScreenRoot.getChildren().add(title);
         btnEasy = new Button("Easy");
+        btnEasy.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         btnMedium = new Button("Medium");
+        btnMedium.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         btnHard = new Button("Hard");
+        btnHard.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         btnExtreme = new Button("Extreme");
+        btnExtreme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         this.homeScreenRoot.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExtreme);
     }
