@@ -19,6 +19,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -44,12 +45,12 @@ public class GridMaker {
      * Makes an easy mode board of Connections
      * @return 4x4 array of Tiles
      */
-    public static ArrayList<ArrayList<Tile>> makeEasyModeBoard(){
-        // Create easy mode game
+    public static ArrayList<ArrayList<Tile>> makeEasyModeBoard() {
         easyModeMap = new TreeMap<>();
+
         easyModeMap.put("____ Hall", new String[]{"Roberts", "Larison", "Vedder", "Swartz"});
         easyModeMap.put("Downtown Houses", new String[]{"Duck", "Tank", "Garage", "Bodega"});
-        easyModeMap.put("Places to eat", new String[]{"Bostwick", "Flyson", "Bison", "Commons"});
+        easyModeMap.put("Places to Eat", new String[]{"Bostwick", "Flyson", "Bison", "Commons"});
         easyModeMap.put("Outdoor Sports Facilities", new String[]{"Emmet", "Graham", "Depew", "Becker"});
 
         return makeBoard(easyModeMap);
@@ -60,6 +61,13 @@ public class GridMaker {
      * @return 4x4 array of Tiles
      */
     public static ArrayList<ArrayList<Tile>> makeMediumModeBoard() {
+       mediumModeMap = new TreeMap<>();
+
+        mediumModeMap.put("Tennis Terms", new String[]{"Love", "Ace", "Deuce", "Fault"});
+        mediumModeMap.put("Water____", new String[]{"Melon", "Color", "Way", "Fall"});
+        mediumModeMap.put("Words with Colors in them", new String[]{"Brownie", "Bred", "Blueberry", "Whiteboard"});
+        mediumModeMap.put("Letter Homophones", new String[]{"Why", "See", "Are", "Ex"});
+
         return makeBoard(mediumModeMap);
     }
 
@@ -68,6 +76,13 @@ public class GridMaker {
      * @return 4x4 array of Tiles
      */
     public static ArrayList<ArrayList<Tile>> makeHardModeBoard() {
+        hardModeMap = new TreeMap<>();
+
+        hardModeMap.put("Legendary Athletes Last Names", new String[]{"Woods", "Ruth", "Bolt", "Phelps"});
+        hardModeMap.put("Things in Nature", new String[]{"Forest", "River", "Mountain", "Desert"});
+        hardModeMap.put("Palindromes", new String[]{"Racecar", "Deed", "Kayak", "Noon"});
+        hardModeMap.put("Star____", new String[]{"Ship", "Fish", "Light", "Wars"});
+
         return makeBoard(hardModeMap);
     }
 
@@ -76,8 +91,17 @@ public class GridMaker {
      * @return 4x4 array of Tiles
      */
     public static ArrayList<ArrayList<Tile>> makeExtremeModeBoard() {
+        extremeModeMap = new TreeMap<>();
+
+        extremeModeMap.put("Musicals", new String[]{"Cats", "Hamilton", "Wicked", "Chicago"});
+        extremeModeMap.put("Slang to Call Someone Cool", new String[]{"Dog", "Beast", "Animal", "Him"});
+        extremeModeMap.put("Wizard of Oz Characters", new String[]{"Witch", "Lion", "Scarecrow", "Wizard"});
+        extremeModeMap.put("ACC Team Names", new String[]{"Tiger", "Irish", "Orange", "Hurricane"});
+
         return makeBoard(extremeModeMap);
     }
+
+
 
     private static ArrayList<ArrayList<Tile>> makeBoard(TreeMap<String, String[]> mapOfWords) {
 
@@ -88,10 +112,12 @@ public class GridMaker {
         for(Map.Entry<String, String[]> entry : mapOfWords.entrySet()){
             listOfTiles.add(new ArrayList<Tile>());
             for(String word : entry.getValue()) {
-                listOfTiles.get(currIndex).add(new Tile(word, entry.getKey()));
+                listOfTiles.get(currIndex).add(new Tile(word, entry.getKey(), currIndex+1));
+                //System.out.println(currIndex);
             }
             currIndex ++;
         }
+
 
         return listOfTiles;
     }

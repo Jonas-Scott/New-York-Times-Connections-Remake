@@ -21,11 +21,17 @@ package model;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Board of words for Connections
  */
 public class Board {
+
+    public ArrayList<ArrayList<Tile>> getWords() {
+        return words;
+    }
 
     /**
      * 4x4 array of tiles containing words to be guessed
@@ -60,6 +66,7 @@ public class Board {
                 break;
             }
         }
+        shuffleBoard();
         selected = new ArrayList<>();
     }
 
@@ -81,19 +88,42 @@ public class Board {
 
     /**
      * Check if selected tiles are in correct category
-     * @return if tiles are correct
+     * @return 0 if its incorrect, 1 if there are 3 of the same category, and 2 if there are all 4
      */
-    public boolean checkSelected(){
+    public int checkSelected() {
         // see if categories all match
-        String choosenCategory = this.selected.get(0).getCategory();
-        for (int i = 1; i < this.selected.size(); i++){
-            if(this.selected.get(i).getCategory() != choosenCategory) {
-                return false;
+
+        Map<Integer, Integer> guessesPer = Map.of(
+                1, 0,
+                2, 0,
+                3, 0,
+                4, 0
+        );
+
+        //String choosenCategory = this.selected.get(0).getCategory();
+        for (int i = 0; i < this.selected.size(); i++) {
+            guessesPer.put(this.selected.get(i).getDifficulty(), guessesPer.get(this.selected.get(i).getDifficulty()) + 1);
+        }
+
+        int keyWithMaxValue = 0;
+        Integer maxValue = 0;
+
+        for (int i = 0; i < 4; i++) {
+            if (guessesPer.get(i) > maxValue) {
+                keyWithMaxValue = i;
             }
         }
-        adjustBoard();
-        return true;
-    }
+            if (guessesPer.get(keyWithMaxValue) < 3) {
+                return 0;
+            } else if (guessesPer.get(keyWithMaxValue) == 3) {
+                return 1;
+            } else {
+                adjustBoard();
+                return 2;
+            }
+        }
+
+
 
     /**
      * After a correct guess adjust the board
