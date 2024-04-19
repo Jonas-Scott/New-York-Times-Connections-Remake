@@ -34,6 +34,9 @@ public class Tile {
     private String category;
 
 
+    /**
+     * This will help us later, as far as determining what our color should be.
+     */
     private int difficulty;
 
     /**
