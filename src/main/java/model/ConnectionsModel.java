@@ -78,15 +78,23 @@ public class ConnectionsModel {
 
     /**
      * Check if selected tiles are a category
+     *
+     * @return 1 if we are 1 guess away, 0 otherwise
      */
-    public void guess() {
+    public int guess() {
         // Only guess if 4 tiles selected
         if(board.getNumSelected() == 4) {
             // Add guess only if wrong, reset if lose
-            if (board.checkSelected()) {
+            if (board.checkSelected() != 2) {
                 guesses++;
                 if (guesses == MAX_GUESSES) {
                     reset();
+                }
+                if (board.checkSelected() == 1){
+                    return 1;
+                }
+                else{
+                    return 0;
                 }
             }
             // Decrease remaining categories, reset if win
@@ -95,7 +103,25 @@ public class ConnectionsModel {
                 if (remainingCategories == 0) {
                     reset();
                 }
+                return 0;
             }
+        }
+        return 0;
+    }
+
+
+    /**
+     * this will help for the feedback part of it. We will keep track of how many guesses are left
+     * Like the connections game, we should have some constant indicator of how many guesses are left
+     *
+     * @return 0 if we are out of guesses. Won't matter ::  otherwise, return how many guesses we have left.
+     */
+    public int userFeedback(){
+        if (guesses<MAX_GUESSES){
+            return (MAX_GUESSES-guesses);
+        }
+        else{
+            return 0;
         }
     }
 

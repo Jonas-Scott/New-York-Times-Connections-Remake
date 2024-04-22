@@ -7,4 +7,6 @@
     -fx-padding: 15;
     -fx-alignment: Center;
     -fx-background-color: green;
+    -fx-min-width: 1000;
+    -fx-min-height: 800;
 }
