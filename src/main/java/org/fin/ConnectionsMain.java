@@ -39,7 +39,7 @@ public class ConnectionsMain extends Application {
         scene.getStylesheets().add(
                 getClass().getResource("/ConnectionsHomeScreen.css")
                         .toExternalForm());
-        this.theController = new ConnectionsController(this.theModel, this.theView);
+        this.theController = new ConnectionsController(this.theModel, this.theView, primaryStage);
 
         primaryStage.setTitle("Connections");
         primaryStage.setScene(scene);
