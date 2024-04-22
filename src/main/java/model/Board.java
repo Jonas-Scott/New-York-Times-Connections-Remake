@@ -51,6 +51,7 @@ public class Board {
         switch (level) {
             case EASY: {
                 this.words = GridMaker.makeEasyModeBoard();
+                //System.out.println(this.words);
                 break;
             }
             case MEDIUM: {
@@ -66,7 +67,8 @@ public class Board {
                 break;
             }
         }
-        shuffleBoard();
+        //shuffleBoard();
+        //System.out.println(this.words);
         selected = new ArrayList<>();
     }
 
@@ -76,6 +78,7 @@ public class Board {
      * @param col
      */
     public void select(int row, int col) {
+        //System.out.println(this.words);
         Tile tile = this.words.get(row).get(col);
         if(selected.contains(tile)){
             selected.remove(tile);
@@ -92,36 +95,38 @@ public class Board {
      */
     public int checkSelected() {
         // see if categories all match
-
-        Map<Integer, Integer> guessesPer = Map.of(
-                1, 0,
-                2, 0,
-                3, 0,
-                4, 0
-        );
+        Map<Integer, Integer> guessesPer = new HashMap<>(); // Mutable map
+        guessesPer.put(1, 0);
+        guessesPer.put(2, 0);
+        guessesPer.put(3, 0);
+        guessesPer.put(4, 0);
 
         //String choosenCategory = this.selected.get(0).getCategory();
-        for (int i = 0; i < this.selected.size(); i++) {
+        for (int i = 0; i < 4; i++) {
             guessesPer.put(this.selected.get(i).getDifficulty(), guessesPer.get(this.selected.get(i).getDifficulty()) + 1);
         }
 
         int keyWithMaxValue = 0;
         Integer maxValue = 0;
 
-        for (int i = 0; i < 4; i++) {
-            if (guessesPer.get(i) > maxValue) {
-                keyWithMaxValue = i;
+        for (int i = 1; i <= 4; i++) {
+            int currentCount = guessesPer.get(i);
+            if (currentCount > maxValue) {
+                maxValue = currentCount;  // Update maxValue to the current highest count
+                keyWithMaxValue = i;      // Track the key with the highest count
             }
         }
-            if (guessesPer.get(keyWithMaxValue) < 3) {
-                return 0;
-            } else if (guessesPer.get(keyWithMaxValue) == 3) {
-                return 1;
-            } else {
-                adjustBoard();
-                return 2;
-            }
+
+        // Return based on the max count found
+        if (maxValue < 3) {
+            return 0;  // Less than three of any category
+        } else if (maxValue == 3) {
+            return 1;  // Exactly three of one category
+        } else {
+            adjustBoard();  // Assuming adjustBoard() makes necessary modifications based on this check
+            return 2;       // Four of one category
         }
+    }
 
 
 
@@ -136,6 +141,7 @@ public class Board {
 
         for(ArrayList<Tile> list: words) {
             for(Tile tile : selected) {
+                //System.out.println(tile.getWord());
                 if(list.contains(tile)){
                    list.remove(tile);
                 }
@@ -196,6 +202,7 @@ public class Board {
      * @return size of selected list
      */
     public int getNumSelected(){
+        //System.out.println(selected.size());
         return selected.size();
     }
 }
