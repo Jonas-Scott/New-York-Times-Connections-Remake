@@ -19,6 +19,7 @@
 package view;
 
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -62,6 +63,8 @@ public class ConnectionsView {
 
         initSceneGraph();
         initStyling();
+
+        gamePlayRoot = new TilePane();
 
     }
 
@@ -108,5 +111,9 @@ public class ConnectionsView {
                 gamePlayRoot.getChildren().add(tileText);
             }
         }
+    }
+
+    public Parent getGamePlayRoot() {
+        return gamePlayRoot;
     }
 }

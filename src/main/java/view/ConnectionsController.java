@@ -19,12 +19,15 @@
 package view;
 
 
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import model.ConnectionsModel;
 import model.Level;
 
 public class ConnectionsController {
     private ConnectionsModel theModel;
     private ConnectionsView theView;
+    private Stage primaryStage;
 
 
     /**
@@ -35,9 +38,10 @@ public class ConnectionsController {
      *
      * @author Owen R
      */
-    public ConnectionsController(ConnectionsModel theModel, ConnectionsView theView){
+    public ConnectionsController(ConnectionsModel theModel, ConnectionsView theView, Stage primaryStage){
         this.theModel = theModel;
         this.theView = theView;
+        this.primaryStage = primaryStage;
 
         initLevelSelector();
     }
@@ -53,9 +57,22 @@ public class ConnectionsController {
      * @author Owen R
      */
     private void initLevelSelector() {
-        this.theView.btnEasy.setOnAction(e -> this.theModel.chooseLevel(Level.EASY));
-        this.theView.btnMedium.setOnAction(e -> this.theModel.chooseLevel(Level.MEDIUM));
-        this.theView.btnHard.setOnAction(e -> this.theModel.chooseLevel(Level.HARD));
-        this.theView.btnExtreme.setOnAction(e -> this.theModel.chooseLevel(Level.EXTREME));
+        this.theView.btnEasy.setOnAction(e -> switchToGameBoard(Level.EASY));
+        this.theView.btnMedium.setOnAction(e -> switchToGameBoard(Level.MEDIUM));
+        this.theView.btnHard.setOnAction(e -> switchToGameBoard(Level.HARD));
+        this.theView.btnExtreme.setOnAction(e -> switchToGameBoard(Level.EXTREME));
     }
+
+    private void switchToGameBoard(Level level) {
+        theModel.chooseLevel(level);
+
+        // Create the game board scene
+        Scene gameBoardScene = new Scene(theView.getGamePlayRoot());
+
+        // Set the scene in the primary stage
+        primaryStage.setScene(gameBoardScene);
+        primaryStage.setTitle("Connections");
+        primaryStage.show();
+    }
+
 }

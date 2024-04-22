@@ -6,7 +6,7 @@
  * Name: Casey King
  * Section: 1:00
  * Date: 4/10/24
- * Time: 1:46 PM
+ * Time: 1:46
  *
  * Project: csci205_final_project
  * Package: model
