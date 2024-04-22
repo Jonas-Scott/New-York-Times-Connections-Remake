@@ -35,28 +35,33 @@ class BoardTest {
 
     @Test
     void checkSelected() {
-        Tile roberts = new Tile("Roberts", "____ Hall");
-        Tile larrison = new Tile ("Larrison", "____ Hall");
-        Tile vedder = new Tile ("Vedder", "____ Hall");
-        Tile swartz = new Tile ("Swartz", "____ Hall");
-        Tile bison = new Tile("Bison", "Food");
+        Tile roberts = new Tile("Roberts", "____ Hall",1);
+        Tile larrison = new Tile ("Larrison", "____ Hall",1);
+        Tile vedder = new Tile ("Vedder", "____ Hall",1);
+        Tile swartz = new Tile ("Swartz", "____ Hall",1);
+        Tile bison = new Tile("Bison", "Food", 2);
+        Tile flyson = new Tile("Flyson", "Food", 2);
         board.getSelected().add(roberts);
-        board.getSelected().add(vedder);
-        board.getSelected().add(swartz);
         board.getSelected().add(bison);
-        assertFalse(board.checkSelected(),"4 categories are not the same");
+        board.getSelected().add(swartz);
+        board.getSelected().add(flyson);
+        assertEquals(board.checkSelected(),1);
 
         board.getSelected().remove(bison);
         board.getSelected().add(larrison);
-        assertTrue(board.checkSelected(),"All categories are the same");
+        assertEquals(board.checkSelected(),2);
+
+        board.getSelected().remove(flyson);
+        board.getSelected().add(vedder);
+
     }
 
     @Test
     void adjustBoard() {
-        Tile roberts = new Tile("Roberts", "____ Hall");
-        Tile larrison = new Tile ("Larison", "____ Hall");
-        Tile vedder = new Tile ("Vedder", "____ Hall");
-        Tile swartz = new Tile ("Swartz", "____ Hall");
+        Tile roberts = new Tile("Roberts", "____ Hall", 1);
+        Tile larrison = new Tile ("Larison", "____ Hall", 1);
+        Tile vedder = new Tile ("Vedder", "____ Hall", 1);
+        Tile swartz = new Tile ("Swartz", "____ Hall", 1);
         board.getSelected().add(roberts);
         board.getSelected().add(vedder);
         board.getSelected().add(swartz);
