@@ -23,12 +23,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-<<<<<<< HEAD
 import javafx.scene.paint.Color;
-=======
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
->>>>>>> main
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import model.ConnectionsModel;
