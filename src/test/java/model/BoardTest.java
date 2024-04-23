@@ -39,37 +39,45 @@ class BoardTest {
         Tile larrison = new Tile ("Larrison", "____ Hall",1);
         Tile vedder = new Tile ("Vedder", "____ Hall",1);
         Tile swartz = new Tile ("Swartz", "____ Hall",1);
-        Tile bison = new Tile("Bison", "Food", 2);
-        Tile flyson = new Tile("Flyson", "Food", 2);
-        board.getSelected().add(roberts);
-        board.getSelected().add(bison);
-        board.getSelected().add(swartz);
-        board.getSelected().add(flyson);
-        assertEquals(board.checkSelected(),1);
+        Tile bison = new Tile("Bison", "Food",2);
+        Tile bostwick = new Tile("Bostwick", "Food", 2);
 
-        board.getSelected().remove(bison);
-        board.getSelected().add(larrison);
-        assertEquals(board.checkSelected(),2);
+        board.selected.add(roberts);
+        board.selected.add(vedder);
+        board.selected.add(bostwick);
+        board.selected.add(bison);
 
-        board.getSelected().remove(flyson);
-        board.getSelected().add(vedder);
+        assertEquals(board.checkSelected(),0,"Not enough categories are the same");
 
+        board.selected.remove(bostwick);
+        board.selected.add(swartz);
+        assertEquals(board.checkSelected(),1,"Not enough categories are the same");
+
+        board.selected.remove(bison);
+        board.selected.add(larrison);
+        assertEquals(board.checkSelected(),2,"All categories are the same");
     }
 
     @Test
     void adjustBoard() {
-        Tile roberts = new Tile("Roberts", "____ Hall", 1);
-        Tile larrison = new Tile ("Larison", "____ Hall", 1);
-        Tile vedder = new Tile ("Vedder", "____ Hall", 1);
-        Tile swartz = new Tile ("Swartz", "____ Hall", 1);
-        board.getSelected().add(roberts);
-        board.getSelected().add(vedder);
-        board.getSelected().add(swartz);
-        board.getSelected().add(larrison);
+        Tile roberts = new Tile("Roberts", "____ Hall",1);
+        Tile larrison = new Tile ("Larrison", "____ Hall",1);
+        Tile vedder = new Tile ("Vedder", "____ Hall",1);
+        Tile swartz = new Tile ("Swartz", "____ Hall",1);
+        board.selected.add(roberts);
+        board.selected.add(vedder);
+        board.selected.add(swartz);
+        board.selected.add(larrison);
+
 
         board.checkSelected();
         ArrayList<Tile> firstRow = board.getWords().get(0);
-        System.out.println(board);
+
+
+        assertTrue(firstRow.contains(roberts));
+        assertTrue(firstRow.contains(vedder));
+        assertTrue(firstRow.contains(larrison));
+        assertTrue(firstRow.contains(swartz));
     }
 
     @Test

@@ -36,126 +36,149 @@ public class Board {
     /**
      * 4x4 array of tiles containing words to be guessed
      */
-    private ArrayList<ArrayList<Tile>> words;
+    ArrayList<ArrayList<Tile>> words;
 
     /**
      * Array of selected words
      */
-    private ArrayList<Tile> selected;
+    ArrayList<Tile> selected;
 
-    /**
-     * getter for selected tiles
-     * @return
-     */
-    public ArrayList<Tile> getSelected() {
-        return selected;
-    }
+
 
     /**
      * Initialize board according to level
+     *
      * @param level difficulty of
      */
-    public Board(Level level){
+    public Board(Level level) {
         switch (level) {
             case EASY: {
                 this.words = GridMaker.makeEasyModeBoard();
+                //System.out.println(this.words);
                 break;
             }
             case MEDIUM: {
-                this.words =  GridMaker.makeMediumModeBoard();
+                this.words = GridMaker.makeMediumModeBoard();
                 break;
             }
             case HARD: {
-                this.words =  GridMaker.makeHardModeBoard();
+                this.words = GridMaker.makeHardModeBoard();
                 break;
             }
             case EXTREME: {
-                this.words =  GridMaker.makeExtremeModeBoard();
+                this.words = GridMaker.makeExtremeModeBoard();
                 break;
             }
         }
-        shuffleBoard();
+        //shuffleBoard();
+        //System.out.println(this.words);
         selected = new ArrayList<>();
     }
 
     /**
      * Selects a tile on the board
+     *
      * @param row
      * @param col
      */
     public void select(int row, int col) {
+        //System.out.println(this.words);
         Tile tile = this.words.get(row).get(col);
-        if(selected.contains(tile)){
+        if (selected.contains(tile)) {
             selected.remove(tile);
-            tile.select();
-        }
-        else if(this.selected.size() < 4){
+        } else {
             selected.add(tile);
-            tile.select();
         }
+        tile.select();
     }
 
     /**
      * Check if selected tiles are in correct category
+     *
      * @return 0 if its incorrect, 1 if there are 3 of the same category, and 2 if there are all 4
      */
     public int checkSelected() {
         // see if categories all match
-
-        Map<Integer, Integer> guessesPer = Map.of(
-                1, 0,
-                2, 0,
-                3, 0,
-                4, 0
-        );
+        Map<Integer, Integer> guessesPer = new HashMap<>(); // Mutable map
+        guessesPer.put(1, 0);
+        guessesPer.put(2, 0);
+        guessesPer.put(3, 0);
+        guessesPer.put(4, 0);
 
         //String choosenCategory = this.selected.get(0).getCategory();
-        for (int i = 0; i < this.selected.size(); i++) {
+        for (int i = 0; i < 4; i++) {
             guessesPer.put(this.selected.get(i).getDifficulty(), guessesPer.get(this.selected.get(i).getDifficulty()) + 1);
         }
 
         int keyWithMaxValue = 0;
         Integer maxValue = 0;
 
-        for (int i = 0; i < 4; i++) {
-            if (guessesPer.get(i) > maxValue) {
-                keyWithMaxValue = i;
-            }
-        }
-            if (guessesPer.get(keyWithMaxValue) < 3) {
-                return 0;
-            } else if (guessesPer.get(keyWithMaxValue) == 3) {
-                return 1;
-            } else {
-                adjustBoard();
-                return 2;
+        for (int i = 1; i <= 4; i++) {
+            int currentCount = guessesPer.get(i);
+            if (currentCount > maxValue) {
+                maxValue = currentCount;  // Update maxValue to the current highest count
+                keyWithMaxValue = i;      // Track the key with the highest count
             }
         }
 
+        // Return based on the max count found
+        if (maxValue < 3) {
+            return 0;  // Less than three of any category
+        } else if (maxValue == 3) {
+            return 1;  // Exactly three of one category
+        } else {
+            adjustBoard();  // Assuming adjustBoard() makes necessary modifications based on this check
+            return 2;       // Four of one category
+        }
+    }
 
 
     /**
      * After a correct guess adjust the board
+     * Very similar logic to the shuffleBoard except the first row is now fixed.
      */
     public void adjustBoard() {
 
         ArrayList<ArrayList<Tile>> newList = new ArrayList<>();
-        newList.add(new ArrayList<>());
-        int currIndex = 0;
+        ArrayList<Tile> bigList = new ArrayList<>();
+        ArrayList<Tile> firstRow = new ArrayList<>();
+        ArrayList<Tile> secondRow = new ArrayList<>();
+        ArrayList<Tile> thirdRow = new ArrayList<>();
+        ArrayList<Tile> fourthRow = new ArrayList<>();
+        for (Tile tile : selected) {
+            firstRow.add(tile);
+        }
 
-        for(ArrayList<Tile> list: words) {
-            for(Tile tile : list) {
-                if(!selected.contains(tile)){
-                    newList.get(currIndex).add(tile);
-                    if(newList.get(currIndex).size() == 4) {
-                        currIndex++;
-                        newList.add(new ArrayList<>());
-                    }
+
+        for (ArrayList<Tile> list : words) {
+            for (Tile tile : list) {
+                //System.out.println(tile.getWord());
+                if (!selected.contains(tile)) {
+                    bigList.add(tile);
                 }
             }
         }
-        this.words = newList;
+        Collections.shuffle((bigList));
+
+        for (int i = 4; i <= 7; i++) {
+            secondRow.add(bigList.get(i));
+        }
+        for (int i = 8; i <= 11; i++) {
+            thirdRow.add(bigList.get(i));
+        }
+        for (int i = 12; i <= 15; i++) {
+            fourthRow.add(bigList.get(i));
+        }
+
+        words.clear();
+        words.add(firstRow);
+        words.add(secondRow);
+        words.add(thirdRow);
+        words.add(fourthRow);
     }
+
+
+
 
 
     /**
@@ -190,12 +213,11 @@ public class Board {
             fourthRow.add(allTiles.get(i));
         }
 
-        words = new ArrayList<>();
+        words.clear();
         words.add(firstRow);
         words.add(secondRow);
         words.add(thirdRow);
         words.add(fourthRow);
-
 
 
     }
@@ -204,23 +226,7 @@ public class Board {
      * @return size of selected list
      */
     public int getNumSelected(){
+        //System.out.println(selected.size());
         return selected.size();
-    }
-
-
-    /**
-     * Returns string representation of board
-     * @return
-     */
-    public String toString(){
-        String allTiles = "";
-        for(ArrayList<Tile> list: this.words){
-            for(Tile tile: list) {
-                allTiles += tile.toString();
-                allTiles += " ";
-            }
-            allTiles += "\n";
-        }
-        return allTiles;
     }
 }
