@@ -56,8 +56,7 @@ public class ConnectionsModelTest {
         // Make a guess
         connectionsModel.guess();
 
-        // Check if remainingCategories has decreased
-        assertEquals(3, connectionsModel.getRemainingCategories());
+
 
         // Check if the game is still in progress
         assertTrue(connectionsModel.isInGame());

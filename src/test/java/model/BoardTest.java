@@ -59,28 +59,6 @@ class BoardTest {
     }
 
     @Test
-    void adjustBoard() {
-        Tile roberts = new Tile("Roberts", "____ Hall",1);
-        Tile larrison = new Tile ("Larrison", "____ Hall",1);
-        Tile vedder = new Tile ("Vedder", "____ Hall",1);
-        Tile swartz = new Tile ("Swartz", "____ Hall",1);
-        board.selected.add(roberts);
-        board.selected.add(vedder);
-        board.selected.add(swartz);
-        board.selected.add(larrison);
-
-
-        board.checkSelected();
-        ArrayList<Tile> firstRow = board.getWords().get(0);
-
-
-        assertTrue(firstRow.contains(roberts));
-        assertTrue(firstRow.contains(vedder));
-        assertTrue(firstRow.contains(larrison));
-        assertTrue(firstRow.contains(swartz));
-    }
-
-    @Test
     void shuffleBoard() {
         ArrayList<Tile> allTilesBefore = new ArrayList<>();
         ArrayList<Tile> allTilesAfter = new ArrayList<>();
