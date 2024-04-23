@@ -22,6 +22,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -33,6 +34,7 @@ import model.ConnectionsModel;
 import model.Tile;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class ConnectionsView {
 
@@ -57,6 +59,7 @@ public class ConnectionsView {
     public Button btnEasy, btnMedium, btnHard, btnExtreme;
 
     public ArrayList<ArrayList<StackPane>> listOfSelectableWords;
+    private Button checkSelectedButton;
 
 
     /**
@@ -141,7 +144,7 @@ public class ConnectionsView {
         for(int i = 0; i < theModel.getBoard().getWords().size(); i++){
             this.listOfSelectableWords.add(new ArrayList<>());
             for(int j = 0; j < theModel.getBoard().getWords().get(i).size(); j++) {
-                Rectangle rect = new Rectangle(100,100);
+                Rectangle rect = new Rectangle(100,60);
                 Text text = new Text(this.theModel.getBoard().getWords().get(i).get(j).getWord());
                 text.setTextAlignment(TextAlignment.CENTER);
                 StackPane newWordTile = new StackPane(rect, text);
@@ -149,9 +152,51 @@ public class ConnectionsView {
                 listOfSelectableWords.get(i).add(newWordTile);
             }
         }
+        checkSelectedButton = new Button("Submit");
+        checkSelectedButton.setOnAction(e -> {
+            int result = theModel.getBoard().checkSelected();
+            if (result == 2) {
+                reLayoutGamePlayRoot();
+            }
+        });
+        this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
+
         gamePlayRoot.setPadding(new Insets(10));
         gamePlayRoot.setHgap(10);
         gamePlayRoot.setVgap(10);
 
+    }
+
+    public void reLayoutGamePlayRoot() {
+        this.gamePlayRoot.getChildren().clear();
+        for(int i = 0; i < theModel.getBoard().getCategoriesGuessed(); i++ ) {
+            String category = theModel.getBoard().getGuessedCategories().get(i);
+            Rectangle catRect = new Rectangle(440, 60);
+            catRect.setFill(Color.GREEN);
+            Text text = new Text(category);
+            text.setTextAlignment(TextAlignment.CENTER);
+            StackPane catLbl = new StackPane(catRect, text);
+            gamePlayRoot.add(catLbl, 2, 0);
+        }
+
+        ArrayList<ArrayList<StackPane>> newList = new ArrayList<>();
+        newList.add(new ArrayList<>());
+        for(int i = 0; i < theModel.getBoard().getWords().size(); i++) {
+            for (int j = 0; j < theModel.getBoard().getWords().get(i).size(); j++) {
+                if(!theModel.getBoard().getWords().get(i).get(j).isSelected()) {
+                    if(newList.get(newList.size() - 1).size() == 4) {
+                        newList.add(new ArrayList<>());
+                    }
+                    newList.get(newList.size() - 1).add(listOfSelectableWords.get(i).get(j));
+                }
+            }
+        }
+        listOfSelectableWords = newList;
+        for(int i = 0; i < listOfSelectableWords.size(); i++){
+            for(int j = 0; j < 4; j++) {
+                gamePlayRoot.add(listOfSelectableWords.get(i).get(j), j , i +  1);
+            }
+        }
+        this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
     }
 }

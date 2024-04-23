@@ -19,6 +19,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TreeMap;
 
 /**
  * Class that models playing Connections
@@ -35,6 +38,13 @@ public class ConnectionsModel {
      */
     private Board board;
 
+    public ArrayList<String> getGuessedCategories() {
+        return guessedCategories;
+    }
+
+    public int getNumGuessedCategories() {
+        return guessedCategories.size();
+    }
 
     /**
      * Kind of like a state-check
@@ -56,6 +66,8 @@ public class ConnectionsModel {
      */
     private final int MAX_GUESSES = 4;
 
+    private ArrayList<String> guessedCategories;
+
     /**
      * ConnectionsModel constructor, initializes variables
      */
@@ -63,6 +75,7 @@ public class ConnectionsModel {
         guesses = 0;
         inGame = false;
         remainingCategories = 4;
+        guessedCategories = new ArrayList<>();
 
     }
 
@@ -100,6 +113,7 @@ public class ConnectionsModel {
             // Decrease remaining categories, reset if win
             else {
                 remainingCategories--;
+                addGuessedCategory();
                 if (remainingCategories == 0) {
                     reset();
                 }
@@ -107,6 +121,11 @@ public class ConnectionsModel {
             }
         }
         return 0;
+    }
+
+    private void addGuessedCategory() {
+        guessedCategories.add(board.selected.get(0).getCategory());
+        board.clearSelected();
     }
 
 

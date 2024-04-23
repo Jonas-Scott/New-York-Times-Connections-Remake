@@ -63,7 +63,7 @@ public class Tile {
         this.selected = new SimpleBooleanProperty(false);
         this.difficulty = difficulty;
         this.selectedColor = Color.LAWNGREEN;
-        this.unselectedColor = Color.GRAY;
+        this.unselectedColor = Color.ANTIQUEWHITE;
         this.currentColor = new SimpleObjectProperty<>();
         this.currentColor.set(unselectedColor);
     }

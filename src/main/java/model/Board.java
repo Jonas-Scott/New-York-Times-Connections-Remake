@@ -29,6 +29,8 @@ import java.util.Map;
  */
 public class Board {
 
+    private ArrayList<String> guessedCategories;
+
     public ArrayList<ArrayList<Tile>> getWords() {
         return words;
     }
@@ -42,6 +44,8 @@ public class Board {
      * Array of selected words
      */
     ArrayList<Tile> selected;
+
+    int categoriesGuessed = 0;
 
 
 
@@ -70,7 +74,8 @@ public class Board {
                 break;
             }
         }
-        //shuffleBoard();
+        guessedCategories = new ArrayList<>();
+        shuffleBoard();
         //System.out.println(this.words);
         selected = new ArrayList<>();
     }
@@ -132,7 +137,9 @@ public class Board {
         } else if (maxValue == 3) {
             return 1;  // Exactly three of one category
         } else {
-            adjustBoard();  // Assuming adjustBoard() makes necessary modifications based on this check
+            categoriesGuessed++;
+            addGuessedCategory();
+            //adjustBoard();  // Assuming adjustBoard() makes necessary modifications based on this check
             return 2;       // Four of one category
         }
     }
@@ -146,40 +153,29 @@ public class Board {
 
         ArrayList<ArrayList<Tile>> newList = new ArrayList<>();
         ArrayList<Tile> bigList = new ArrayList<>();
-        ArrayList<Tile> firstRow = new ArrayList<>();
-        ArrayList<Tile> secondRow = new ArrayList<>();
-        ArrayList<Tile> thirdRow = new ArrayList<>();
-        ArrayList<Tile> fourthRow = new ArrayList<>();
-        for (Tile tile : selected) {
-            firstRow.add(tile);
-        }
 
 
         for (ArrayList<Tile> list : words) {
             for (Tile tile : list) {
-                //System.out.println(tile.getWord());
                 if (!selected.contains(tile)) {
                     bigList.add(tile);
                 }
             }
         }
         Collections.shuffle((bigList));
-
-        for (int i = 4; i <= 7; i++) {
-            secondRow.add(bigList.get(i));
+        for(int i = 0; i < bigList.size(); i++) {
+            if(i%4 == 0) {
+                newList.add(new ArrayList<Tile>());
+            }
+            newList.get(newList.size() - 1).add(bigList.get(i));
         }
-        for (int i = 8; i <= 11; i++) {
-            thirdRow.add(bigList.get(i));
+        this.words = newList;
+        for(ArrayList<Tile> list: this.words ) {
+            for(Tile tile : list) {
+                System.out.print(tile + " ");
+            }
+            System.out.println();
         }
-        for (int i = 12; i <= 15; i++) {
-            fourthRow.add(bigList.get(i));
-        }
-
-        words.clear();
-        words.add(firstRow);
-        words.add(secondRow);
-        words.add(thirdRow);
-        words.add(fourthRow);
     }
 
 
@@ -233,5 +229,22 @@ public class Board {
     public int getNumSelected(){
         //System.out.println(selected.size());
         return selected.size();
+    }
+
+    public void clearSelected() {
+        this.selected.clear();
+    }
+
+    private void addGuessedCategory() {
+        guessedCategories.add(selected.get(0).getCategory());
+        selected.clear();
+    }
+
+    public ArrayList<String> getGuessedCategories() {
+        return guessedCategories;
+    }
+
+    public int getCategoriesGuessed() {
+        return categoriesGuessed;
     }
 }
