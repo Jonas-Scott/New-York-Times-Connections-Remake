@@ -87,11 +87,12 @@ public class Board {
         Tile tile = this.words.get(row).get(col);
         if(selected.contains(tile)){
             selected.remove(tile);
+            tile.select();
         }
-        else {
+        else if(this.selected.size() < 4){
             selected.add(tile);
+            tile.select();
         }
-        tile.select();
     }
 
     /**

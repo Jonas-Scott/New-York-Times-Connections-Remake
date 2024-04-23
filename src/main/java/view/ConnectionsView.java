@@ -18,12 +18,13 @@
  */
 package view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -43,7 +44,7 @@ public class ConnectionsView {
     /**
      * Root object for the Connection game screen
      */
-    private TilePane gamePlayRoot;
+    private GridPane gamePlayRoot;
 
     /**
      * Root object for the home screen
@@ -54,6 +55,8 @@ public class ConnectionsView {
      * All of our buttons
      */
     public Button btnEasy, btnMedium, btnHard, btnExtreme;
+
+    public ArrayList<ArrayList<StackPane>> listOfSelectableWords;
 
 
     /**
@@ -67,7 +70,7 @@ public class ConnectionsView {
         initSceneGraph();
         initStyling();
 
-        gamePlayRoot = new TilePane();
+        gamePlayRoot = new GridPane();
 
     }
 
@@ -125,5 +128,30 @@ public class ConnectionsView {
 
     public Parent getGamePlayRoot() {
         return gamePlayRoot;
+    }
+
+    public ArrayList<ArrayList<StackPane>> getListOfSelectableWords() {
+        return listOfSelectableWords;
+    }
+
+    public void initGamePlayRoot() {
+
+        listOfSelectableWords = new ArrayList<>();
+
+        for(int i = 0; i < theModel.getBoard().getWords().size(); i++){
+            this.listOfSelectableWords.add(new ArrayList<>());
+            for(int j = 0; j < theModel.getBoard().getWords().get(i).size(); j++) {
+                Rectangle rect = new Rectangle(100,100);
+                Text text = new Text(this.theModel.getBoard().getWords().get(i).get(j).getWord());
+                text.setTextAlignment(TextAlignment.CENTER);
+                StackPane newWordTile = new StackPane(rect, text);
+                this.gamePlayRoot.add(newWordTile, i, j);
+                listOfSelectableWords.get(i).add(newWordTile);
+            }
+        }
+        gamePlayRoot.setPadding(new Insets(10));
+        gamePlayRoot.setHgap(10);
+        gamePlayRoot.setVgap(10);
+
     }
 }

@@ -20,9 +20,16 @@ package view;
 
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.ConnectionsModel;
 import model.Level;
+import model.Tile;
+
+import java.util.ArrayList;
 
 public class ConnectionsController {
     private ConnectionsModel theModel;
@@ -67,12 +74,32 @@ public class ConnectionsController {
         theModel.chooseLevel(level);
 
         // Create the game board scene
+        theView.initGamePlayRoot();
         Scene gameBoardScene = new Scene(theView.getGamePlayRoot());
+
+        initGameBoardBindings();
 
         // Set the scene in the primary stage
         primaryStage.setScene(gameBoardScene);
         primaryStage.setTitle("Connections");
         primaryStage.show();
+    }
+
+    private void initGameBoardBindings() {
+
+        for(int i = 0; i < theView.getListOfSelectableWords().size(); i++){
+            for(int j = 0; j < theView.getListOfSelectableWords().get(i).size(); j++) {
+                final int row = i;
+                final int column = j;
+                Tile tile = theModel.getBoard().getWords().get(i).get(j);
+                StackPane wordTile = theView.getListOfSelectableWords().get(i).get(j);
+                Rectangle rect = (Rectangle) wordTile.getChildren().get(0);
+                rect.fillProperty().bind(tile.currentColorProperty());
+                wordTile.onMouseClickedProperty().setValue(event -> theModel.getBoard().select(row, column));
+
+
+            }
+        }
     }
 
 }

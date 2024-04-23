@@ -18,6 +18,10 @@
  */
 package model;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.paint.Color;
+
 /**
  * Tile class, makes up the 16 words in Connections
  * @author Casey King
@@ -28,16 +32,24 @@ public class Tile {
     private String word;
 
     /** Is the tile selected? */
-    private boolean selected;
+    private SimpleBooleanProperty selected;
 
     /** Category */
     private String category;
+
+    private Color selectedColor;
+
+    private Color unselectedColor;
 
 
     /**
      * This will help us later, as far as determining what our color should be.
      */
     private int difficulty;
+
+
+    private SimpleObjectProperty<Color> currentColor;
+
 
     /**
      * Tile constructor, initializes attributes
@@ -48,8 +60,12 @@ public class Tile {
     public Tile(String word, String category, int difficulty){
         this.word = word;
         this.category = category;
-        this.selected = false;
+        this.selected = new SimpleBooleanProperty(false);
         this.difficulty = difficulty;
+        this.selectedColor = Color.LAWNGREEN;
+        this.unselectedColor = Color.GRAY;
+        this.currentColor = new SimpleObjectProperty<>();
+        this.currentColor.set(unselectedColor);
     }
 
     public int getDifficulty() {
@@ -65,12 +81,11 @@ public class Tile {
         return word;
     }
 
-    /**
-     * Return if tile is selected
-     * @return
-     * @author Casey King
-     */
     public boolean isSelected() {
+        return selected.get();
+    }
+
+    public SimpleBooleanProperty selectedProperty() {
         return selected;
     }
 
@@ -83,12 +98,26 @@ public class Tile {
         return category;
     }
 
+    public Color getCurrentColor() {
+        return currentColor.get();
+    }
+
+    public SimpleObjectProperty<Color> currentColorProperty() {
+        return currentColor;
+    }
+
     /**
      * Select or unselect tile
      * @author Casey King
      */
     public void select(){
-        this.selected = !this.selected;
+        this.selected.set(!this.isSelected());
+        if(this.isSelected()){
+            this.currentColor.set(selectedColor);
+        }
+        else {
+            this.currentColor.set(unselectedColor);
+        }
     }
 
     /**
