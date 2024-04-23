@@ -72,10 +72,7 @@ class BoardTest {
 
         board.checkSelected();
         ArrayList<Tile> firstRow = board.getWords().get(0);
-//        System.out.println(firstRow.get(0).getWord());
-//        System.out.println(firstRow.get(1).getWord());
-//        System.out.println(firstRow.get(2).getWord());
-//        System.out.println(firstRow.get(3).getWord());
+
 
         assertTrue(firstRow.contains(roberts));
         assertTrue(firstRow.contains(vedder));

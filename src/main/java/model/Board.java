@@ -43,11 +43,14 @@ public class Board {
      */
     ArrayList<Tile> selected;
 
+
+
     /**
      * Initialize board according to level
+     *
      * @param level difficulty of
      */
-    public Board(Level level){
+    public Board(Level level) {
         switch (level) {
             case EASY: {
                 this.words = GridMaker.makeEasyModeBoard();
@@ -55,15 +58,15 @@ public class Board {
                 break;
             }
             case MEDIUM: {
-                this.words =  GridMaker.makeMediumModeBoard();
+                this.words = GridMaker.makeMediumModeBoard();
                 break;
             }
             case HARD: {
-                this.words =  GridMaker.makeHardModeBoard();
+                this.words = GridMaker.makeHardModeBoard();
                 break;
             }
             case EXTREME: {
-                this.words =  GridMaker.makeExtremeModeBoard();
+                this.words = GridMaker.makeExtremeModeBoard();
                 break;
             }
         }
@@ -74,16 +77,16 @@ public class Board {
 
     /**
      * Selects a tile on the board
+     *
      * @param row
      * @param col
      */
     public void select(int row, int col) {
         //System.out.println(this.words);
         Tile tile = this.words.get(row).get(col);
-        if(selected.contains(tile)){
+        if (selected.contains(tile)) {
             selected.remove(tile);
-        }
-        else {
+        } else {
             selected.add(tile);
         }
         tile.select();
@@ -91,6 +94,7 @@ public class Board {
 
     /**
      * Check if selected tiles are in correct category
+     *
      * @return 0 if its incorrect, 1 if there are 3 of the same category, and 2 if there are all 4
      */
     public int checkSelected() {
@@ -129,32 +133,52 @@ public class Board {
     }
 
 
-
     /**
      * After a correct guess adjust the board
+     * Very similar logic to the shuffleBoard except the first row is now fixed.
      */
     public void adjustBoard() {
 
         ArrayList<ArrayList<Tile>> newList = new ArrayList<>();
-        newList.add(new ArrayList<>());
-        int currIndex = 0;
+        ArrayList<Tile> bigList = new ArrayList<>();
+        ArrayList<Tile> firstRow = new ArrayList<>();
+        ArrayList<Tile> secondRow = new ArrayList<>();
+        ArrayList<Tile> thirdRow = new ArrayList<>();
+        ArrayList<Tile> fourthRow = new ArrayList<>();
+        for (Tile tile : selected) {
+            firstRow.add(tile);
+        }
 
-        for(ArrayList<Tile> list: words) {
-            for(Tile tile : selected) {
+
+        for (ArrayList<Tile> list : words) {
+            for (Tile tile : list) {
                 //System.out.println(tile.getWord());
-                if(list.contains(tile)){
-                   list.remove(tile);
-                }
-                else {
-                    newList.get(currIndex).add(tile);
-                    if(newList.size() == 4) {
-                        currIndex++;
-                        newList.add(new ArrayList<>());
-                    }
+                if (!selected.contains(tile)) {
+                    bigList.add(tile);
                 }
             }
         }
+        Collections.shuffle((bigList));
+
+        for (int i = 4; i <= 7; i++) {
+            secondRow.add(bigList.get(i));
+        }
+        for (int i = 8; i <= 11; i++) {
+            thirdRow.add(bigList.get(i));
+        }
+        for (int i = 12; i <= 15; i++) {
+            fourthRow.add(bigList.get(i));
+        }
+
+        words.clear();
+        words.add(firstRow);
+        words.add(secondRow);
+        words.add(thirdRow);
+        words.add(fourthRow);
     }
+
+
+
 
 
     /**
@@ -176,17 +200,17 @@ public class Board {
         }
         Collections.shuffle(allTiles);
 
-        for (int i = 0; i == 3; i++){
+        for (int i = 0; i <= 3; i++){
             firstRow.add(allTiles.get(i));
         }
-        for (int i = 4; i == 7; i++){
-            firstRow.add(allTiles.get(i));
+        for (int i = 4; i <= 7; i++){
+            secondRow.add(allTiles.get(i));
         }
-        for (int i = 8; i == 11; i++){
-            firstRow.add(allTiles.get(i));
+        for (int i = 8; i <= 11; i++){
+            thirdRow.add(allTiles.get(i));
         }
-        for (int i = 12; i == 15; i++){
-            firstRow.add(allTiles.get(i));
+        for (int i = 12; i <= 15; i++){
+            fourthRow.add(allTiles.get(i));
         }
 
         words.clear();
