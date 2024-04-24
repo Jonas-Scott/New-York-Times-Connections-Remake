@@ -236,7 +236,9 @@ public class Board {
     }
 
     private void addGuessedCategory() {
+        //System.out.println(selected.get(0).getCategory());
         guessedCategories.add(selected.get(0).getCategory());
+        //System.out.println(guessedCategories);
         selected.clear();
     }
 
