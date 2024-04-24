@@ -138,7 +138,7 @@ public class Board {
             return 1;  // Exactly three of one category
         } else {
             categoriesGuessed++;
-            addGuessedCategory();
+            //addGuessedCategory();
             //adjustBoard();  // Assuming adjustBoard() makes necessary modifications based on this check
             return 2;       // Four of one category
         }
