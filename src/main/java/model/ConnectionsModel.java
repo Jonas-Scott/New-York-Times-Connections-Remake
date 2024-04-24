@@ -125,7 +125,6 @@ public class ConnectionsModel {
 
     private void addGuessedCategory() {
         guessedCategories.add(board.selected.get(0).getCategory());
-        board.clearSelected();
     }
 
 
