@@ -116,7 +116,7 @@ public class ConnectionsModel {
             // Decrease remaining categories, reset if win
             else {
                 remainingCategories--;
-                //addGuessedCategory();
+                board.addGuessedCategory();
                 if (remainingCategories == 0) {
                     reset();
                     return 3;
@@ -127,10 +127,11 @@ public class ConnectionsModel {
         return 0;
     }
 
-    private void addGuessedCategory() {
-        guessedCategories.add(board.selected.get(0).getCategory());
-        board.clearSelected();
-    }
+//    private void addGuessedCategory() {
+//        guessedCategories.add(board.selected.get(0).getCategory());
+//        System.out.println(guessedCategories);
+//        board.clearSelected();
+//    }
 
 
     /**

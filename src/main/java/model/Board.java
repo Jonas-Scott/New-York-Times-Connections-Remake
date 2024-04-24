@@ -235,11 +235,12 @@ public class Board {
         this.selected.clear();
     }
 
-    private void addGuessedCategory() {
+    public void addGuessedCategory() {
         //System.out.println(selected.get(0).getCategory());
         guessedCategories.add(selected.get(0).getCategory());
-        //System.out.println(guessedCategories);
+        System.out.println(guessedCategories);
         selected.clear();
+        System.out.println("cleared");
     }
 
     public ArrayList<String> getGuessedCategories() {
