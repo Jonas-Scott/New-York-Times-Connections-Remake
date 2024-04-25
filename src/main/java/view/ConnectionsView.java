@@ -18,6 +18,10 @@
  */
 package view;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
+import javafx.collections.ObservableArray;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -25,11 +29,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 import model.ConnectionsModel;
 import model.Tile;
 
@@ -62,6 +68,9 @@ public class ConnectionsView {
     private Button checkSelectedButton;
 
     public ArrayList<StackPane> listOfCategoriesGuessed;
+    private HBox ballDisplay;
+    private Label notificationLabel; // The notification label
+
 
 
     /**
@@ -93,6 +102,14 @@ public class ConnectionsView {
         title.setTextAlignment(TextAlignment.CENTER);
 
         this.homeScreenRoot.getChildren().add(title);
+        addButtons();
+
+    }
+
+
+
+
+    private void addButtons() {
         btnEasy = new Button("Easy");
         btnEasy.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         btnMedium = new Button("Medium");
@@ -103,7 +120,6 @@ public class ConnectionsView {
         btnExtreme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         this.homeScreenRoot.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExtreme);
-
     }
 
     // This might be completely unnecessary we could maybe delete it since we are styling in a CSS file anyway
@@ -138,20 +154,54 @@ public class ConnectionsView {
             listOfSelectableWords.add(newWordTile);
             yPos++;
         }
+
+        ballDisplay = new HBox(10);
+        ballDisplay.setAlignment(Pos.BOTTOM_LEFT);
+
+        addBallCounterToTheBottom(theModel.userFeedback());
         checkSelectedButton = new Button("Submit");
         checkSelectedButton.setOnAction(e -> {
             int result = theModel.guess();
-            if (result == 2) {
-                reLayoutGamePlayRoot();
-                theModel.getBoard().clearSelected();
-            }
+
+            runTheCommandClick(result);
+
+
         });
+        this.gamePlayRoot.add(ballDisplay,1,5);
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
 
         gamePlayRoot.setPadding(new Insets(10));
         gamePlayRoot.setHgap(10);
         gamePlayRoot.setVgap(10);
 
+    }
+
+
+
+
+    private void runTheCommandClick(int result) {
+        if (result == 1){
+            initNotificationLabel(14);
+            oneAway("One Away!");
+        }
+        else if (result == 2) {
+            reLayoutGamePlayRoot();
+            theModel.getBoard().clearSelected();
+        }
+        else if (result == 3){
+            // game is lost
+            // make it so the remaining categories are placed as should be
+            initLosingScreen();
+            initNotificationLabel(30);
+            oneAway("You lost!");
+        }
+        else if (result == 4){
+            initNotificationLabel(30);
+            oneAway("You won");
+        }
+
+        addBallCounterToTheBottom(theModel.userFeedback());
+        this.gamePlayRoot.add(ballDisplay,1,5);
     }
 
     public void reLayoutGamePlayRoot() {
@@ -205,6 +255,19 @@ public class ConnectionsView {
             yPos++;
         }
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
+
+    }
+
+
+    public void addBallCounterToTheBottom(int count){
+        ballDisplay.getChildren().clear();
+        System.out.println(count);
+        for (int i = 0; i < count; i++) {
+            Circle circle = new Circle(10, Color.RED);  // Create a new circle (ball) with radius 10
+            ballDisplay.getChildren().add(circle);  // Add the circle to the display box
+        }
+
+
     }
 
     public boolean checkIfSelected(String word) {
@@ -215,4 +278,38 @@ public class ConnectionsView {
         }
         return false;
     }
+
+    /**
+     * screen that comes up when we lose
+     */
+    public void initLosingScreen(){
+
+    }
+    public void oneAway(String message) {
+        notificationLabel.setText(message);
+        notificationLabel.setVisible(true);
+        notificationLabel.setOpacity(0);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), notificationLabel);
+        fadeIn.setToValue(1);  // Fade in to fully opaque
+
+        PauseTransition stayVisible = new PauseTransition(Duration.seconds(2));  // Stay visible for 2 seconds
+
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), notificationLabel);
+        fadeOut.setToValue(0);  // Fade out to fully transparent
+
+        SequentialTransition sequence = new SequentialTransition(fadeIn, stayVisible, fadeOut);
+        sequence.setOnFinished(event -> notificationLabel.setVisible(false));  // Hide after animation
+        sequence.play();
+    }
+    private void initNotificationLabel(int size) {
+        notificationLabel = new Label();
+        notificationLabel.setTextFill(Color.BLACK);
+        notificationLabel.setFont(Font.font("Arial", FontWeight.BOLD, size));
+        notificationLabel.setStyle("-fx-background-color: lightgrey; -fx-padding: 10;");
+        notificationLabel.setOpacity(0);  // Start fully transparent
+        notificationLabel.setVisible(false);  // Start hidden
+        this.gamePlayRoot.add(notificationLabel, 1,2);  // Adjust position as needed
+    }
+
 }

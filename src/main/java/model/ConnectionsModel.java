@@ -93,7 +93,7 @@ public class ConnectionsModel {
      * Check if selected tiles are a category
      *
      * @return 0 if we have nothing right, 1 if we are 1 guess away,
-     * 2 if we got a correct guess, 3 if the game is over
+     * 2 if we got a correct guess, 3 if the game is lost, 4 if it is won
      */
     public int guess() {
         // Only guess if 4 tiles selected
@@ -122,7 +122,7 @@ public class ConnectionsModel {
                 if (remainingCategories == 0) {
                     reset();
                     System.out.println("Game won");
-                    return 3;
+                    return 4;
                 }
                 System.out.println("Correct Guess");
                 return 2;
