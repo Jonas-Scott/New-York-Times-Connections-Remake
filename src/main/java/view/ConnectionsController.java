@@ -76,6 +76,9 @@ public class ConnectionsController {
         // Create the game board scene
         theView.initGamePlayRoot();
         Scene gameBoardScene = new Scene(theView.getGamePlayRoot());
+        gameBoardScene.getStylesheets().add(
+                getClass().getResource("/GameScreen.css")
+                        .toExternalForm());
 
         initGameBoardBindings();
 
