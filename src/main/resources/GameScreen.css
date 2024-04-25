@@ -1,0 +1,16 @@
+/*
+ * CSS file for the game screen
+ */
+
+.root {
+    -fx-spacing: 15;
+    -fx-padding: 15;
+    -fx-alignment: Center;
+    -fx-background-color: LightBlue;
+    -fx-min-width: 1000;
+    -fx-min-height: 800;
+}
+
+.button {
+    -fx-alignment: CENTER;
+}

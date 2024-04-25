@@ -82,7 +82,6 @@ public class ConnectionsView {
         this.theModel = theModel;
 
         initSceneGraph();
-        initStyling();
 
         gamePlayRoot = new GridPane();
         listOfCategoriesGuessed = new ArrayList<>();
@@ -91,6 +90,7 @@ public class ConnectionsView {
 
     /**
      * Init method to initialize all objects in the scene graph
+     * adding the title as well as the buttons for selecting difficulty
      *
      * @author - Jonas Scott
      */
@@ -98,8 +98,7 @@ public class ConnectionsView {
         this.homeScreenRoot = new VBox();
         this.homeScreenRoot.setAlignment(Pos.CENTER);
         Text title = new Text("Welcome to Connections \n Select your Difficulty");
-        title.setFont(Font.font("verdana", FontWeight.BOLD, 50));
-        title.setTextAlignment(TextAlignment.CENTER);
+        title.getStyleClass().add("title");
 
         this.homeScreenRoot.getChildren().add(title);
         addButtons();
@@ -111,19 +110,14 @@ public class ConnectionsView {
 
     private void addButtons() {
         btnEasy = new Button("Easy");
-        btnEasy.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
         btnMedium = new Button("Medium");
-        btnMedium.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
         btnHard = new Button("Hard");
-        btnHard.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
         btnExtreme = new Button("Extreme");
-        btnExtreme.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         this.homeScreenRoot.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExtreme);
-    }
-
-    // This might be completely unnecessary we could maybe delete it since we are styling in a CSS file anyway
-    private void initStyling() {
     }
 
     /**
@@ -133,10 +127,16 @@ public class ConnectionsView {
         return homeScreenRoot;
     }
 
+    /**
+     * Getter for the gamePlayRoot
+     */
     public Parent getGamePlayRoot() {
         return gamePlayRoot;
     }
 
+    /**
+     * Get the list of the still selectable words, used after a player gets the category right
+     */
     public ArrayList<StackPane> getListOfSelectableWords() {
         return listOfSelectableWords;
     }
@@ -225,11 +225,11 @@ public class ConnectionsView {
                 break;
             }
             case (3): {
-                catRect.setFill(Color.LIGHTBLUE);
+                catRect.setFill(Color.INDIANRED);
                 break;
             }
             case (4): {
-                catRect.setFill(Color.PURPLE);
+                catRect.setFill(Color.MEDIUMPURPLE);
                 break;
             }
         }
