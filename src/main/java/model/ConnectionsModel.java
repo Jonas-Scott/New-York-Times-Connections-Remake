@@ -92,8 +92,7 @@ public class ConnectionsModel {
     /**
      * Check if selected tiles are a category
      *
-     * @return 0 if its an incorrect guess, 1 if we are 1 guess away, 2 if the guess is correct
-     * and 3 if we win or lose
+     * @return 1 if we are 1 guess away, 0 otherwise
      */
     public int guess() {
         // Only guess if 4 tiles selected
@@ -102,9 +101,7 @@ public class ConnectionsModel {
             if (board.checkSelected() != 2) {
                 guesses++;
                 if (guesses == MAX_GUESSES) {
-                    System.out.println("here");
                     reset();
-                    return 3;
                 }
                 if (board.checkSelected() == 1){
                     return 1;
@@ -116,12 +113,11 @@ public class ConnectionsModel {
             // Decrease remaining categories, reset if win
             else {
                 remainingCategories--;
-                //addGuessedCategory();
+                addGuessedCategory();
                 if (remainingCategories == 0) {
                     reset();
-                    return 3;
                 }
-                return 2;
+                return 0;
             }
         }
         return 0;

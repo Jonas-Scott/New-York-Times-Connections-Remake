@@ -140,23 +140,10 @@ public class ConnectionsView {
         }
         checkSelectedButton = new Button("Submit");
         checkSelectedButton.setOnAction(e -> {
-            int result = theModel.guess();
+            int result = theModel.getBoard().checkSelected();
             if (result == 2) {
                 reLayoutGamePlayRoot();
                 theModel.getBoard().clearSelected();
-            }
-            else if (result == 0) {
-                // call a method to lose one of the dots at the bottom
-                // using theModel.userFeedback
-            }
-            else if (result == 1){
-                // this means that we are 1 away
-                // call a method that briefly puts up a "one away" sign
-            }
-            else if (result == 3){
-                // game is over
-                // call a method so that the screen shows the finalized answer screen
-                // then gives the option to go to the original screen
             }
         });
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
