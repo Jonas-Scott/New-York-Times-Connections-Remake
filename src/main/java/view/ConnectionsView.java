@@ -32,12 +32,14 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import model.ConnectionsModel;
 import model.Tile;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class ConnectionsView {
 
+    private Stage primaryStage;
     /**
      * Model object for the ConnectionsModel Class
      */
@@ -62,6 +64,7 @@ public class ConnectionsView {
     private Button checkSelectedButton;
 
     public ArrayList<StackPane> listOfCategoriesGuessed;
+    private ConnectionsView theView;
 
 
     /**
@@ -69,8 +72,10 @@ public class ConnectionsView {
      *
      * @author - Jonas Scott
      */
-    public ConnectionsView(ConnectionsModel theModel) {
+    public ConnectionsView(ConnectionsModel theModel, Stage primaryStage) {
         this.theModel = theModel;
+        this.primaryStage = primaryStage;
+        this.theView = this;
 
         initSceneGraph();
 
@@ -147,6 +152,12 @@ public class ConnectionsView {
             }
         });
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
+
+        Button goBackButton = new Button("Go Back");
+        goBackButton.setOnAction(e -> {
+            this.primaryStage.setScene(theView.getHomeScreenRoot().getScene());
+        });
+        this.gamePlayRoot.add(goBackButton, 0, 5, 2, 1);
 
         gamePlayRoot.setPadding(new Insets(10));
         gamePlayRoot.setHgap(10);
