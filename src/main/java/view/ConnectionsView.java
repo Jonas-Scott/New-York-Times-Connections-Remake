@@ -140,7 +140,7 @@ public class ConnectionsView {
         }
         checkSelectedButton = new Button("Submit");
         checkSelectedButton.setOnAction(e -> {
-            int result = theModel.getBoard().checkSelected();
+            int result = theModel.guess();
             if (result == 2) {
                 reLayoutGamePlayRoot();
                 theModel.getBoard().clearSelected();
