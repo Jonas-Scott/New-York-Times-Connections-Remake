@@ -309,7 +309,7 @@ public class ConnectionsView {
         notificationLabel.setStyle("-fx-background-color: lightgrey; -fx-padding: 10;");
         notificationLabel.setOpacity(0);  // Start fully transparent
         notificationLabel.setVisible(false);  // Start hidden
-        this.gamePlayRoot.add(notificationLabel, 1,2);  // Adjust position as needed
+        this.gamePlayRoot.add(notificationLabel, 1,1);  // Adjust position as needed
     }
 
 }
