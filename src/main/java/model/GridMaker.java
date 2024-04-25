@@ -45,7 +45,7 @@ public class GridMaker {
      * Makes an easy mode board of Connections
      * @return 4x4 array of Tiles
      */
-    public static ArrayList<ArrayList<Tile>> makeEasyModeBoard() {
+    public static ArrayList<Tile> makeEasyModeBoard() {
         easyModeMap = new TreeMap<>();
 
         easyModeMap.put("____ Hall", new String[]{"Roberts", "Larison", "Vedder", "Swartz"});
@@ -60,7 +60,7 @@ public class GridMaker {
      * Makes a medium mode board of Connections
      * @return 4x4 array of Tiles
      */
-    public static ArrayList<ArrayList<Tile>> makeMediumModeBoard() {
+    public static ArrayList<Tile> makeMediumModeBoard() {
        mediumModeMap = new TreeMap<>();
 
         mediumModeMap.put("Tennis Terms", new String[]{"Love", "Ace", "Deuce", "Fault"});
@@ -75,7 +75,7 @@ public class GridMaker {
      * Makes a hard mode board of Connections
      * @return 4x4 array of Tiles
      */
-    public static ArrayList<ArrayList<Tile>> makeHardModeBoard() {
+    public static ArrayList<Tile> makeHardModeBoard() {
         hardModeMap = new TreeMap<>();
 
         hardModeMap.put("Legendary Athletes Last Names", new String[]{"Woods", "Ruth", "Bolt", "Phelps"});
@@ -90,7 +90,7 @@ public class GridMaker {
      * Makes an extreme mode board of Connections
      * @return 4x4 array of Tiles
      */
-    public static ArrayList<ArrayList<Tile>> makeExtremeModeBoard() {
+    public static ArrayList<Tile> makeExtremeModeBoard() {
         extremeModeMap = new TreeMap<>();
 
         extremeModeMap.put("Musicals", new String[]{"Cats", "Hamilton", "Wicked", "Chicago"});
@@ -103,16 +103,15 @@ public class GridMaker {
 
 
 
-    private static ArrayList<ArrayList<Tile>> makeBoard(TreeMap<String, String[]> mapOfWords) {
+    private static ArrayList<Tile> makeBoard(TreeMap<String, String[]> mapOfWords) {
 
-        ArrayList<ArrayList<Tile>> listOfTiles = new ArrayList<>();
+        ArrayList<Tile> listOfTiles = new ArrayList<>();
 
         int currIndex = 0;
 
         for(Map.Entry<String, String[]> entry : mapOfWords.entrySet()){
-            listOfTiles.add(new ArrayList<Tile>());
             for(String word : entry.getValue()) {
-                listOfTiles.get(currIndex).add(new Tile(word, entry.getKey(), currIndex+1));
+                listOfTiles.add(new Tile(word, entry.getKey(), currIndex+1));
                 //System.out.println(currIndex);
             }
             currIndex ++;
@@ -124,13 +123,12 @@ public class GridMaker {
 
 
     public static void main(String[] args) {
-        ArrayList<ArrayList<Tile>> testList = GridMaker.makeEasyModeBoard();
-        for(ArrayList<Tile> list : testList) {
-            for (Tile tile : list) {
-                System.out.print(tile.getWord() + " ");
-            }
-            System.out.println();
+        ArrayList<Tile> testList = GridMaker.makeEasyModeBoard();
+
+        for (Tile tile : testList) {
+            System.out.print(tile.getWord() + " ");
         }
+        System.out.println();
     }
 
 }

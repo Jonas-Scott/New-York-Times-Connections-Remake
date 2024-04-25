@@ -88,17 +88,12 @@ public class ConnectionsController {
     private void initGameBoardBindings() {
 
         for(int i = 0; i < theView.getListOfSelectableWords().size(); i++){
-            for(int j = 0; j < theView.getListOfSelectableWords().get(i).size(); j++) {
                 final int row = i;
-                final int column = j;
-                Tile tile = theModel.getBoard().getWords().get(i).get(j);
-                StackPane wordTile = theView.getListOfSelectableWords().get(i).get(j);
+                Tile tile = theModel.getBoard().getWords().get(i);
+                StackPane wordTile = theView.getListOfSelectableWords().get(i);
                 Rectangle rect = (Rectangle) wordTile.getChildren().get(0);
                 rect.fillProperty().bind(tile.currentColorProperty());
-                wordTile.onMouseClickedProperty().setValue(event -> theModel.getBoard().select(row, column));
-
-
-            }
+                wordTile.onMouseClickedProperty().setValue(event -> theModel.getBoard().select(row));
         }
     }
 

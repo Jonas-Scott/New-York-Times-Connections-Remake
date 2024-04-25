@@ -21,7 +21,6 @@ public class ConnectionsMain extends Application {
     /**
      * Main model to start the game
      */
-
     private ConnectionsController theController;
     public static void main(String[] args) {launch(args);}
 
