@@ -100,12 +100,15 @@ public class ConnectionsModel {
         if(board.getNumSelected() == 4) {
             // Add guess only if wrong, reset if lose
             if (board.checkSelected() != 2) {
+                System.out.println("Wrong Guess");
                 guesses++;
                 if (guesses == MAX_GUESSES) {
                     reset();
+                    System.out.println("Game lost");
                     return 3;
                 }
                 if (board.checkSelected() == 1){
+                    System.out.println("One away!");
                     return 1;
                 }
                 else{
@@ -115,20 +118,17 @@ public class ConnectionsModel {
             // Decrease remaining categories, reset if win
             else {
                 remainingCategories--;
-                addGuessedCategory();
+                board.addGuessedCategory();
                 if (remainingCategories == 0) {
                     reset();
+                    System.out.println("Game won");
                     return 3;
                 }
+                System.out.println("Correct Guess");
                 return 2;
             }
         }
         return 0;
-    }
-
-    private void addGuessedCategory() {
-        guessedCategories.add(board.selected.get(0).getCategory());
-        board.clearSelected();
     }
 
 
