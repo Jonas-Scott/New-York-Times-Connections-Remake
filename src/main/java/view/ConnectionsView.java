@@ -375,6 +375,12 @@ public class ConnectionsView {
     }
 
 
+    /**
+     * Formulate the pop-up message if the player has won or lost, fading in
+     * for a short time and then disappearing again
+     * @param message - the message to fade in and out, either win, lose, or one away
+     * @author - Owen Reilly
+     */
     public void messagePopUp(String message) {
         notificationLabel.setText(message);
         notificationLabel.setVisible(true);
@@ -392,15 +398,21 @@ public class ConnectionsView {
         sequence.setOnFinished(event -> notificationLabel.setVisible(false));  // Hide after animation
         sequence.play();
     }
+
+    /**
+     * Creation and sizing for the notification label that pops in and out,
+     * larger sized text for winning and losing
+     * @param size - the font size of the message
+     * @author - Owen Reilly
+     */
     private void initNotificationLabel(int size) {
         notificationLabel = new Label();
+        //Pair to CSS file
         notificationLabel.getStyleClass().add("notificationText");
-        //notificationLabel.setTextFill(Color.BLACK);
+        //Size corresponding to parameter
         notificationLabel.setFont(Font.font(size));
-        //notificationLabel.setStyle("-fx-background-color: lightgrey; -fx-padding: 10;");
-        //notificationLabel.setOpacity(0);  // Start fully transparent
         notificationLabel.setVisible(false);  // Start hidden
-        this.gamePlayRoot.add(notificationLabel, 0,5);  // Adjust position as needed
+        this.gamePlayRoot.add(notificationLabel, 0,5, 2,1);  // Adjust position as needed
     }
 
     private void backToHomeScreen() {

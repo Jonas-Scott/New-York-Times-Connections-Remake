@@ -39,6 +39,8 @@ public class GridMaker {
 
     /** Map of extreme mode categories and words */
     private static TreeMap<String, String[]> extremeModeMap;
+
+    /** Map of Hollywood mode categories and words */
     private static TreeMap<String, String[]> hollywoodMap;
 
 
