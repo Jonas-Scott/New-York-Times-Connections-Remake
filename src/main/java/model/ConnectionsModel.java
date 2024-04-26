@@ -92,18 +92,23 @@ public class ConnectionsModel {
     /**
      * Check if selected tiles are a category
      *
-     * @return 1 if we are 1 guess away, 0 otherwise
+     * @return 0 if we have nothing right, 1 if we are 1 guess away,
+     * 2 if we got a correct guess, 3 if the game is lost, 4 if it is won
      */
     public int guess() {
         // Only guess if 4 tiles selected
         if(board.getNumSelected() == 4) {
             // Add guess only if wrong, reset if lose
             if (board.checkSelected() != 2) {
+                System.out.println("Wrong Guess");
                 guesses++;
                 if (guesses == MAX_GUESSES) {
                     reset();
+                    System.out.println("Game lost");
+                    return 3;
                 }
                 if (board.checkSelected() == 1){
+                    System.out.println("One away!");
                     return 1;
                 }
                 else{
@@ -113,18 +118,17 @@ public class ConnectionsModel {
             // Decrease remaining categories, reset if win
             else {
                 remainingCategories--;
-                addGuessedCategory();
+                board.addGuessedCategory();
                 if (remainingCategories == 0) {
                     reset();
+                    System.out.println("Game won");
+                    return 4;
                 }
-                return 0;
+                System.out.println("Correct Guess");
+                return 2;
             }
         }
         return 0;
-    }
-
-    private void addGuessedCategory() {
-        guessedCategories.add(board.selected.get(0).getCategory());
     }
 
 
