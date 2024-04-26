@@ -40,6 +40,7 @@ import model.ConnectionsModel;
 import model.Tile;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 public class ConnectionsView {
@@ -70,7 +71,7 @@ public class ConnectionsView {
     public ArrayList<StackPane> listOfCategoriesGuessed;
     private HBox ballDisplay;
     private Label notificationLabel; // The notification label
-
+    private Button shuffleButton;
 
 
     /**
@@ -167,6 +168,11 @@ public class ConnectionsView {
 
 
         });
+
+        shuffleButton = new Button("Shuffle");
+        shuffleButton.setOnAction(e -> {
+            shuffleButtons();
+        });
         this.gamePlayRoot.add(ballDisplay,1,5);
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
 
@@ -174,9 +180,27 @@ public class ConnectionsView {
         gamePlayRoot.setHgap(10);
         gamePlayRoot.setVgap(10);
 
+        gamePlayRoot.add(shuffleButton, 3, 5);
+
     }
 
+    private void shuffleButtons() {
+        gamePlayRoot.getChildren().clear();
+        for(int i = 0; i < listOfCategoriesGuessed.size(); i++) {
+            StackPane catLbl = listOfCategoriesGuessed.get(i);
+            gamePlayRoot.add(catLbl, 2, i);
+        }
+        Collections.shuffle(listOfSelectableWords);
+        int yPos = listOfCategoriesGuessed.size() * 4;
+        for(int i = 0; i < listOfSelectableWords.size(); i++){
+            gamePlayRoot.add(listOfSelectableWords.get(i), i%4 , yPos/4);
+            yPos++;
+        }
+        gamePlayRoot.add(shuffleButton, 3, 5);
+        this.gamePlayRoot.add(ballDisplay,1,5);
+        this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
 
+    }
 
 
     private void runTheCommandClick(int result) {
@@ -187,6 +211,7 @@ public class ConnectionsView {
         else if (result == 2) {
             reLayoutGamePlayRoot();
             theModel.getBoard().clearSelected();
+            this.gamePlayRoot.add(ballDisplay,1,5);
         }
         else if (result == 3){
             // game is lost
@@ -201,7 +226,6 @@ public class ConnectionsView {
         }
 
         addBallCounterToTheBottom(theModel.userFeedback());
-        this.gamePlayRoot.add(ballDisplay,1,5);
     }
 
     public void reLayoutGamePlayRoot() {
@@ -255,7 +279,7 @@ public class ConnectionsView {
             yPos++;
         }
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
-
+        this.gamePlayRoot.add(shuffleButton, 3,5);
     }
 
 
