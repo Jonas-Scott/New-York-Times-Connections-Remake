@@ -83,7 +83,6 @@ public class ConnectionsView {
         this.theModel = theModel;
 
         initSceneGraph();
-
         gamePlayRoot = new GridPane();
         gamePlayRoot.getStyleClass().add("grid");
         listOfCategoriesGuessed = new ArrayList<>();
@@ -98,7 +97,6 @@ public class ConnectionsView {
      */
     private void initSceneGraph() {
         this.homeScreenRoot = new VBox();
-        this.homeScreenRoot.setAlignment(Pos.CENTER);
         Text title = new Text("Welcome to Connections \n Select your Difficulty");
         title.getStyleClass().add("title");
 
@@ -174,12 +172,10 @@ public class ConnectionsView {
         shuffleButton.setOnAction(e -> {
             shuffleButtons();
         });
-        this.gamePlayRoot.add(ballDisplay,1,5);
+        this.gamePlayRoot.add(ballDisplay,0,5);
+        GridPane.setColumnSpan(ballDisplay, 2);
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
 
-        gamePlayRoot.setPadding(new Insets(10));
-        gamePlayRoot.setHgap(10);
-        gamePlayRoot.setVgap(10);
 
         gamePlayRoot.add(shuffleButton, 3, 5);
 
@@ -189,7 +185,7 @@ public class ConnectionsView {
         gamePlayRoot.getChildren().clear();
         for(int i = 0; i < listOfCategoriesGuessed.size(); i++) {
             StackPane catLbl = listOfCategoriesGuessed.get(i);
-            gamePlayRoot.add(catLbl, 2, i);
+            gamePlayRoot.add(catLbl, 0, i);
         }
         Collections.shuffle(listOfSelectableWords);
         int yPos = listOfCategoriesGuessed.size() * 4;
@@ -234,7 +230,7 @@ public class ConnectionsView {
 
         for(int i = 0; i < listOfCategoriesGuessed.size(); i++) {
             StackPane catLbl = listOfCategoriesGuessed.get(i);
-            gamePlayRoot.add(catLbl, 2, i);
+            gamePlayRoot.add(catLbl, 0, i);
         }
         String category = theModel.getBoard().getSelected().get(0).getCategory() + " ";
         String words = theModel.getBoard().getSelected().toString();
@@ -262,7 +258,11 @@ public class ConnectionsView {
         catAndWords.setTextAlignment(TextAlignment.CENTER);
         StackPane catLbl = new StackPane(catRect, catAndWords);
         listOfCategoriesGuessed.add(catLbl);
-        gamePlayRoot.add(catLbl, 2, listOfCategoriesGuessed.size() - 1);
+//        gamePlayRoot.addRow(listOfCategoriesGuessed.size() - 1 ,catLbl);
+//        GridPane.setColumnIndex(catLbl, 0);
+//        GridPane.setColumnSpan(catLbl, 4);
+        gamePlayRoot.add(catLbl, 0, listOfCategoriesGuessed.size() - 1, 4, 1);
+        //GridPane.setColumnSpan(catLbl, 4);
 
         ArrayList<StackPane> newList = new ArrayList<>();
 
@@ -284,6 +284,12 @@ public class ConnectionsView {
     }
 
 
+    /**
+     * Add the ball counter to the bottom of the grid
+     * add the appropriate number of balls for how many guesses are remaining
+     * @param count - the number of guesses remaining
+     * @author - Owen Reilly
+     */
     public void addBallCounterToTheBottom(int count){
         ballDisplay.getChildren().clear();
         System.out.println(count);
@@ -329,10 +335,11 @@ public class ConnectionsView {
     }
     private void initNotificationLabel(int size) {
         notificationLabel = new Label();
-        notificationLabel.setTextFill(Color.BLACK);
-        notificationLabel.setFont(Font.font("Arial", FontWeight.BOLD, size));
-        notificationLabel.setStyle("-fx-background-color: lightgrey; -fx-padding: 10;");
-        notificationLabel.setOpacity(0);  // Start fully transparent
+        notificationLabel.getStyleClass().add("notificationText");
+        //notificationLabel.setTextFill(Color.BLACK);
+        notificationLabel.setFont(Font.font(size));
+        //notificationLabel.setStyle("-fx-background-color: lightgrey; -fx-padding: 10;");
+        //notificationLabel.setOpacity(0);  // Start fully transparent
         notificationLabel.setVisible(false);  // Start hidden
         this.gamePlayRoot.add(notificationLabel, 1,1);  // Adjust position as needed
     }
