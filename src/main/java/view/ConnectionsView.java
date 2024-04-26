@@ -54,6 +54,11 @@ public class ConnectionsView {
     private VBox homeScreenRoot;
 
     /**
+     * Root object for the game
+     */
+    private VBox overallRoot;
+
+    /**
      * All of our buttons
      */
     public Button btnEasy, btnMedium, btnHard, btnExtreme;
@@ -75,6 +80,7 @@ public class ConnectionsView {
         initSceneGraph();
 
         gamePlayRoot = new GridPane();
+        gamePlayRoot.getStyleClass().add("grid");
         listOfCategoriesGuessed = new ArrayList<>();
 
     }
@@ -111,6 +117,8 @@ public class ConnectionsView {
         return homeScreenRoot;
     }
 
+    public VBox getOverallRoot() {return overallRoot; }
+
     /**
      * Getter for the gamePlayRoot
      */
@@ -146,11 +154,7 @@ public class ConnectionsView {
                 theModel.getBoard().clearSelected();
             }
         });
-        this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
-
-        gamePlayRoot.setPadding(new Insets(10));
-        gamePlayRoot.setHgap(10);
-        gamePlayRoot.setVgap(10);
+        this.gamePlayRoot.add(checkSelectedButton, 2, 5,4, 4);
 
     }
 
