@@ -33,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class ConnectionsController {
+    private final Scene gameBoardScene;
     private ConnectionsModel theModel;
     private ConnectionsView theView;
     private Stage primaryStage;
@@ -50,6 +51,29 @@ public class ConnectionsController {
         this.theModel = theModel;
         this.theView = theView;
         this.primaryStage = primaryStage;
+
+        gameBoardScene = new Scene(theView.getGamePlayRoot());
+        gameBoardScene.getStylesheets().add(
+                getClass().getResource("/GameScreen.css")
+                        .toExternalForm());
+
+        initLevelSelector();
+        initGobackButton();
+    }
+
+    private void initGobackButton() {
+        theView.getGoBack().setOnAction(e -> switchToHomeScreen());
+    }
+
+    private void switchToHomeScreen() {
+        theModel.reset();
+        theView.reset();
+
+        Scene homeScene = new Scene(theView.getHomeScreenRoot());
+        primaryStage.setScene(homeScene);
+        homeScene.getStylesheets().add(
+                getClass().getResource("/ConnectionsHomeScreen.css")
+                        .toExternalForm());
 
         initLevelSelector();
     }
@@ -81,10 +105,6 @@ public class ConnectionsController {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        Scene gameBoardScene = new Scene(theView.getGamePlayRoot());
-        gameBoardScene.getStylesheets().add(
-                getClass().getResource("/GameScreen.css")
-                        .toExternalForm());
 
         initGameBoardBindings();
 
