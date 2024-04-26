@@ -19,7 +19,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -40,6 +39,9 @@ public class GridMaker {
 
     /** Map of extreme mode categories and words */
     private static TreeMap<String, String[]> extremeModeMap;
+    private static TreeMap<String, String[]> hollywoodMap;
+
+
 
     /**
      * Makes an easy mode board of Connections
@@ -101,7 +103,32 @@ public class GridMaker {
         return makeBoard(extremeModeMap);
     }
 
+    public static ArrayList<Tile> makeHollywoodBoard() {
+        String rdj = "https://upload.wikimedia.org/wikipedia/commons/9/94/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg";
+        String evans = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/ChrisEvans2023.jpg/800px-ChrisEvans2023.jpg";
+        String hemsworth = "https://upload.wikimedia.org/wikipedia/commons/e/e8/Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg";
+        String scar = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Scarlett_Johansson_by_Gage_Skidmore_2_%28cropped%2C_2%29.jpg/640px-Scarlett_Johansson_by_Gage_Skidmore_2_%28cropped%2C_2%29.jpg";
+        String brando = "https://upload.wikimedia.org/wikipedia/commons/5/53/Marlon_Brando_publicity_for_One-Eyed_Jacks.png";
+        String pacino = "https://upload.wikimedia.org/wikipedia/commons/9/98/Al_Pacino.jpg";
+        String deniro = "https://upload.wikimedia.org/wikipedia/commons/2/25/Robert_De_Niro_Cannes_2016_2.jpg";
+        String duval = "https://upload.wikimedia.org/wikipedia/commons/0/03/Robert_Duvall_1.jpg";
+        String cena = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/John_Cena_July_2018.jpg/1200px-John_Cena_July_2018.jpg";
+        String bautista = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Dave_Bautista_Photo_Op_GalaxyCon_Minneapolis_2019.jpg/640px-Dave_Bautista_Photo_Op_GalaxyCon_Minneapolis_2019.jpg";
+        String rock = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJYIpe1NAJI16PXDkZTt8tiebkI2dDCn4XV7djOeWVkg&s";
+        String andre = "https://b.fssta.com/uploads/application/wwe/headshots/andre-the-giant.vresize.350.350.medium.99.png";
+        String murphy = "https://upload.wikimedia.org/wikipedia/commons/5/5a/Cillian_Murphy_at_Berlinale_2024%2C_Ausschnitt.jpg";
+        String smith = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/TechCrunch_Disrupt_2019_%2848834434641%29_%28cropped%29.jpg/640px-TechCrunch_Disrupt_2019_%2848834434641%29_%28cropped%29.jpg";
+        String fraser = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Brendan_Fraser_October_2022.jpg/1200px-Brendan_Fraser_October_2022.jpg";
+        String hopkins = "https://upload.wikimedia.org/wikipedia/commons/4/47/AnthonyHopkins10TIFF.jpg";
 
+        hollywoodMap = new TreeMap<String, String[]>();
+        hollywoodMap.put("Avengers Actors", new String[]{rdj, evans, hemsworth, scar});
+        hollywoodMap.put("Godfather Actors", new String[]{brando, pacino, deniro, duval});
+        hollywoodMap.put("WWE -> Actors", new String[]{cena, bautista, rock, andre});
+        hollywoodMap.put("Last 4 Oscar Winners", new String[]{murphy, smith, fraser, hopkins});
+
+        return makeBoard(hollywoodMap);
+        }
 
     private static ArrayList<Tile> makeBoard(TreeMap<String, String[]> mapOfWords) {
 
@@ -130,5 +157,6 @@ public class GridMaker {
         }
         System.out.println();
     }
+
 
 }

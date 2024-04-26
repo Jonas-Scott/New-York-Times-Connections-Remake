@@ -47,7 +47,12 @@ public class Board {
 
     int categoriesGuessed = 0;
 
+    private Level level;
 
+
+    public Level getLevel() {
+        return level;
+    }
 
     /**
      * Initialize board according to level
@@ -55,22 +60,32 @@ public class Board {
      * @param level difficulty of
      */
     public Board(Level level) {
+        level = level;
         switch (level) {
             case EASY: {
                 this.words = GridMaker.makeEasyModeBoard();
                 //System.out.println(this.words);
+                this.level = Level.EASY;
                 break;
             }
             case MEDIUM: {
                 this.words = GridMaker.makeMediumModeBoard();
+                this.level = Level.MEDIUM;
                 break;
             }
             case HARD: {
                 this.words = GridMaker.makeHardModeBoard();
+                this.level = Level.HARD;
                 break;
             }
             case EXTREME: {
                 this.words = GridMaker.makeExtremeModeBoard();
+                this.level = Level.EXTREME;
+                break;
+            }
+            case HOLLYWOOD:{
+                this.level = Level.HOLLYWOOD;
+                this.words = GridMaker.makeHollywoodBoard();
                 break;
             }
         }
