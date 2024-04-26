@@ -29,6 +29,7 @@ import model.ConnectionsModel;
 import model.Level;
 import model.Tile;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class ConnectionsController {
@@ -68,13 +69,18 @@ public class ConnectionsController {
         this.theView.btnMedium.setOnAction(e -> switchToGameBoard(Level.MEDIUM));
         this.theView.btnHard.setOnAction(e -> switchToGameBoard(Level.HARD));
         this.theView.btnExtreme.setOnAction(e -> switchToGameBoard(Level.EXTREME));
+        this.theView.btnHollywood.setOnAction(e -> switchToGameBoard(Level.HOLLYWOOD));
     }
 
     private void switchToGameBoard(Level level) {
         theModel.chooseLevel(level);
 
         // Create the game board scene
-        theView.initGamePlayRoot();
+        try {
+            theView.initGamePlayRoot();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         Scene gameBoardScene = new Scene(theView.getGamePlayRoot());
         gameBoardScene.getStylesheets().add(
                 getClass().getResource("/GameScreen.css")
