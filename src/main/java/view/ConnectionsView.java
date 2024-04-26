@@ -109,14 +109,17 @@ public class ConnectionsView {
         title.getStyleClass().add("title");
 
         this.homeScreenRoot.getChildren().add(title);
-        addButtons();
+        this.homeScreenRoot.setMinWidth(1000);
+        this.homeScreenRoot.setMinHeight(800);
+        addHomeButtons();
 
     }
 
 
-
-
-    private void addButtons() {
+    /**
+     * Add the home buttons for the difficulties on the home screen
+     */
+    private void addHomeButtons() {
         btnEasy = new Button("Easy");
 
         btnMedium = new Button("Medium");
@@ -161,7 +164,6 @@ public class ConnectionsView {
         for(int i = 0; i < theModel.getBoard().getWords().size(); i++){
             Rectangle rect = new Rectangle(100,60);
             if (this.theModel.getBoard().getLevel() == Level.HOLLYWOOD){
-                //System.out.println("Hollywood");
                 String imageUrl = this.theModel.getBoard().getWords().get(i).getWord();
                 Image image = new Image(imageUrl, true);
                 ImageView imageView = new ImageView();
@@ -202,13 +204,9 @@ public class ConnectionsView {
         shuffleButton.setOnAction(e -> {
             shuffleButtons();
         });
-        this.gamePlayRoot.add(ballDisplay,0,5);
-        this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
 
-
-        gamePlayRoot.add(shuffleButton, 3, 5);
-
-        gamePlayRoot.add(goBack, 3, 6);
+        // Re add all the gameplay buttons after clearing the board
+        addGameplayButtons();
 
     }
 
@@ -224,10 +222,9 @@ public class ConnectionsView {
             gamePlayRoot.add(listOfSelectableWords.get(i), i%4 , yPos/4);
             yPos++;
         }
-        gamePlayRoot.add(shuffleButton, 3, 5);
-        this.gamePlayRoot.add(ballDisplay,0,5);
-        this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
-        this.gamePlayRoot.add(goBack, 3,6);
+
+        // Re add all the gameplay buttons after clearing the board
+        addGameplayButtons();
 
     }
 
@@ -245,19 +242,28 @@ public class ConnectionsView {
         else if (result == 3){
             // game is lost
             // make it so the remaining categories are placed as should be
-            initLosingScreen();
             initNotificationLabel(30);
             messagePopUp("You lost!");
+            initLosingScreen();
         }
         else if (result == 4){
             reLayoutGamePlayRoot();
             initNotificationLabel(30);
-            messagePopUp("You won");
+            messagePopUp("You won!");
+            this.gamePlayRoot.getChildren().remove(shuffleButton);
+            this.gamePlayRoot.getChildren().remove(checkSelectedButton);
         }
 
         addBallCounterToTheBottom(theModel.userFeedback());
     }
 
+    /**
+     * Reconfigure the layout of the tiles on the game board when
+     * the user gets a category right, properly moving the tiles around
+     * to maintain the grid pattern. Also creates the correct category rectangle
+     * to tell the user what the category was that they just got right
+     * @author - CK, OR, JS
+     */
     public void reLayoutGamePlayRoot() {
         this.gamePlayRoot.getChildren().clear();
 
@@ -275,6 +281,7 @@ public class ConnectionsView {
         }
         Rectangle catRect = new Rectangle(440, 60);
 
+        // Switch case, setting the color dependent on which difficulty of category the user got
         switch (this.theModel.getBoard().getSelected().get(0).getDifficulty()) {
             case (1): {
                 catRect.setFill(Color.GREEN);
@@ -321,9 +328,9 @@ public class ConnectionsView {
             gamePlayRoot.add(listOfSelectableWords.get(i), i%4 , yPos/4);
             yPos++;
         }
-        this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
-        this.gamePlayRoot.add(shuffleButton, 3,5);
-        this.gamePlayRoot.add(goBack, 3,6);
+        this.gamePlayRoot.add(checkSelectedButton, 1, 5, 2,1);
+        this.gamePlayRoot.add(shuffleButton, 2,5);
+        this.gamePlayRoot.add(goBack, 3,5);
     }
 
 
@@ -356,10 +363,15 @@ public class ConnectionsView {
 
 
     /**
-     * screen that comes up when we lose
+     * screen that comes up when we lose, showing the player the
+     * correct categories and then offering them the chance to go back
+     * to the home screen and play again
+     * @author Jonas Scott
      */
     public void initLosingScreen(){
-
+        gamePlayRoot.getChildren().remove(shuffleButton);
+        gamePlayRoot.getChildren().remove(checkSelectedButton);
+        gamePlayRoot.getChildren().remove(ballDisplay);
     }
 
 
@@ -388,7 +400,7 @@ public class ConnectionsView {
         //notificationLabel.setStyle("-fx-background-color: lightgrey; -fx-padding: 10;");
         //notificationLabel.setOpacity(0);  // Start fully transparent
         notificationLabel.setVisible(false);  // Start hidden
-        this.gamePlayRoot.add(notificationLabel, 1,1);  // Adjust position as needed
+        this.gamePlayRoot.add(notificationLabel, 0,5);  // Adjust position as needed
     }
 
     private void backToHomeScreen() {
@@ -403,5 +415,18 @@ public class ConnectionsView {
     public void reset() {
         gamePlayRoot.getChildren().clear();
         initSceneGraph();
+    }
+
+    /**
+     * Add the gameplay buttons and ball display after clearing the board
+     * @author - Jonas Scott
+     */
+    private void addGameplayButtons() {
+
+        this.gamePlayRoot.add(ballDisplay, 0, 5);
+        this.gamePlayRoot.add(checkSelectedButton, 1, 5, 2, 1);
+        gamePlayRoot.add(shuffleButton, 2, 5);
+        this.gamePlayRoot.add(goBack, 3, 5);
+
     }
 }
