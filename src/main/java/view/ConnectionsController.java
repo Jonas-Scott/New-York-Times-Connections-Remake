@@ -29,10 +29,10 @@ import model.ConnectionsModel;
 import model.Level;
 import model.Tile;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class ConnectionsController {
-    private final Scene gameBoardScene;
     private ConnectionsModel theModel;
     private ConnectionsView theView;
     private Stage primaryStage;
@@ -50,29 +50,6 @@ public class ConnectionsController {
         this.theModel = theModel;
         this.theView = theView;
         this.primaryStage = primaryStage;
-
-        gameBoardScene = new Scene(theView.getGamePlayRoot());
-        gameBoardScene.getStylesheets().add(
-                getClass().getResource("/GameScreen.css")
-                        .toExternalForm());
-
-        initLevelSelector();
-        initGobackButton();
-    }
-
-    private void initGobackButton() {
-        theView.getGoBack().setOnAction(e -> switchToHomeScreen());
-    }
-
-    private void switchToHomeScreen() {
-        theModel.reset();
-        theView.reset();
-
-        Scene homeScene = new Scene(theView.getHomeScreenRoot());
-        primaryStage.setScene(homeScene);
-        homeScene.getStylesheets().add(
-                getClass().getResource("/ConnectionsHomeScreen.css")
-                        .toExternalForm());
 
         initLevelSelector();
     }
@@ -92,13 +69,22 @@ public class ConnectionsController {
         this.theView.btnMedium.setOnAction(e -> switchToGameBoard(Level.MEDIUM));
         this.theView.btnHard.setOnAction(e -> switchToGameBoard(Level.HARD));
         this.theView.btnExtreme.setOnAction(e -> switchToGameBoard(Level.EXTREME));
+        this.theView.btnHollywood.setOnAction(e -> switchToGameBoard(Level.HOLLYWOOD));
     }
 
     private void switchToGameBoard(Level level) {
         theModel.chooseLevel(level);
 
         // Create the game board scene
-        theView.initGamePlayRoot();
+        try {
+            theView.initGamePlayRoot();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        Scene gameBoardScene = new Scene(theView.getGamePlayRoot());
+        gameBoardScene.getStylesheets().add(
+                getClass().getResource("/GameScreen.css")
+                        .toExternalForm());
 
         initGameBoardBindings();
 

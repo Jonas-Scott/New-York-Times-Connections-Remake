@@ -26,6 +26,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -36,8 +38,12 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import model.ConnectionsModel;
+import model.Level;
 import model.Tile;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -61,7 +67,7 @@ public class ConnectionsView {
     /**
      * All of our buttons
      */
-    public Button btnEasy, btnMedium, btnHard, btnExtreme;
+    public Button btnEasy, btnMedium, btnHard, btnExtreme, btnHollywood;
 
     public ArrayList<StackPane> listOfSelectableWords;
     private Button checkSelectedButton;
@@ -83,7 +89,6 @@ public class ConnectionsView {
         this.theModel = theModel;
 
         initSceneGraph();
-
         gamePlayRoot = new GridPane();
         gamePlayRoot.getStyleClass().add("grid");
         listOfCategoriesGuessed = new ArrayList<>();
@@ -100,7 +105,6 @@ public class ConnectionsView {
      */
     private void initSceneGraph() {
         this.homeScreenRoot = new VBox();
-        this.homeScreenRoot.setAlignment(Pos.CENTER);
         Text title = new Text("Welcome to Connections \n Select your Difficulty");
         title.getStyleClass().add("title");
 
@@ -121,7 +125,11 @@ public class ConnectionsView {
 
         btnExtreme = new Button("Extreme");
 
-        this.homeScreenRoot.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExtreme);
+        btnHollywood = new Button("Hollywood");
+
+
+
+        this.homeScreenRoot.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExtreme, btnHollywood);
     }
 
     /**
@@ -145,15 +153,33 @@ public class ConnectionsView {
         return listOfSelectableWords;
     }
 
-    public void initGamePlayRoot() {
+    public void initGamePlayRoot() throws FileNotFoundException {
 
+        StackPane newWordTile;
         listOfSelectableWords = new ArrayList<>();
         int yPos = 0;
         for(int i = 0; i < theModel.getBoard().getWords().size(); i++){
             Rectangle rect = new Rectangle(100,60);
-            Text text = new Text(this.theModel.getBoard().getWords().get(i).getWord());
-            text.setTextAlignment(TextAlignment.CENTER);
-            StackPane newWordTile = new StackPane(rect, text);
+            if (this.theModel.getBoard().getLevel() == Level.HOLLYWOOD){
+                //System.out.println("Hollywood");
+                String imageUrl = this.theModel.getBoard().getWords().get(i).getWord();
+                Image image = new Image(imageUrl, true);
+                ImageView imageView = new ImageView();
+                imageView.setImage(image);
+                imageView.setId(imageUrl);
+                imageView.setFitHeight(rect.getHeight());  // Set the ImageView height
+                imageView.setFitWidth(rect.getWidth());    // Set the ImageView width
+                imageView.setPreserveRatio(true);          // Preserve the aspect ratio
+
+                newWordTile = new StackPane(rect, imageView);
+                newWordTile.setAlignment(Pos.CENTER);
+            }
+            else {
+                Text text = new Text(this.theModel.getBoard().getWords().get(i).getWord());
+                text.setTextAlignment(TextAlignment.CENTER);
+                newWordTile = new StackPane(rect, text);
+            }
+
             this.gamePlayRoot.add(newWordTile, i%4, yPos/4);
             listOfSelectableWords.add(newWordTile);
             yPos++;
@@ -176,12 +202,9 @@ public class ConnectionsView {
         shuffleButton.setOnAction(e -> {
             shuffleButtons();
         });
-        this.gamePlayRoot.add(ballDisplay,1,5);
+        this.gamePlayRoot.add(ballDisplay,0,5);
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
 
-        gamePlayRoot.setPadding(new Insets(10));
-        gamePlayRoot.setHgap(10);
-        gamePlayRoot.setVgap(10);
 
         gamePlayRoot.add(shuffleButton, 3, 5);
 
@@ -193,7 +216,7 @@ public class ConnectionsView {
         gamePlayRoot.getChildren().clear();
         for(int i = 0; i < listOfCategoriesGuessed.size(); i++) {
             StackPane catLbl = listOfCategoriesGuessed.get(i);
-            gamePlayRoot.add(catLbl, 2, i);
+            gamePlayRoot.add(catLbl, 0, i);
         }
         Collections.shuffle(listOfSelectableWords);
         int yPos = listOfCategoriesGuessed.size() * 4;
@@ -202,7 +225,7 @@ public class ConnectionsView {
             yPos++;
         }
         gamePlayRoot.add(shuffleButton, 3, 5);
-        this.gamePlayRoot.add(ballDisplay,1,5);
+        this.gamePlayRoot.add(ballDisplay,0,5);
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
         this.gamePlayRoot.add(goBack, 3,6);
 
@@ -212,23 +235,24 @@ public class ConnectionsView {
     private void runTheCommandClick(int result) {
         if (result == 1){
             initNotificationLabel(14);
-            oneAway("One Away!");
+            messagePopUp("One Away!");
         }
         else if (result == 2) {
             reLayoutGamePlayRoot();
             theModel.getBoard().clearSelected();
-            this.gamePlayRoot.add(ballDisplay,1,5);
+            this.gamePlayRoot.add(ballDisplay,0,5);
         }
         else if (result == 3){
             // game is lost
             // make it so the remaining categories are placed as should be
             initLosingScreen();
             initNotificationLabel(30);
-            oneAway("You lost!");
+            messagePopUp("You lost!");
         }
         else if (result == 4){
+            reLayoutGamePlayRoot();
             initNotificationLabel(30);
-            oneAway("You won");
+            messagePopUp("You won");
         }
 
         addBallCounterToTheBottom(theModel.userFeedback());
@@ -239,10 +263,16 @@ public class ConnectionsView {
 
         for(int i = 0; i < listOfCategoriesGuessed.size(); i++) {
             StackPane catLbl = listOfCategoriesGuessed.get(i);
-            gamePlayRoot.add(catLbl, 2, i);
+            gamePlayRoot.add(catLbl, 0, i);
         }
+        String words;
         String category = theModel.getBoard().getSelected().get(0).getCategory() + " ";
-        String words = theModel.getBoard().getSelected().toString();
+        if (this.theModel.getBoard().getLevel() != Level.HOLLYWOOD) {
+            words = theModel.getBoard().getSelected().toString();
+        }
+        else {
+            words = "";
+        }
         Rectangle catRect = new Rectangle(440, 60);
 
         switch (this.theModel.getBoard().getSelected().get(0).getDifficulty()) {
@@ -267,13 +297,20 @@ public class ConnectionsView {
         catAndWords.setTextAlignment(TextAlignment.CENTER);
         StackPane catLbl = new StackPane(catRect, catAndWords);
         listOfCategoriesGuessed.add(catLbl);
-        gamePlayRoot.add(catLbl, 2, listOfCategoriesGuessed.size() - 1);
+        gamePlayRoot.add(catLbl, 0, listOfCategoriesGuessed.size() - 1, 4, 1);
 
         ArrayList<StackPane> newList = new ArrayList<>();
 
+
         for(StackPane wordTile : listOfSelectableWords) {
+            String word;
+            if (this.theModel.getBoard().getLevel() != Level.HOLLYWOOD){
             Text text = (Text) wordTile.getChildren().get(1);
-            String word = text.getText();
+            word = text.getText();
+            }
+            else{
+                word = wordTile.getChildren().get(1).getId();
+            }
             if(!checkIfSelected(word)) {
                 newList.add(wordTile);
             }
@@ -290,11 +327,17 @@ public class ConnectionsView {
     }
 
 
+    /**
+     * Add the ball counter to the bottom of the grid
+     * add the appropriate number of balls for how many guesses are remaining
+     * @param count - the number of guesses remaining
+     * @author - Owen Reilly
+     */
     public void addBallCounterToTheBottom(int count){
         ballDisplay.getChildren().clear();
         System.out.println(count);
         for (int i = 0; i < count; i++) {
-            Circle circle = new Circle(10, Color.RED);  // Create a new circle (ball) with radius 10
+            Circle circle = new Circle(7, Color.RED);  // Create a new circle (ball) with radius 10
             ballDisplay.getChildren().add(circle);  // Add the circle to the display box
         }
 
@@ -310,13 +353,17 @@ public class ConnectionsView {
         return false;
     }
 
+
+
     /**
      * screen that comes up when we lose
      */
     public void initLosingScreen(){
 
     }
-    public void oneAway(String message) {
+
+
+    public void messagePopUp(String message) {
         notificationLabel.setText(message);
         notificationLabel.setVisible(true);
         notificationLabel.setOpacity(0);
@@ -335,10 +382,11 @@ public class ConnectionsView {
     }
     private void initNotificationLabel(int size) {
         notificationLabel = new Label();
-        notificationLabel.setTextFill(Color.BLACK);
-        notificationLabel.setFont(Font.font("Arial", FontWeight.BOLD, size));
-        notificationLabel.setStyle("-fx-background-color: lightgrey; -fx-padding: 10;");
-        notificationLabel.setOpacity(0);  // Start fully transparent
+        notificationLabel.getStyleClass().add("notificationText");
+        //notificationLabel.setTextFill(Color.BLACK);
+        notificationLabel.setFont(Font.font(size));
+        //notificationLabel.setStyle("-fx-background-color: lightgrey; -fx-padding: 10;");
+        //notificationLabel.setOpacity(0);  // Start fully transparent
         notificationLabel.setVisible(false);  // Start hidden
         this.gamePlayRoot.add(notificationLabel, 1,1);  // Adjust position as needed
     }
