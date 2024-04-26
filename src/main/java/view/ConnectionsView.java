@@ -199,7 +199,6 @@ public class ConnectionsView {
             shuffleButtons();
         });
         this.gamePlayRoot.add(ballDisplay,0,5);
-        GridPane.setColumnSpan(ballDisplay, 2);
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
 
 
@@ -220,7 +219,7 @@ public class ConnectionsView {
             yPos++;
         }
         gamePlayRoot.add(shuffleButton, 3, 5);
-        this.gamePlayRoot.add(ballDisplay,1,5);
+        this.gamePlayRoot.add(ballDisplay,0,5);
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
 
     }
@@ -234,7 +233,7 @@ public class ConnectionsView {
         else if (result == 2) {
             reLayoutGamePlayRoot();
             theModel.getBoard().clearSelected();
-            this.gamePlayRoot.add(ballDisplay,1,5);
+            this.gamePlayRoot.add(ballDisplay,0,5);
         }
         else if (result == 3){
             // game is lost
@@ -291,11 +290,7 @@ public class ConnectionsView {
         catAndWords.setTextAlignment(TextAlignment.CENTER);
         StackPane catLbl = new StackPane(catRect, catAndWords);
         listOfCategoriesGuessed.add(catLbl);
-//        gamePlayRoot.addRow(listOfCategoriesGuessed.size() - 1 ,catLbl);
-//        GridPane.setColumnIndex(catLbl, 0);
-//        GridPane.setColumnSpan(catLbl, 4);
         gamePlayRoot.add(catLbl, 0, listOfCategoriesGuessed.size() - 1, 4, 1);
-        //GridPane.setColumnSpan(catLbl, 4);
 
         ArrayList<StackPane> newList = new ArrayList<>();
 
@@ -334,7 +329,7 @@ public class ConnectionsView {
         ballDisplay.getChildren().clear();
         System.out.println(count);
         for (int i = 0; i < count; i++) {
-            Circle circle = new Circle(10, Color.RED);  // Create a new circle (ball) with radius 10
+            Circle circle = new Circle(7, Color.RED);  // Create a new circle (ball) with radius 10
             ballDisplay.getChildren().add(circle);  // Add the circle to the display box
         }
 
