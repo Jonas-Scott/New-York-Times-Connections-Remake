@@ -21,7 +21,6 @@ package view;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
-import javafx.collections.ObservableArray;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -41,7 +40,6 @@ import model.Tile;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Stack;
 
 public class ConnectionsView {
 
@@ -73,6 +71,8 @@ public class ConnectionsView {
     private Label notificationLabel; // The notification label
     private Button shuffleButton;
 
+    private Button goBack;
+
 
     /**
      * Constructor for ConnectionsView class
@@ -87,6 +87,8 @@ public class ConnectionsView {
         gamePlayRoot = new GridPane();
         gamePlayRoot.getStyleClass().add("grid");
         listOfCategoriesGuessed = new ArrayList<>();
+
+        goBack = new Button("Return");
 
     }
 
@@ -183,6 +185,8 @@ public class ConnectionsView {
 
         gamePlayRoot.add(shuffleButton, 3, 5);
 
+        gamePlayRoot.add(goBack, 3, 6);
+
     }
 
     private void shuffleButtons() {
@@ -200,6 +204,7 @@ public class ConnectionsView {
         gamePlayRoot.add(shuffleButton, 3, 5);
         this.gamePlayRoot.add(ballDisplay,1,5);
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
+        this.gamePlayRoot.add(goBack, 3,6);
 
     }
 
@@ -281,6 +286,7 @@ public class ConnectionsView {
         }
         this.gamePlayRoot.add(checkSelectedButton, 2, 5, 2,1);
         this.gamePlayRoot.add(shuffleButton, 3,5);
+        this.gamePlayRoot.add(goBack, 3,6);
     }
 
 
@@ -337,4 +343,17 @@ public class ConnectionsView {
         this.gamePlayRoot.add(notificationLabel, 1,1);  // Adjust position as needed
     }
 
+    private void backToHomeScreen() {
+        this.gamePlayRoot.getChildren().clear();
+
+    }
+
+    public Button getGoBack() {
+        return goBack;
+    }
+
+    public void reset() {
+        gamePlayRoot.getChildren().clear();
+        initSceneGraph();
+    }
 }

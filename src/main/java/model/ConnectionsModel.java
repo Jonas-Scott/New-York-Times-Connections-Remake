@@ -150,7 +150,7 @@ public class ConnectionsModel {
     /**
      * Resets model to not be playing game
      */
-    private void reset(){
+    public void reset(){
         // Reset all variables
         inGame = false;
         guesses = 0;
