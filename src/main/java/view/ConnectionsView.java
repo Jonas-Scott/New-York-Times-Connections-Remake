@@ -248,6 +248,7 @@ public class ConnectionsView {
             messagePopUp("You lost!");
         }
         else if (result == 4){
+            reLayoutGamePlayRoot();
             initNotificationLabel(30);
             messagePopUp("You won");
         }
