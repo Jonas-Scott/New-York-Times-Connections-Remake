@@ -85,6 +85,7 @@ public class ConnectionsView {
         initSceneGraph();
 
         gamePlayRoot = new GridPane();
+        gamePlayRoot.getStyleClass().add("grid");
         listOfCategoriesGuessed = new ArrayList<>();
 
     }
