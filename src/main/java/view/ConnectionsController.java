@@ -75,6 +75,7 @@ public class ConnectionsController {
 
         // Reset the categories guessed to 0 when the player exits the level
         theView.listOfCategoriesGuessed.clear();
+        initEventHandlers();
     }
 
     /**
