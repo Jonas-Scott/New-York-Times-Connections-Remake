@@ -37,8 +37,14 @@ public class Tile {
     /** Category */
     private String category;
 
+    /**
+     * Color when Tile is selected
+     */
     private Color selectedColor;
 
+    /**
+     * Color when Tile is unselected
+     */
     private Color unselectedColor;
 
 
@@ -48,6 +54,9 @@ public class Tile {
     private int difficulty;
 
 
+    /**
+     * Color that the tile is in game
+     */
     private SimpleObjectProperty<Color> currentColor;
 
 
@@ -68,23 +77,18 @@ public class Tile {
         this.currentColor.set(unselectedColor);
     }
 
-    public int getDifficulty() {
-        return this.difficulty;
-    }
-
     /**
-     * Returns stored word
+     * Returns whether Tile is selected
      * @return
-     * @author Casey King
      */
-    public String getWord() {
-        return word;
-    }
-
     public boolean isSelected() {
         return selected.get();
     }
 
+    /**
+     * Returns whether Tile is selected
+     * @return
+     */
     public SimpleBooleanProperty selectedProperty() {
         return selected;
     }
@@ -98,10 +102,18 @@ public class Tile {
         return category;
     }
 
+    /**
+     * Get the current color of the Tile
+     * @return
+     */
     public Color getCurrentColor() {
         return currentColor.get();
     }
 
+    /**
+     * Get the current color of the tile
+     * @return
+     */
     public SimpleObjectProperty<Color> currentColorProperty() {
         return currentColor;
     }
@@ -128,8 +140,29 @@ public class Tile {
         return(word);
     }
 
-
+    /**
+     * Equals method to check if Tile is in an ArrayList
+     * @param obj
+     * @return
+     */
     public boolean equals(Object obj) {
         return obj.toString().equals( this.toString());
+    }
+
+    /**
+     * Returns the difficulty of the Tile
+     * @return
+     */
+    public int getDifficulty() {
+        return this.difficulty;
+    }
+
+    /**
+     * Returns stored word
+     * @return word
+     * @author Casey King
+     */
+    public String getWord() {
+        return word;
     }
 }

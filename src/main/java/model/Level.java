@@ -8,6 +8,5 @@ public enum Level {
     MEDIUM,
     HARD,
     EXTREME,
-
     HOLLYWOOD
 }

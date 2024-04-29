@@ -118,7 +118,6 @@ public class ConnectionsModel {
             // Decrease remaining categories, reset if win
             else {
                 remainingCategories--;
-                board.addGuessedCategory();
                 if (remainingCategories == 0) {
                     reset();
                     System.out.println("Game won");

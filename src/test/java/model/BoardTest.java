@@ -59,30 +59,6 @@ class BoardTest {
     }
 
     @Test
-    void shuffleBoard() {
-        ArrayList<Tile> allTilesBefore = new ArrayList<>();
-        ArrayList<Tile> allTilesAfter = new ArrayList<>();
-        for (ArrayList each : board.getWords()){
-            for (Object tiles : each){
-                allTilesBefore.add((Tile) tiles);
-            }
-        }
-        board.shuffleBoard();
-        for (ArrayList each : board.getWords()){
-            for (Object tiles : each){
-                allTilesAfter.add((Tile) tiles);
-            }
-        }
-
-        try {
-            assertArrayEquals(allTilesBefore.toArray(), allTilesAfter.toArray());
-            fail("The lists are unexpectedly equal.");
-        } catch (AssertionError e) {
-            // This is expected if the lists are not equal, test should pass
-        }
-    }
-
-    @Test
     void getNumSelected() {
         board.select(0,1);
         assertEquals(board.getNumSelected(),1);

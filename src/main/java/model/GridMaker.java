@@ -105,6 +105,10 @@ public class GridMaker {
         return makeBoard(extremeModeMap);
     }
 
+    /**
+     * Makes Hollywood level board in Connections
+     * @return the Board in list format
+     */
     public static ArrayList<Tile> makeHollywoodBoard() {
         String rdj = "https://upload.wikimedia.org/wikipedia/commons/9/94/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg";
         String evans = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/ChrisEvans2023.jpg/800px-ChrisEvans2023.jpg";
@@ -126,12 +130,18 @@ public class GridMaker {
         hollywoodMap = new TreeMap<String, String[]>();
         hollywoodMap.put("Avengers Actors", new String[]{rdj, evans, hemsworth, scar});
         hollywoodMap.put("Godfather Actors", new String[]{brando, pacino, deniro, duval});
-        hollywoodMap.put("WWE -> Actors", new String[]{cena, bautista, rock, andre});
+        hollywoodMap.put("Former WWE Stars", new String[]{cena, bautista, rock, andre});
         hollywoodMap.put("Last 4 Oscar Winners", new String[]{murphy, smith, fraser, hopkins});
 
         return makeBoard(hollywoodMap);
         }
 
+
+    /**
+     * Makes the list of words
+      * @param mapOfWords map containing words and their categories
+     * @return list of words in Tile class
+     */
     private static ArrayList<Tile> makeBoard(TreeMap<String, String[]> mapOfWords) {
 
         ArrayList<Tile> listOfTiles = new ArrayList<>();
@@ -149,16 +159,5 @@ public class GridMaker {
 
         return listOfTiles;
     }
-
-
-    public static void main(String[] args) {
-        ArrayList<Tile> testList = GridMaker.makeEasyModeBoard();
-
-        for (Tile tile : testList) {
-            System.out.print(tile.getWord() + " ");
-        }
-        System.out.println();
-    }
-
 
 }
