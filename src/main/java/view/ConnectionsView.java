@@ -342,7 +342,7 @@ public class ConnectionsView {
      */
     public void addBallCounterToTheBottom(int count){
         ballDisplay.getChildren().clear();
-        System.out.println(count);
+        //System.out.println(count);
         for (int i = 0; i < count; i++) {
             Circle circle = new Circle(7, Color.RED);  // Create a new circle (ball) with radius 10
             ballDisplay.getChildren().add(circle);  // Add the circle to the display box
