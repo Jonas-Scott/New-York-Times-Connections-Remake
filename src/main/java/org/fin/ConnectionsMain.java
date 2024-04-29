@@ -22,8 +22,6 @@ public class ConnectionsMain extends Application {
      * Main model to start the game
      */
     private ConnectionsController theController;
-    private Stage primaryStage;
-
     public static void main(String[] args) {launch(args);}
 
 
@@ -34,7 +32,6 @@ public class ConnectionsMain extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        this.theView = new ConnectionsView(this.theModel,primaryStage);
         Scene scene = new Scene(theView.getHomeScreenRoot());
 
         // Attach a CSS file for styling
@@ -59,6 +56,6 @@ public class ConnectionsMain extends Application {
     public void init() throws Exception {
         super.init();
         this.theModel = new ConnectionsModel();
-        this.theView = new ConnectionsView(this.theModel, primaryStage);
+        this.theView = new ConnectionsView(this.theModel);
     }
 }
