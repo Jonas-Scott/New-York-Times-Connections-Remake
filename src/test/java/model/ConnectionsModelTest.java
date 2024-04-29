@@ -48,10 +48,10 @@ public class ConnectionsModelTest {
 
     @Test
     void guess() {
-        connectionsModel.getBoard().select(0, 0);
-        connectionsModel.getBoard().select(0, 1);
-        connectionsModel.getBoard().select(0, 2);
-        connectionsModel.getBoard().select(0, 3);
+        connectionsModel.getBoard().select(0);
+        connectionsModel.getBoard().select(1);
+        connectionsModel.getBoard().select(2);
+        connectionsModel.getBoard().select(3);
 
         // Make a guess
         connectionsModel.guess();

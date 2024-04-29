@@ -100,15 +100,15 @@ public class ConnectionsModel {
         if(board.getNumSelected() == 4) {
             // Add guess only if wrong, reset if lose
             if (board.checkSelected() != 2) {
-                System.out.println("Wrong Guess");
+                //System.out.println("Wrong Guess");
                 guesses++;
                 if (guesses == MAX_GUESSES) {
                     reset();
-                    System.out.println("Game lost");
+                    //System.out.println("Game lost");
                     return 3;
                 }
                 if (board.checkSelected() == 1){
-                    System.out.println("One away!");
+                    //System.out.println("One away!");
                     return 1;
                 }
                 else{
