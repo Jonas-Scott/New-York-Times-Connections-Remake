@@ -38,13 +38,7 @@ public class ConnectionsModel {
      */
     private Board board;
 
-    public ArrayList<String> getGuessedCategories() {
-        return guessedCategories;
-    }
 
-    public int getNumGuessedCategories() {
-        return guessedCategories.size();
-    }
 
     /**
      * Kind of like a state-check
@@ -66,8 +60,6 @@ public class ConnectionsModel {
      */
     private final int MAX_GUESSES = 4;
 
-    private ArrayList<String> guessedCategories;
-
     /**
      * ConnectionsModel constructor, initializes variables
      */
@@ -75,7 +67,6 @@ public class ConnectionsModel {
         guesses = 0;
         inGame = false;
         remainingCategories = 4;
-        guessedCategories = new ArrayList<>();
 
     }
 
@@ -93,14 +84,12 @@ public class ConnectionsModel {
      * Check if selected tiles are a category
      *
      * @return 0 if we have nothing right, 1 if we are 1 guess away,
-     * 2 if we got a correct guess, 3 if the game is lost, 4 if it is won
+     * 2 if we got a correct guess, 3 if the game is lost, 4 if it is won, 5 if we have already guessed it
      */
     public int guess() {
         // Only guess if 4 tiles selected
         if(board.getNumSelected() == 4) {
-            // Add guess only if wrong, reset if lose
             if (board.checkSelected() != 2) {
-                //System.out.println("Wrong Guess");
                 guesses++;
                 if (guesses == MAX_GUESSES) {
                     reset();
@@ -108,7 +97,6 @@ public class ConnectionsModel {
                     return 3;
                 }
                 if (board.checkSelected() == 1){
-                    //System.out.println("One away!");
                     return 1;
                 }
                 else{

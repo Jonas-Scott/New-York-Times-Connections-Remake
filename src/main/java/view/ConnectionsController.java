@@ -92,14 +92,17 @@ public class ConnectionsController {
         this.theView.btnExtreme.setOnAction(e -> switchToGameBoard(Level.EXTREME));
         this.theView.btnHollywood.setOnAction(e -> switchToGameBoard(Level.HOLLYWOOD));
 
-        //
+        // set go back button to return to home screen
         theView.getGoBackButton().setOnAction(e -> switchToHomeScreen());
+
+        // Check selected tiles
         theView.getCheckSelectedButton().setOnAction(e -> {
             int result = theModel.guess();
 
             theView.showFeedback(result);
         });
 
+        // set shuffle button to shuffle buttons
         theView.getShuffleButton().setOnAction(e -> {
             theView.shuffleButtons();
         });
@@ -113,6 +116,7 @@ public class ConnectionsController {
      * @author Mikey M
      */
     private void switchToGameBoard(Level level) {
+        // Choose level based on what was clicked
         theModel.chooseLevel(level);
 
         // Create the game board scene
@@ -122,6 +126,7 @@ public class ConnectionsController {
             throw new RuntimeException(e);
         }
 
+        // initialize bindings for squares
         initGameBoardBindings();
 
         // Set the scene in the primary stage
@@ -138,6 +143,7 @@ public class ConnectionsController {
      */
     private void initGameBoardBindings() {
 
+        // Bind tiles to selecting Tile
         for(int i = 0; i < theView.getListOfSelectableWords().size(); i++){
                 final int row = i;
                 Tile tile = theModel.getBoard().getWords().get(i);

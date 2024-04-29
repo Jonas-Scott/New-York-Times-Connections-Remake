@@ -50,5 +50,13 @@ game more or less challenging and clever.
 
 ## Package Structure
 ****
+We followed a standard MVC package structure. We have a model package containing all of our logic for our
+program to run. This package contains all the stuff with the intricacies and details of the board. We have 
+our ConnectionsMain class in our org package that is there to start the program and open the initial home 
+screen window. Our view package contains a lot of functionality in the ConnectionsView class and also contains
+the controller class. The controller class contains all functionality for switching between screens and 
+the bindings for the buttons. We have a resources package containing two different CSS files we used for 
+styling, one for the home screen and one for the gameplay screen. Finally, we have our test package containing 
+all necessary JUnit tests. 
 
 ### Video URL: 

@@ -21,6 +21,7 @@ package view;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -171,8 +172,6 @@ public class ConnectionsView {
         // Re add all the gameplay buttons after clearing the board
         addGameplayButtons();
 
-        this.gamePlayRoot.add(notificationLabel, 0,5, 2,1);  // Adjust position as needed
-
     }
 
     /**
@@ -244,7 +243,7 @@ public class ConnectionsView {
      */
     public void showFeedback(int result) {
         if (result == 1 || result == 0){
-
+            shakeSelectedTiles();
             if (result == 1) {
                 initNotificationLabel(14);
                 messagePopUp("One Away!");
@@ -269,6 +268,10 @@ public class ConnectionsView {
             this.gamePlayRoot.getChildren().remove(checkSelectedButton);
         }
 
+        else if (result == 5){
+            messagePopUp("Already Guessed!");
+        }
+
         updateGuessCounter(theModel.userFeedback());
     }
 
@@ -280,14 +283,17 @@ public class ConnectionsView {
      * @author - Casey king, Owen Reilly, Jonas Scott, Mikey Myro
      */
     public void reLayoutGamePlayRoot() {
+
+        // Reset root
         this.gamePlayRoot.getChildren().clear();
 
-        addCategories();
-        addNewCategory();
+        addCategories(); // Add the previous categories
+        addNewCategory(); // add the new category
 
         ArrayList<StackPane> newList = new ArrayList<>();
 
 
+        // remake list without guessed
         for(StackPane wordTile : listOfSelectableWords) {
             String word;
             if (this.theModel.getBoard().getLevel() != Level.HOLLYWOOD){
@@ -303,10 +309,13 @@ public class ConnectionsView {
         }
         listOfSelectableWords = newList;
 
-        addWords();
-        addGameplayButtons();
+        addWords(); // Re add words
+        addGameplayButtons(); // Re add buttons
     }
 
+    /**
+     * Display word tiles
+     */
     private void addWords() {
         int yPos = listOfCategoriesGuessed.size() * 4;
         for(int i = 0; i < listOfSelectableWords.size(); i++){
@@ -326,7 +335,7 @@ public class ConnectionsView {
      *
      */
     private void addNewCategory() {
-        String words;
+        String words; // Get all words
         String category = theModel.getBoard().getSelected().get(0).getCategory() + " ";
         if (this.theModel.getBoard().getLevel() != Level.HOLLYWOOD) {
             words = theModel.getBoard().getSelected().toString();
@@ -358,7 +367,7 @@ public class ConnectionsView {
         Text catAndWords = new Text(category + words);
         catAndWords.setTextAlignment(TextAlignment.CENTER);
         StackPane catLbl = new StackPane(catRect, catAndWords);
-        listOfCategoriesGuessed.add(catLbl);
+        listOfCategoriesGuessed.add(catLbl); // Make label for category
         gamePlayRoot.add(catLbl, 0, listOfCategoriesGuessed.size() - 1, 4, 1);
     }
 
@@ -387,6 +396,7 @@ public class ConnectionsView {
      * @author casey K
      */
     public boolean checkIfSelected(String word) {
+        // Check if each tile is selcted or not
         for(Tile tile : this.theModel.getBoard().getSelected()) {
             if (tile.getWord().equals(word)) {
                 return true;
@@ -417,10 +427,12 @@ public class ConnectionsView {
      * @author - Owen Reilly
      */
     public void messagePopUp(String message) {
+        // Set up message
         notificationLabel.setText(message);
         notificationLabel.setVisible(true);
         notificationLabel.setOpacity(0);
 
+        // set up transition
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), notificationLabel);
         fadeIn.setToValue(1);  // Fade in to fully opaque
 
@@ -432,6 +444,37 @@ public class ConnectionsView {
         SequentialTransition sequence = new SequentialTransition(fadeIn, stayVisible, fadeOut);
         sequence.setOnFinished(event -> notificationLabel.setVisible(false));  // Hide after animation
         sequence.play();
+    }
+
+    public void shakeSelectedTiles() {
+        // Move every tile selected if wrong
+        for (Tile tile : theModel.getBoard().getSelected()) {
+            listOfSelectableWords.stream()
+                    .filter(sp -> sp.getChildren().size() > 1)
+                    .filter(sp -> {
+                        if (theModel.getBoard().getLevel() == Level.HOLLYWOOD) {
+                            return sp.getChildren().get(1).getId().equals(tile.getWord());
+                        } else {
+                            Text text = (Text) sp.getChildren().get(1);
+                            return text.getText().equals(tile.getWord());
+                        }
+                    })
+                    .forEach(this::applyShakeAnimation);
+        }
+    }
+
+    /**
+     * Applies a shaking animation to a given StackPane.
+     * @param stackPane the StackPane to animate
+     */
+    private void applyShakeAnimation(StackPane stackPane) {
+        // Make animation
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), stackPane);
+        translateTransition.setFromX(0);
+        translateTransition.setToX(10);
+        translateTransition.setCycleCount(6);
+        translateTransition.setAutoReverse(true);
+        translateTransition.play();
     }
 
     /**
@@ -460,6 +503,7 @@ public class ConnectionsView {
      * @author Mikey Myro
      */
     public void reset() {
+        // Clear root and return to home
         gamePlayRoot.getChildren().clear();
         initSceneGraph();
     }
@@ -470,10 +514,12 @@ public class ConnectionsView {
      */
     private void addGameplayButtons() {
 
+        // Add all gameplay elements
         this.gamePlayRoot.add(ballDisplay, 0, 5);
         this.gamePlayRoot.add(checkSelectedButton, 1, 5, 2, 1);
         this.gamePlayRoot.add(shuffleButton, 2, 5);
         this.gamePlayRoot.add(goBackButton, 3, 5);
+        this.gamePlayRoot.add(notificationLabel, 0,5, 2,1);
 
     }
 
