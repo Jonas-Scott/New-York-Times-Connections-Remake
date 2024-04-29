@@ -46,8 +46,8 @@ public class ConnectionsController {
      */
     public ConnectionsController(ConnectionsModel theModel, ConnectionsView theView, Stage primaryStage){
         this.theModel = theModel;
-        this.theView = theView;
         this.primaryStage = primaryStage;
+        this.theView = theView;
 
         gameBoardScene = new Scene(theView.getGamePlayRoot());
         gameBoardScene.getStylesheets().add(
