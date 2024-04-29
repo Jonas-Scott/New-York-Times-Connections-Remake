@@ -20,17 +20,14 @@ package view;
 
 
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.ConnectionsModel;
 import model.Level;
 import model.Tile;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 public class ConnectionsController {
     private final Scene gameBoardScene;
@@ -57,16 +54,7 @@ public class ConnectionsController {
                 getClass().getResource("/GameScreen.css")
                         .toExternalForm());
 
-        initLevelSelector();
-        initGobackButton();
-    }
-
-    /**
-     * Binding for the return button, calling the switchToHomeScreen method
-     * when the user hits the return button
-     */
-    private void initGobackButton() {
-        theView.getGoBack().setOnAction(e -> switchToHomeScreen());
+        initEventHandlers();
     }
 
     /**
@@ -87,9 +75,8 @@ public class ConnectionsController {
 
         // Reset the categories guessed to 0 when the player exits the level
         theView.listOfCategoriesGuessed.clear();
-        initLevelSelector();
+        initEventHandlers();
     }
-
 
     /**
      * Binds all the buttons in the view to a specific action
@@ -97,20 +84,31 @@ public class ConnectionsController {
      *
      * @author Owen R
      */
-    private void initLevelSelector() {
+    private void initEventHandlers() {
+        /// initialize level selector buttons
         this.theView.btnEasy.setOnAction(e -> switchToGameBoard(Level.EASY));
         this.theView.btnMedium.setOnAction(e -> switchToGameBoard(Level.MEDIUM));
         this.theView.btnHard.setOnAction(e -> switchToGameBoard(Level.HARD));
         this.theView.btnExtreme.setOnAction(e -> switchToGameBoard(Level.EXTREME));
         this.theView.btnHollywood.setOnAction(e -> switchToGameBoard(Level.HOLLYWOOD));
+
+        //
+        theView.getGoBackButton().setOnAction(e -> switchToHomeScreen());
+        theView.getCheckSelectedButton().setOnAction(e -> {
+            int result = theModel.guess();
+
+            theView.showFeedback(result);
+        });
+
+        theView.getShuffleButton().setOnAction(e -> {
+            theView.shuffleButtons();
+        });
     }
 
     /**
      * Switch the window to the appropriate level game board
      * showing the new window
      * @param level - difficulty the user chooses to play
-     *
-     * @author Mikey M
      */
     private void switchToGameBoard(Level level) {
         theModel.chooseLevel(level);
@@ -133,8 +131,6 @@ public class ConnectionsController {
     /**
      * Create all bindings for the game board, adding to the tiles color properties
      * and creating the tiles and rectangles
-     *
-     * @author Casey K
      */
     private void initGameBoardBindings() {
 

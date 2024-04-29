@@ -29,12 +29,6 @@ import java.util.Map;
  */
 public class Board {
 
-    private ArrayList<String> guessedCategories;
-
-    public ArrayList<Tile> getWords() {
-        return words;
-    }
-
     /**
      * 4x4 array of tiles containing words to be guessed
      */
@@ -45,14 +39,11 @@ public class Board {
      */
     ArrayList<Tile> selected;
 
-    int categoriesGuessed = 0;
-
+    /**
+     * Level of Connections
+     */
     private Level level;
 
-
-    public Level getLevel() {
-        return level;
-    }
 
     /**
      * Initialize board according to level
@@ -90,8 +81,6 @@ public class Board {
             }
         }
         Collections.shuffle(this.words);
-        guessedCategories = new ArrayList<>();
-        //System.out.println(this.words);
         selected = new ArrayList<>();
     }
 
@@ -112,14 +101,10 @@ public class Board {
         }
     }
 
-    public ArrayList<Tile> getSelected() {
-        return selected;
-    }
-
     /**
      * Check if selected tiles are in correct category
      *
-     * @return 0 if its incorrect, 1 if there are 3 of the same category, and 2 if there are all 4
+     * @return 0 if it's incorrect, 1 if there are 3 of the same category, and 2 if there are all 4
      */
     public int checkSelected() {
         if(this.selected.size() < 4) {
@@ -154,13 +139,9 @@ public class Board {
         } else if (maxValue == 3) {
             return 1;  // Exactly three of one category
         } else {
-            categoriesGuessed++;
-            addGuessedCategory();
-            //adjustBoard();  // Assuming adjustBoard() makes necessary modifications based on this check
             return 2;       // Four of one category
         }
     }
-
 
     /**
      * Give number of tiles selected
@@ -171,19 +152,34 @@ public class Board {
         return selected.size();
     }
 
+    /**
+     * Clears the list of selected tiles
+     */
     public void clearSelected() {
         this.selected.clear();
     }
 
-    public void addGuessedCategory() {
-        guessedCategories.add(selected.get(0).getCategory());
+    /**
+     * Getter for selected tiles
+     * @return tiles
+     */
+    public ArrayList<Tile> getSelected() {
+        return selected;
     }
 
-    public ArrayList<String> getGuessedCategories() {
-        return guessedCategories;
+    /**
+     * Gets the level of the game
+     * @return level
+     */
+    public Level getLevel() {
+        return level;
     }
 
-    public int getCategoriesGuessed() {
-        return categoriesGuessed;
+    /**
+     * Gets the list of words
+     * @return words
+     */
+    public ArrayList<Tile> getWords() {
+        return words;
     }
 }
