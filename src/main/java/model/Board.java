@@ -45,6 +45,7 @@ public class Board {
     private Level level;
 
 
+
     /**
      * Initialize board according to level
      *
@@ -52,6 +53,7 @@ public class Board {
      *
      */
     public Board(Level level) {
+        //this.pastGuesses = new ArrayList<>();
         level = level;
         switch (level) {
             case EASY: {
@@ -109,13 +111,16 @@ public class Board {
      * Acts as a type of extended boolean. A lot of different options can happen depending
      * on what the user selects
      *
-     * @return 0 if it's incorrect, 1 if there are 3 of the same category, and 2 if there are all 4
+     * @return 0 if it's incorrect / invalid, 1 if there are 3 of the same category, 2 if there are all 4
+     * and 3 if we have already guessed it
      * @author Owen R, Casey K
      */
     public int checkSelected() {
-        if(this.selected.size() < 4) {
+         if(this.selected.size() < 4) {
             return 0;
         }
+
+
         // see if categories all match
         Map<Integer, Integer> guessesPer = new HashMap<>(); // Mutable map
         guessesPer.put(1, 0);

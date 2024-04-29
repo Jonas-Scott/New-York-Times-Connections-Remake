@@ -21,6 +21,7 @@ package view;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -244,7 +245,7 @@ public class ConnectionsView {
      */
     public void showFeedback(int result) {
         if (result == 1 || result == 0){
-
+            shakeSelectedTiles();
             if (result == 1) {
                 initNotificationLabel(14);
                 messagePopUp("One Away!");
@@ -267,6 +268,10 @@ public class ConnectionsView {
             messagePopUp("You won!");
             this.gamePlayRoot.getChildren().remove(shuffleButton);
             this.gamePlayRoot.getChildren().remove(checkSelectedButton);
+        }
+
+        else if (result == 5){
+            messagePopUp("Already Guessed!");
         }
 
         updateGuessCounter(theModel.userFeedback());
@@ -432,6 +437,35 @@ public class ConnectionsView {
         SequentialTransition sequence = new SequentialTransition(fadeIn, stayVisible, fadeOut);
         sequence.setOnFinished(event -> notificationLabel.setVisible(false));  // Hide after animation
         sequence.play();
+    }
+
+    public void shakeSelectedTiles() {
+        for (Tile tile : theModel.getBoard().getSelected()) {
+            listOfSelectableWords.stream()
+                    .filter(sp -> sp.getChildren().size() > 1)
+                    .filter(sp -> {
+                        if (theModel.getBoard().getLevel() == Level.HOLLYWOOD) {
+                            return sp.getChildren().get(1).getId().equals(tile.getWord());
+                        } else {
+                            Text text = (Text) sp.getChildren().get(1);
+                            return text.getText().equals(tile.getWord());
+                        }
+                    })
+                    .forEach(this::applyShakeAnimation);
+        }
+    }
+
+    /**
+     * Applies a shaking animation to a given StackPane.
+     * @param stackPane the StackPane to animate
+     */
+    private void applyShakeAnimation(StackPane stackPane) {
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), stackPane);
+        translateTransition.setFromX(0);
+        translateTransition.setToX(10);
+        translateTransition.setCycleCount(6);
+        translateTransition.setAutoReverse(true);
+        translateTransition.play();
     }
 
     /**
