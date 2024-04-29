@@ -87,7 +87,7 @@ public class ConnectionsView {
      * Init method to initialize all objects in the scene graph
      * adding the title as well as the buttons for selecting difficulty
      *
-     * @author - Jonas Scott
+     * @author - Jonas Scott, Mikey Myro
      */
     private void initSceneGraph() {
         this.homeScreenRoot = new VBox();
@@ -144,7 +144,7 @@ public class ConnectionsView {
      * @throws FileNotFoundException for the game modes with photos in them, in case the URL does not exist
      * (this will never throw for now, since each URL is manually inputted in)
      *
-     * @author Case K, Owen R, Jonas S, Mikey M
+     * @author Casey K, Owen R, Jonas S, Mikey M
      */
     public void initGamePlayRoot() throws FileNotFoundException{
 
@@ -277,7 +277,7 @@ public class ConnectionsView {
      * the user gets a category right, properly moving the tiles around
      * to maintain the grid pattern. Also creates the correct category rectangle
      * to tell the user what the category was that they just got right
-     * @author - CK, OR, JS
+     * @author - Casey king, Owen Reilly, Jonas Scott, Mikey Myro
      */
     public void reLayoutGamePlayRoot() {
         this.gamePlayRoot.getChildren().clear();
@@ -446,10 +446,19 @@ public class ConnectionsView {
         notificationLabel.setVisible(false);  // Start hidden
     }
 
+    /**
+     * getter for go back button
+     * @return goBackButton
+     */
     public Button getGoBackButton() {
         return goBackButton;
     }
 
+    /**
+     * Clears the game play root node and initializes the scene graph for the game.
+     * This method is typically used to reset the game to its initial state.
+     * @author Mikey Myro
+     */
     public void reset() {
         gamePlayRoot.getChildren().clear();
         initSceneGraph();
@@ -468,10 +477,18 @@ public class ConnectionsView {
 
     }
 
+    /**
+     * getter for checkSelectedButton
+     * @return checkSelectedButton
+     */
     public Button getCheckSelectedButton() {
         return checkSelectedButton;
     }
 
+    /**
+     * getter for shuffleButton
+     * @return shuffleButton
+     */
     public Button getShuffleButton() {
         return shuffleButton;
     }

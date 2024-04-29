@@ -48,8 +48,8 @@ public class Board {
     /**
      * Initialize board according to level
      *
-     * @param level difficulty of
-     *
+     * @param level difficulty of game
+     * @author Casey King, Mikey Myro
      */
     public Board(Level level) {
         level = level;

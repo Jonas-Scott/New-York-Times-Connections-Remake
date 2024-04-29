@@ -79,7 +79,7 @@ public class Tile {
 
     /**
      * Returns whether Tile is selected
-     * @return
+     * @return isSelected
      */
     public boolean isSelected() {
         return selected.get();
@@ -87,7 +87,7 @@ public class Tile {
 
     /**
      * Returns whether Tile is selected
-     * @return
+     * @return selected
      */
     public SimpleBooleanProperty selectedProperty() {
         return selected;
@@ -95,7 +95,7 @@ public class Tile {
 
     /**
      * Return category of word
-     * @return
+     * @return category
      * @author Casey King
      */
     public String getCategory() {
@@ -104,7 +104,7 @@ public class Tile {
 
     /**
      * Get the current color of the Tile
-     * @return
+     * @return currentColor
      */
     public Color getCurrentColor() {
         return currentColor.get();
@@ -112,7 +112,7 @@ public class Tile {
 
     /**
      * Get the current color of the tile
-     * @return
+     * @return currentColor
      */
     public SimpleObjectProperty<Color> currentColorProperty() {
         return currentColor;
@@ -134,7 +134,7 @@ public class Tile {
 
     /**
      * Prints word of Tile
-     * @return
+     * @return word
      */
     public String toString() {
         return(word);
@@ -142,8 +142,8 @@ public class Tile {
 
     /**
      * Equals method to check if Tile is in an ArrayList
-     * @param obj
-     * @return
+     * @param obj to compare
+     * @return if they are equal
      */
     public boolean equals(Object obj) {
         return obj.toString().equals( this.toString());
@@ -151,7 +151,7 @@ public class Tile {
 
     /**
      * Returns the difficulty of the Tile
-     * @return
+     * @return difficulty
      */
     public int getDifficulty() {
         return this.difficulty;

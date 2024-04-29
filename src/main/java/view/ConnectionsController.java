@@ -61,7 +61,7 @@ public class ConnectionsController {
      * Method for going back to the home screen from the gameplay screen, used
      * if the player loses or if they just want to switch difficulties. The user
      * hits a return button to invoke this method
-     * @author - Casey King
+     * @author - Casey King, Mikey Myro
      */
     private void switchToHomeScreen() {
         theModel.reset();
@@ -82,7 +82,7 @@ public class ConnectionsController {
      * Binds all the buttons in the view to a specific action
      * each action chooses a level that we have in the model.
      *
-     * @author Owen R
+     * @author Owen R, Mikey Myro
      */
     private void initEventHandlers() {
         /// initialize level selector buttons

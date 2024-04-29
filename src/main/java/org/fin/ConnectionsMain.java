@@ -28,7 +28,7 @@ public class ConnectionsMain extends Application {
     /**
      * Start the view, initializing all JavaFX objects and launching the window
      * @param primaryStage - Primary Stage object
-     * @author - Jonas Scott
+     * @author - Jonas Scott, Mikey Myro
      */
     @Override
     public void start(Stage primaryStage) {

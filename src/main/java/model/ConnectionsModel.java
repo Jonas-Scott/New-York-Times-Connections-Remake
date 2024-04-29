@@ -172,6 +172,10 @@ public class ConnectionsModel {
         return inGame;
     }
 
+    /**
+     * getter for remainingCategories
+     * @return remainingCategories
+     */
     public int getRemainingCategories() {
         return remainingCategories;
     }

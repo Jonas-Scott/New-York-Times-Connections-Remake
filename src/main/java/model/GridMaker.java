@@ -48,6 +48,7 @@ public class GridMaker {
     /**
      * Makes an easy mode board of Connections
      * @return 4x4 array of Tiles
+     * @author Casey king
      */
     public static ArrayList<Tile> makeEasyModeBoard() {
         easyModeMap = new TreeMap<>();
@@ -63,6 +64,7 @@ public class GridMaker {
     /**
      * Makes a medium mode board of Connections
      * @return 4x4 array of Tiles
+     * @author Owen Reilly
      */
     public static ArrayList<Tile> makeMediumModeBoard() {
        mediumModeMap = new TreeMap<>();
@@ -78,6 +80,7 @@ public class GridMaker {
     /**
      * Makes a hard mode board of Connections
      * @return 4x4 array of Tiles
+     * @author Owen Reilly
      */
     public static ArrayList<Tile> makeHardModeBoard() {
         hardModeMap = new TreeMap<>();
@@ -93,6 +96,7 @@ public class GridMaker {
     /**
      * Makes an extreme mode board of Connections
      * @return 4x4 array of Tiles
+     * @author Owen Reilly
      */
     public static ArrayList<Tile> makeExtremeModeBoard() {
         extremeModeMap = new TreeMap<>();
@@ -108,6 +112,7 @@ public class GridMaker {
     /**
      * Makes Hollywood level board in Connections
      * @return the Board in list format
+     * @author Owen Reilly
      */
     public static ArrayList<Tile> makeHollywoodBoard() {
         String rdj = "https://upload.wikimedia.org/wikipedia/commons/9/94/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg";
