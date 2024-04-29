@@ -34,6 +34,9 @@ class BoardTest {
     }
 
     @Test
+    /**
+     * @author Owen R
+     */
     void checkSelected() {
         Tile roberts = new Tile("Roberts", "____ Hall",1);
         Tile larrison = new Tile ("Larrison", "____ Hall",1);
@@ -58,31 +61,12 @@ class BoardTest {
         assertEquals(board.checkSelected(),2,"All categories are the same");
     }
 
-//    @Test
-//    void shuffleBoard() {
-//        ArrayList<Tile> allTilesBefore = new ArrayList<>();
-//        ArrayList<Tile> allTilesAfter = new ArrayList<>();
-//        for (ArrayList each : board.getWords()){
-//            for (Object tiles : each){
-//                allTilesBefore.add((Tile) tiles);
-//            }
-//        }
-//        board.shuffleBoard();
-//        for (ArrayList each : board.getWords()){
-//            for (Object tiles : each){
-//                allTilesAfter.add((Tile) tiles);
-//            }
-//        }
-//
-//        try {
-//            assertArrayEquals(allTilesBefore.toArray(), allTilesAfter.toArray());
-//            fail("The lists are unexpectedly equal.");
-//        } catch (AssertionError e) {
-//            // This is expected if the lists are not equal, test should pass
-//        }
-//    }
+
 
     @Test
+    /**
+     * @author Owen R
+     */
     void getNumSelected() {
         board.select(1);
         assertEquals(board.getNumSelected(),1);

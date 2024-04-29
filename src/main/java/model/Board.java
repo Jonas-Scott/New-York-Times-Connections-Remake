@@ -49,6 +49,7 @@ public class Board {
      * Initialize board according to level
      *
      * @param level difficulty of
+     *
      */
     public Board(Level level) {
         level = level;
@@ -85,9 +86,11 @@ public class Board {
     }
 
     /**
-     * Selects a tile on the board
+     * Selects a tile on the board using indexing
      *
      * @param i index of tile
+     *
+     * @author Casey K
      */
     public void select(int i) {
         Tile selectTile = words.get(i);
@@ -103,8 +106,11 @@ public class Board {
 
     /**
      * Check if selected tiles are in correct category
+     * Acts as a type of extended boolean. A lot of different options can happen depending
+     * on what the user selects
      *
      * @return 0 if it's incorrect, 1 if there are 3 of the same category, and 2 if there are all 4
+     * @author Owen R, Casey K
      */
     public int checkSelected() {
         if(this.selected.size() < 4) {

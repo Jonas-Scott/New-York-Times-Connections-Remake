@@ -35,18 +35,27 @@ public class ConnectionsModelTest {
     private ConnectionsModel connectionsModel;
 
     @BeforeEach
+    /**
+     * @author Mikey M
+     */
     void setUp() {
         connectionsModel = new ConnectionsModel();
         connectionsModel.chooseLevel(Level.EASY);
     }
 
     @Test
+    /**
+     * @author Mikey M
+     */
     void chooseLevel() {
         assertTrue(connectionsModel.isInGame());
         assertNotNull(connectionsModel.getBoard());
     }
 
     @Test
+    /**
+     * @author Mikey M
+     */
     void guess() {
         connectionsModel.getBoard().select(0);
         connectionsModel.getBoard().select(1);
