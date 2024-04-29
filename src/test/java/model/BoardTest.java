@@ -23,6 +23,8 @@ class BoardTest {
 
     @Test
     /**
+     * Test the select method in the Board class, ensuring that the list of selected categories
+     * contains the proper amount of selected tiles at different increments
      * @author Owen R
      */
     void select() {
@@ -35,6 +37,9 @@ class BoardTest {
 
     @Test
     /**
+     * Check and make sure that the checking of the selected tiles is correct. Making sure the proper
+     * integer is returned based on if the suer has selected less than 3 tiles that go together, 3 tiles
+     * that go together and 4 tiles that go together for a correct category.
      * @author Owen R
      */
     void checkSelected() {
@@ -65,6 +70,8 @@ class BoardTest {
 
     @Test
     /**
+     * Make sure the getter is working for the num selected, which returns the
+     * amount of tiles that are currently selected
      * @author Owen R
      */
     void getNumSelected() {

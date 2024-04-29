@@ -45,6 +45,8 @@ public class ConnectionsModelTest {
 
     @Test
     /**
+     * Ensure that when the user chooses a level to play, the correct game board is created
+     * with the tiles from that difficulty level
      * @author Mikey M
      */
     void chooseLevel() {
@@ -54,6 +56,8 @@ public class ConnectionsModelTest {
 
     @Test
     /**
+     * Ensure that the guess method is working correctly, meaning that
+     * if a user makes a guess it does not crash the game
      * @author Mikey M
      */
     void guess() {

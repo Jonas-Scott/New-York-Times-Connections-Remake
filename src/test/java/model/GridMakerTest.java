@@ -10,6 +10,7 @@ class GridMakerTest {
 
     @Test
     /**
+     * Test to see if a board is successfully created with easy difficulty
      * @author Mikey M, Owen R
      */
     void makeEasyModeBoard() {
@@ -20,6 +21,7 @@ class GridMakerTest {
 
     @Test
     /**
+     * Test to see if a board is successfully created with medium difficulty
      * @author Mikey M, Owen R
      */
     void makeMediumModeBoard() {
@@ -31,6 +33,7 @@ class GridMakerTest {
 
     @Test
     /**
+     * Test to see if a board is successfully created with hard difficulty
      * @author Mikey M, Owen R
      */
     void makeHardModeBoard() {
@@ -43,6 +46,7 @@ class GridMakerTest {
 
     @Test
     /**
+     * Test to see if a board is successfully created with extreme difficulty
      * @author Mikey M, Owen R
      */
     void makeExtremeModeBoard() {
@@ -53,6 +57,7 @@ class GridMakerTest {
 
     @Test
     /**
+     * Test to see if a board is successfully created in Hollywood mode
      * @author Mikey M, Owen R
      */
     void makeHollywoodBoard(){
