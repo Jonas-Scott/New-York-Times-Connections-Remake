@@ -53,12 +53,10 @@ public class Board {
      *
      */
     public Board(Level level) {
-        //this.pastGuesses = new ArrayList<>();
-        level = level;
+        level = level; // make specific board depending on the level of difficulty
         switch (level) {
             case EASY: {
                 this.words = GridMaker.makeEasyModeBoard();
-                //System.out.println(this.words);
                 this.level = Level.EASY;
                 break;
             }
@@ -83,6 +81,7 @@ public class Board {
                 break;
             }
         }
+        // Shuffle words
         Collections.shuffle(this.words);
         selected = new ArrayList<>();
     }
@@ -97,6 +96,7 @@ public class Board {
     public void select(int i) {
         Tile selectTile = words.get(i);
 
+        // Selected on deselect a tile
         if (selected.contains(selectTile)) {
             selected.remove(selectTile);
             selectTile.select();
