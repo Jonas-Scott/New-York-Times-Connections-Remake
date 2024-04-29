@@ -61,10 +61,20 @@ public class ConnectionsController {
         initGobackButton();
     }
 
+    /**
+     * Binding for the return button, calling the switchToHomeScreen method
+     * when the user hits the return button
+     */
     private void initGobackButton() {
         theView.getGoBack().setOnAction(e -> switchToHomeScreen());
     }
 
+    /**
+     * Method for going back to the home screen from the gameplay screen, used
+     * if the player loses or if they just want to switch difficulties. The user
+     * hits a return button to invoke this method
+     * @author - Casey King
+     */
     private void switchToHomeScreen() {
         theModel.reset();
         theView.reset();
@@ -75,6 +85,8 @@ public class ConnectionsController {
                 getClass().getResource("/ConnectionsHomeScreen.css")
                         .toExternalForm());
 
+        // Reset the categories guessed to 0 when the player exits the level
+        theView.listOfCategoriesGuessed.clear();
         initLevelSelector();
     }
 
@@ -96,6 +108,11 @@ public class ConnectionsController {
         this.theView.btnHollywood.setOnAction(e -> switchToGameBoard(Level.HOLLYWOOD));
     }
 
+    /**
+     * Switch the window to the appropriate level game board
+     * showing the new window
+     * @param level - difficulty the user chooses to play
+     */
     private void switchToGameBoard(Level level) {
         theModel.chooseLevel(level);
 
@@ -114,6 +131,10 @@ public class ConnectionsController {
         primaryStage.show();
     }
 
+    /**
+     * Create all bindings for the game board, adding to the tiles color properties
+     * and creating the tiles and rectangles
+     */
     private void initGameBoardBindings() {
 
         for(int i = 0; i < theView.getListOfSelectableWords().size(); i++){
