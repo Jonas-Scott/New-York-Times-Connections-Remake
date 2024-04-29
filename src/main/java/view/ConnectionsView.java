@@ -172,8 +172,6 @@ public class ConnectionsView {
         // Re add all the gameplay buttons after clearing the board
         addGameplayButtons();
 
-        this.gamePlayRoot.add(notificationLabel, 0,5, 2,1);  // Adjust position as needed
-
     }
 
     /**
@@ -499,6 +497,7 @@ public class ConnectionsView {
         this.gamePlayRoot.add(checkSelectedButton, 1, 5, 2, 1);
         this.gamePlayRoot.add(shuffleButton, 2, 5);
         this.gamePlayRoot.add(goBackButton, 3, 5);
+        this.gamePlayRoot.add(notificationLabel, 0,5, 2,1);
 
     }
 
