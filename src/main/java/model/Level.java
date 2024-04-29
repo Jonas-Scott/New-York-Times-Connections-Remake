@@ -7,5 +7,6 @@ public enum Level {
     EASY,
     MEDIUM,
     HARD,
-    EXTREME
+    EXTREME,
+    HOLLYWOOD
 }

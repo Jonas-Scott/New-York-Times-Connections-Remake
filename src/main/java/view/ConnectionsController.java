@@ -20,18 +20,17 @@ package view;
 
 
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.ConnectionsModel;
 import model.Level;
 import model.Tile;
 
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
 
 public class ConnectionsController {
+    private final Scene gameBoardScene;
     private ConnectionsModel theModel;
     private ConnectionsView theView;
     private Stage primaryStage;
@@ -50,11 +49,33 @@ public class ConnectionsController {
         this.primaryStage = primaryStage;
         this.theView = theView;
 
-        initLevelSelector();
+        gameBoardScene = new Scene(theView.getGamePlayRoot());
+        gameBoardScene.getStylesheets().add(
+                getClass().getResource("/GameScreen.css")
+                        .toExternalForm());
+
+        initEventHandlers();
     }
 
-    private void initBindings(){
-        //theModel.chooseLevel(Level.EASY).bind(theView.getHomeScreenRoot().getChildren());
+    /**
+     * Method for going back to the home screen from the gameplay screen, used
+     * if the player loses or if they just want to switch difficulties. The user
+     * hits a return button to invoke this method
+     * @author - Casey King
+     */
+    private void switchToHomeScreen() {
+        theModel.reset();
+        theView.reset();
+
+        Scene homeScene = new Scene(theView.getHomeScreenRoot());
+        primaryStage.setScene(homeScene);
+        homeScene.getStylesheets().add(
+                getClass().getResource("/ConnectionsHomeScreen.css")
+                        .toExternalForm());
+
+        // Reset the categories guessed to 0 when the player exits the level
+        theView.listOfCategoriesGuessed.clear();
+        initEventHandlers();
     }
 
     /**
@@ -63,22 +84,41 @@ public class ConnectionsController {
      *
      * @author Owen R
      */
-    private void initLevelSelector() {
+    private void initEventHandlers() {
+        /// initialize level selector buttons
         this.theView.btnEasy.setOnAction(e -> switchToGameBoard(Level.EASY));
         this.theView.btnMedium.setOnAction(e -> switchToGameBoard(Level.MEDIUM));
         this.theView.btnHard.setOnAction(e -> switchToGameBoard(Level.HARD));
         this.theView.btnExtreme.setOnAction(e -> switchToGameBoard(Level.EXTREME));
+        this.theView.btnHollywood.setOnAction(e -> switchToGameBoard(Level.HOLLYWOOD));
+
+        //
+        theView.getGoBackButton().setOnAction(e -> switchToHomeScreen());
+        theView.getCheckSelectedButton().setOnAction(e -> {
+            int result = theModel.guess();
+
+            theView.showFeedback(result);
+        });
+
+        theView.getShuffleButton().setOnAction(e -> {
+            theView.shuffleButtons();
+        });
     }
 
+    /**
+     * Switch the window to the appropriate level game board
+     * showing the new window
+     * @param level - difficulty the user chooses to play
+     */
     private void switchToGameBoard(Level level) {
         theModel.chooseLevel(level);
 
         // Create the game board scene
-        theView.initGamePlayRoot();
-        Scene gameBoardScene = new Scene(theView.getGamePlayRoot());
-        gameBoardScene.getStylesheets().add(
-                getClass().getResource("/GameScreen.css")
-                        .toExternalForm());
+        try {
+            theView.initGamePlayRoot();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         initGameBoardBindings();
 
@@ -88,6 +128,10 @@ public class ConnectionsController {
         primaryStage.show();
     }
 
+    /**
+     * Create all bindings for the game board, adding to the tiles color properties
+     * and creating the tiles and rectangles
+     */
     private void initGameBoardBindings() {
 
         for(int i = 0; i < theView.getListOfSelectableWords().size(); i++){
