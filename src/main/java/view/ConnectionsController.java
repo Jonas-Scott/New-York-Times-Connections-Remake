@@ -55,7 +55,6 @@ public class ConnectionsController {
                         .toExternalForm());
 
         initEventHandlers();
-        initGameBoardBindings();
     }
 
     /**
@@ -76,7 +75,6 @@ public class ConnectionsController {
 
         // Reset the categories guessed to 0 when the player exits the level
         theView.listOfCategoriesGuessed.clear();
-        initEventHandlers();
     }
 
     /**
@@ -120,6 +118,8 @@ public class ConnectionsController {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        initGameBoardBindings();
 
         // Set the scene in the primary stage
         primaryStage.setScene(gameBoardScene);
