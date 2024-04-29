@@ -37,6 +37,7 @@ public class ConnectionsModel {
      * Connections game board
      */
     private Board board;
+    private ArrayList<ArrayList<Tile>> pastGuesses;
 
     public ArrayList<String> getGuessedCategories() {
         return guessedCategories;
@@ -45,6 +46,8 @@ public class ConnectionsModel {
     public int getNumGuessedCategories() {
         return guessedCategories.size();
     }
+
+
 
     /**
      * Kind of like a state-check
@@ -72,6 +75,7 @@ public class ConnectionsModel {
      * ConnectionsModel constructor, initializes variables
      */
     public ConnectionsModel() {
+        pastGuesses = new ArrayList<>();
         guesses = 0;
         inGame = false;
         remainingCategories = 4;
@@ -93,11 +97,20 @@ public class ConnectionsModel {
      * Check if selected tiles are a category
      *
      * @return 0 if we have nothing right, 1 if we are 1 guess away,
-     * 2 if we got a correct guess, 3 if the game is lost, 4 if it is won
+     * 2 if we got a correct guess, 3 if the game is lost, 4 if it is won, 5 if we have already guessed it
      */
     public int guess() {
         // Only guess if 4 tiles selected
         if(board.getNumSelected() == 4) {
+
+            // if we have already guessed it then nullify the guess
+
+            if (pastGuesses.contains(board.getSelected())){
+                return 5;
+            }
+
+
+            //System.out.println(pastGuesses);
             // Add guess only if wrong, reset if lose
             if (board.checkSelected() != 2) {
                 //System.out.println("Wrong Guess");
@@ -107,6 +120,7 @@ public class ConnectionsModel {
                     //System.out.println("Game lost");
                     return 3;
                 }
+                //pastGuesses.add(board.getSelected());
                 if (board.checkSelected() == 1){
                     //System.out.println("One away!");
                     return 1;
@@ -154,6 +168,7 @@ public class ConnectionsModel {
         inGame = false;
         guesses = 0;
         remainingCategories = 4;
+        pastGuesses = new ArrayList<>();
     }
 
     /**
