@@ -48,6 +48,7 @@ public class GridMaker {
     /**
      * Makes an easy mode board of Connections
      * @return 4x4 array of Tiles
+     * @author Casey K
      */
     public static ArrayList<Tile> makeEasyModeBoard() {
         easyModeMap = new TreeMap<>();
@@ -63,6 +64,7 @@ public class GridMaker {
     /**
      * Makes a medium mode board of Connections
      * @return 4x4 array of Tiles
+     * @author Casey K
      */
     public static ArrayList<Tile> makeMediumModeBoard() {
        mediumModeMap = new TreeMap<>();
@@ -78,6 +80,7 @@ public class GridMaker {
     /**
      * Makes a hard mode board of Connections
      * @return 4x4 array of Tiles
+     * @author Casey K
      */
     public static ArrayList<Tile> makeHardModeBoard() {
         hardModeMap = new TreeMap<>();
@@ -93,6 +96,7 @@ public class GridMaker {
     /**
      * Makes an extreme mode board of Connections
      * @return 4x4 array of Tiles
+     * @author Casey K
      */
     public static ArrayList<Tile> makeExtremeModeBoard() {
         extremeModeMap = new TreeMap<>();
@@ -105,6 +109,13 @@ public class GridMaker {
         return makeBoard(extremeModeMap);
     }
 
+    /**
+     * Makes an extreme mode board of Connections
+     * Sets all the strings beforehand for easier notation
+     * each string now is a photo URL that will be utilized later
+     * @return 4x4 array of Tiles
+     * @author Owen R
+     */
     public static ArrayList<Tile> makeHollywoodBoard() {
         String rdj = "https://upload.wikimedia.org/wikipedia/commons/9/94/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg";
         String evans = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/ChrisEvans2023.jpg/800px-ChrisEvans2023.jpg";
@@ -132,6 +143,15 @@ public class GridMaker {
         return makeBoard(hollywoodMap);
         }
 
+
+    /**
+     *
+      * @param mapOfWords, all the words that we have laid out in our make___Board
+     * @return the total ArrayList that we will utilize later
+     *
+     * each map is turned into a tile object, which has a word (or URL) and a category
+     *
+     */
     private static ArrayList<Tile> makeBoard(TreeMap<String, String[]> mapOfWords) {
 
         ArrayList<Tile> listOfTiles = new ArrayList<>();

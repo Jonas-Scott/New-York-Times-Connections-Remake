@@ -118,6 +118,7 @@ public class ConnectionsView {
 
     /**
      * Add the home buttons for the difficulties on the home screen
+     * @author Casey K
      */
     private void addHomeButtons() {
         btnEasy = new Button("Easy");
@@ -137,6 +138,7 @@ public class ConnectionsView {
 
     /**
      * Getter for the root of the Home Screen
+     * @author Jonas S
      */
     public VBox getHomeScreenRoot() {
         return homeScreenRoot;
@@ -144,6 +146,7 @@ public class ConnectionsView {
 
     /**
      * Getter for the gamePlayRoot
+     * @author Mikey M
      */
     public Parent getGamePlayRoot() {
         return gamePlayRoot;
@@ -151,11 +154,25 @@ public class ConnectionsView {
 
     /**
      * Get the list of the still selectable words, used after a player gets the category right
+     *
+     * @author Casey K, Owen R
      */
     public ArrayList<StackPane> getListOfSelectableWords() {
         return listOfSelectableWords;
     }
 
+
+    /**
+     * The
+     * @throws FileNotFoundException is thrown if our url file does not exist, but since we manually put in
+     * every URL we will never actually run into this problem
+     *
+     * We run through each word in our list (if it is a photo like for Hollywood, then the word is a url)
+     * We create a rectangle and add either the word or photo onto the rectangle, while also
+     * keeping track of the category
+     *
+     * @author Casey K, Owen R
+     */
     public void initGamePlayRoot() throws FileNotFoundException {
 
         StackPane newWordTile;
@@ -169,9 +186,9 @@ public class ConnectionsView {
                 ImageView imageView = new ImageView();
                 imageView.setImage(image);
                 imageView.setId(imageUrl);
-                imageView.setFitHeight(rect.getHeight());  // Set the ImageView height
-                imageView.setFitWidth(rect.getWidth());    // Set the ImageView width
-                imageView.setPreserveRatio(true);          // Preserve the aspect ratio
+                imageView.setFitHeight(rect.getHeight());
+                imageView.setFitWidth(rect.getWidth());
+                imageView.setPreserveRatio(true);
 
                 newWordTile = new StackPane(rect, imageView);
                 newWordTile.setAlignment(Pos.CENTER);
@@ -210,6 +227,13 @@ public class ConnectionsView {
 
     }
 
+    /**
+     * This replaces the shuffle method that we had in the model originally
+     * Now, we work straight the view so that the buttons stay the same
+     * but the order is just shifted around after the fact
+     *
+     * @author Casey K
+     */
     private void shuffleButtons() {
         gamePlayRoot.getChildren().clear();
         for(int i = 0; i < listOfCategoriesGuessed.size(); i++) {
@@ -229,6 +253,18 @@ public class ConnectionsView {
     }
 
 
+    /**
+     * This works mainly with our model.guess() method. That method returns an integer
+     * and sends it over here, where we display out what we want
+     *
+     * 1 means that the guess is 1 away
+     * 2 means that we guessed it correctly, but didn't win
+     * 3 means we lost the game (out of guesses)
+     * 4 means we won the game
+     *
+     * @param result
+     * @author Owen R
+     */
     private void runTheCommandClick(int result) {
         if (result == 1){
             initNotificationLabel(14);
@@ -351,6 +387,12 @@ public class ConnectionsView {
 
     }
 
+    /**
+     *
+     * @param word, a word within our list
+     * @return true if it is currently selected and false if it is not
+     * @author Casey K
+     */
     public boolean checkIfSelected(String word) {
         for(Tile tile : this.theModel.getBoard().getSelected()) {
             if (tile.getWord().equals(word)) {
@@ -407,12 +449,10 @@ public class ConnectionsView {
      */
     private void initNotificationLabel(int size) {
         notificationLabel = new Label();
-        //Pair to CSS file
         notificationLabel.getStyleClass().add("notificationText");
-        //Size corresponding to parameter
         notificationLabel.setFont(Font.font(size));
-        notificationLabel.setVisible(false);  // Start hidden
-        this.gamePlayRoot.add(notificationLabel, 0,5, 2,1);  // Adjust position as needed
+        notificationLabel.setVisible(false);
+        this.gamePlayRoot.add(notificationLabel, 0,5, 2,1);
     }
 
     private void backToHomeScreen() {
