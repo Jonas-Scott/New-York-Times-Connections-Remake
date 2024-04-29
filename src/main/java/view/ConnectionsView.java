@@ -105,6 +105,8 @@ public class ConnectionsView {
 
     /**
      * Add the home buttons for the difficulties on the home screen and initialize rest of game
+     *
+     * @author Casey K, Mikey M
      */
     private void initializeEverything() {
         btnEasy = new Button("Easy");
@@ -134,6 +136,16 @@ public class ConnectionsView {
         this.homeScreenRoot.getChildren().addAll(btnEasy, btnMedium, btnHard, btnExtreme, btnHollywood);
     }
 
+
+    /**
+     * The main screen for the gameplay. It puts up a whole board of rectangles with
+     * all the tiles from our level on there. we use our Enumerator.
+     *
+     * @throws FileNotFoundException for the game modes with photos in them, in case the URL does not exist
+     * (this will never throw for now, since each URL is manually inputted in)
+     *
+     * @author Case K, Owen R, Jonas S, Mikey M
+     */
     public void initGamePlayRoot() throws FileNotFoundException{
 
         StackPane newWordTile;
@@ -163,6 +175,17 @@ public class ConnectionsView {
 
     }
 
+    /**
+     * this is for the Hollywood difficulty, as well as any future difficulties with photos
+     * rather than printing the word onto the tile, it pops up a url
+     *
+     * @param i the index of our word in the word array
+     * @param rect the rectangle object that will turn into our tile
+     * @return the final tile that will be presented. It is a rectangle
+     * that has the photo on it, with all the tile data encapsulated in it
+     *
+     * @author Owen R
+     */
     private StackPane makeImageTile(int i, Rectangle rect){
         StackPane newWordTile;
         String imageUrl = this.theModel.getBoard().getWords().get(i).getWord();
@@ -170,15 +193,22 @@ public class ConnectionsView {
         ImageView imageView = new ImageView();
         imageView.setImage(image);
         imageView.setId(imageUrl);
-        imageView.setFitHeight(rect.getHeight());  // Set the ImageView height
-        imageView.setFitWidth(rect.getWidth());    // Set the ImageView width
-        imageView.setPreserveRatio(true);          // Preserve the aspect ratio
+        imageView.setFitHeight(rect.getHeight());
+        imageView.setFitWidth(rect.getWidth());
+        imageView.setPreserveRatio(true);
 
         newWordTile = new StackPane(rect, imageView);
         newWordTile.setAlignment(Pos.CENTER);
         return newWordTile;
     }
 
+
+    /**
+     * This replaces the original shuffle method that we had in the model
+     * Rather than shuffling the list behind the scenes, we shuffle all the words after being added to the screen
+     *
+     * @Author Owen R, Casey K
+     */
     public void shuffleButtons() {
         gamePlayRoot.getChildren().clear();
         addCategories();
@@ -190,6 +220,10 @@ public class ConnectionsView {
 
     }
 
+    /**
+     * just add our categories into our list
+     * @author Jonas S
+     */
     private void addCategories() {
         for(int i = 0; i < listOfCategoriesGuessed.size(); i++) {
             StackPane catLbl = listOfCategoriesGuessed.get(i);
@@ -198,10 +232,23 @@ public class ConnectionsView {
     }
 
 
+    /**
+     * A very strong Method. This gathers in the data from our model.guess() method and
+     * determines what will be outputted on the screen
+     *
+     *
+     * @param result 1 means we are 1 away, 2 means we got it correct,
+     *               3 means we lost the game
+     *               4 means we won the game
+     *               all of these have their own specific action
+     */
     public void showFeedback(int result) {
-        if (result == 1){
-            initNotificationLabel(14);
-            messagePopUp("One Away!");
+        if (result == 1 || result == 0){
+
+            if (result == 1) {
+                initNotificationLabel(14);
+                messagePopUp("One Away!");
+            }
         }
         else if (result == 2) {
             reLayoutGamePlayRoot();
@@ -220,10 +267,6 @@ public class ConnectionsView {
             messagePopUp("You won!");
             this.gamePlayRoot.getChildren().remove(shuffleButton);
             this.gamePlayRoot.getChildren().remove(checkSelectedButton);
-        }
-        else {
-            initNotificationLabel(14);
-            messagePopUp("Try Again!");
         }
 
         updateGuessCounter(theModel.userFeedback());
@@ -272,6 +315,16 @@ public class ConnectionsView {
         }
     }
 
+
+    /**
+     *
+     * this is where we adjust the board, so that the correct category is added to the top
+     * the category attribute of the selected tiles determines the color of the box
+     * and then the category is printed out, with the words underneath
+     *
+     * @Author Casey K, Jonas S
+     *
+     */
     private void addNewCategory() {
         String words;
         String category = theModel.getBoard().getSelected().get(0).getCategory() + " ";
@@ -326,6 +379,13 @@ public class ConnectionsView {
 
     }
 
+    /**
+     * Checks if the word is in the list of selected words
+     * @param word that we will check
+     * @return true if it is, false if not
+     *
+     * @author casey K
+     */
     public boolean checkIfSelected(String word) {
         for(Tile tile : this.theModel.getBoard().getSelected()) {
             if (tile.getWord().equals(word)) {

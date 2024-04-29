@@ -109,6 +109,8 @@ public class ConnectionsController {
      * Switch the window to the appropriate level game board
      * showing the new window
      * @param level - difficulty the user chooses to play
+     *
+     * @author Mikey M
      */
     private void switchToGameBoard(Level level) {
         theModel.chooseLevel(level);
@@ -131,6 +133,8 @@ public class ConnectionsController {
     /**
      * Create all bindings for the game board, adding to the tiles color properties
      * and creating the tiles and rectangles
+     *
+     * @author Casey K
      */
     private void initGameBoardBindings() {
 
