@@ -310,6 +310,9 @@ public class ConnectionsView {
         addGameplayButtons();
     }
 
+    /**
+     * Display word tiles
+     */
     private void addWords() {
         int yPos = listOfCategoriesGuessed.size() * 4;
         for(int i = 0; i < listOfSelectableWords.size(); i++){
