@@ -159,7 +159,6 @@ public class Board {
      * @return size of selected list
      */
     public int getNumSelected(){
-        //System.out.println(selected.size());
         return selected.size();
     }
 

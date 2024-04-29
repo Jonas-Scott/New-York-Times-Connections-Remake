@@ -283,14 +283,17 @@ public class ConnectionsView {
      * @author - CK, OR, JS
      */
     public void reLayoutGamePlayRoot() {
+
+        // Reset root
         this.gamePlayRoot.getChildren().clear();
 
-        addCategories();
-        addNewCategory();
+        addCategories(); // Add the previous categories
+        addNewCategory(); // add the new category
 
         ArrayList<StackPane> newList = new ArrayList<>();
 
 
+        // remake list without guessed
         for(StackPane wordTile : listOfSelectableWords) {
             String word;
             if (this.theModel.getBoard().getLevel() != Level.HOLLYWOOD){
@@ -306,8 +309,8 @@ public class ConnectionsView {
         }
         listOfSelectableWords = newList;
 
-        addWords();
-        addGameplayButtons();
+        addWords(); // Re add words
+        addGameplayButtons(); // Re add buttons
     }
 
     /**
@@ -332,7 +335,7 @@ public class ConnectionsView {
      *
      */
     private void addNewCategory() {
-        String words;
+        String words; // Get all words
         String category = theModel.getBoard().getSelected().get(0).getCategory() + " ";
         if (this.theModel.getBoard().getLevel() != Level.HOLLYWOOD) {
             words = theModel.getBoard().getSelected().toString();
@@ -364,7 +367,7 @@ public class ConnectionsView {
         Text catAndWords = new Text(category + words);
         catAndWords.setTextAlignment(TextAlignment.CENTER);
         StackPane catLbl = new StackPane(catRect, catAndWords);
-        listOfCategoriesGuessed.add(catLbl);
+        listOfCategoriesGuessed.add(catLbl); // Make label for category
         gamePlayRoot.add(catLbl, 0, listOfCategoriesGuessed.size() - 1, 4, 1);
     }
 
@@ -393,6 +396,7 @@ public class ConnectionsView {
      * @author casey K
      */
     public boolean checkIfSelected(String word) {
+        // Check if each tile is selcted or not
         for(Tile tile : this.theModel.getBoard().getSelected()) {
             if (tile.getWord().equals(word)) {
                 return true;
@@ -423,10 +427,12 @@ public class ConnectionsView {
      * @author - Owen Reilly
      */
     public void messagePopUp(String message) {
+        // Set up message
         notificationLabel.setText(message);
         notificationLabel.setVisible(true);
         notificationLabel.setOpacity(0);
 
+        // set up transition
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), notificationLabel);
         fadeIn.setToValue(1);  // Fade in to fully opaque
 
@@ -441,6 +447,7 @@ public class ConnectionsView {
     }
 
     public void shakeSelectedTiles() {
+        // Move every tile selected if wrong
         for (Tile tile : theModel.getBoard().getSelected()) {
             listOfSelectableWords.stream()
                     .filter(sp -> sp.getChildren().size() > 1)
@@ -461,6 +468,7 @@ public class ConnectionsView {
      * @param stackPane the StackPane to animate
      */
     private void applyShakeAnimation(StackPane stackPane) {
+        // Make animation
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(100), stackPane);
         translateTransition.setFromX(0);
         translateTransition.setToX(10);
@@ -486,6 +494,7 @@ public class ConnectionsView {
     }
 
     public void reset() {
+        // Clear root and return to home
         gamePlayRoot.getChildren().clear();
         initSceneGraph();
     }
@@ -496,6 +505,7 @@ public class ConnectionsView {
      */
     private void addGameplayButtons() {
 
+        // Add all gameplay elements
         this.gamePlayRoot.add(ballDisplay, 0, 5);
         this.gamePlayRoot.add(checkSelectedButton, 1, 5, 2, 1);
         this.gamePlayRoot.add(shuffleButton, 2, 5);

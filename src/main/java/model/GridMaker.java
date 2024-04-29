@@ -110,6 +110,7 @@ public class GridMaker {
      * @return the Board in list format
      */
     public static ArrayList<Tile> makeHollywoodBoard() {
+        // image urls
         String rdj = "https://upload.wikimedia.org/wikipedia/commons/9/94/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg";
         String evans = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/ChrisEvans2023.jpg/800px-ChrisEvans2023.jpg";
         String hemsworth = "https://upload.wikimedia.org/wikipedia/commons/e/e8/Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg";
@@ -144,14 +145,15 @@ public class GridMaker {
      */
     private static ArrayList<Tile> makeBoard(TreeMap<String, String[]> mapOfWords) {
 
+        // init new array list
         ArrayList<Tile> listOfTiles = new ArrayList<>();
 
         int currIndex = 0;
 
+        // Add each in w category
         for(Map.Entry<String, String[]> entry : mapOfWords.entrySet()){
             for(String word : entry.getValue()) {
                 listOfTiles.add(new Tile(word, entry.getKey(), currIndex+1));
-                //System.out.println(currIndex);
             }
             currIndex ++;
         }
