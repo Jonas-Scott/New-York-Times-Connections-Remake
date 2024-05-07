@@ -59,4 +59,4 @@ the bindings for the buttons. We have a resources package containing two differe
 styling, one for the home screen and one for the gameplay screen. Finally, we have our test package containing 
 all necessary JUnit tests. 
 
-### Video URL: 
+### Video URL: https://drive.google.com/file/d/1NcLjeAI72cdkfCXIVpBye9uME0C7zTaG/view?t=1
